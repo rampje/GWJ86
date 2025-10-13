@@ -200,6 +200,7 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22fhl"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_cxr5p")
 jump_speed = -350.0
 

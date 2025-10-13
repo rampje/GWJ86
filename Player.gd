@@ -24,9 +24,27 @@ var _coyote_timer: float = 0.0
 var _facing: int = 1
 var attacking: bool = false
 var is_wall_sliding: bool = false
+var _carry: Vector2 = Vector2.ZERO
+var _prev_on_floor: bool = false
+
+
+func _ready():
+	floor_snap_length = 8.0   # slightly less than half your tile size
+	floor_max_angle = deg_to_rad(46)
+
 
 func _physics_process(delta: float) -> void:
-	var dir := Input.get_axis("ui_left", "ui_right")        # -1,0,1
+	var dir := Input.get_axis("ui_left", "ui_right") 
+	
+	if _prev_on_floor:
+		velocity += _carry       # -1,0,1
+		
+	if is_on_floor():
+		for i in get_slide_collision_count():
+			var c := get_slide_collision(i)
+			if c:
+				print("n=", c.get_normal(), " carry=", _carry)
+
 
 	# Buffer jump so it can't be missed between frames
 	if Input.is_action_just_pressed("ui_accept"):
@@ -74,13 +92,31 @@ func _physics_process(delta: float) -> void:
 		# handled inside
 		pass
 
-	# inherit platform motion only from the true floor contact
-	if is_on_floor():
-		var fm := get_floor_motion()
-		velocity += fm
-		
 	move_and_slide()
+	
+	if !is_on_floor():
+		_carry = Vector2.ZERO
 
+	var carry_next := Vector2.ZERO
+	if is_on_floor():
+		for i in get_slide_collision_count():
+			var c := get_slide_collision(i)
+			if c and c.get_normal().dot(Vector2.UP) > 0.7:
+				var col := c.get_collider()
+				if col is AnimatableBody2D:
+					carry_next = col.constant_linear_velocity
+					break
+	
+	# If we *just* landed, suppress one frame of horizontal carry
+	var just_landed := is_on_floor() and !_prev_on_floor
+	if just_landed:
+		_carry = Vector2.ZERO
+	else:
+		_carry = carry_next
+
+	_prev_on_floor = is_on_floor()
+	
+	
 	# --- ANIMATION (kept simple; consider a proper state machine later) ---
 	if !attacking:
 		if is_wall_sliding:
@@ -149,12 +185,10 @@ func _on_animated_sprite_2d_animation_changed():
 func get_floor_motion() -> Vector2:
 	if !is_on_floor():
 		return Vector2.ZERO
-
-	var up := Vector2.UP
 	for i in get_slide_collision_count():
 		var c := get_slide_collision(i)
-		if c and c.get_normal().dot(up) > 0.7: # definitely a floor hit
+		if c and c.get_normal().dot(Vector2.UP) > 0.7:
 			var col := c.get_collider()
-			if col is AnimatableBody2D:
-				return col.constant_linear_velocity
+			if col and "platform_velocity" in col:
+				return col.platform_velocity
 	return Vector2.ZERO

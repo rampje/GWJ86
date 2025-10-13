@@ -1,44 +1,32 @@
-[gd_scene load_steps=12 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=6 format=3 uid="uid://b64rgmffvcg05"]
 
-[ext_resource type="PackedScene" uid="uid://pgvwuru21ei" path="res://Tilemap1.tscn" id="1_13aqy"]
-[ext_resource type="Texture2D" uid="uid://c5lblpjecs0ps" path="res://Tileset.png" id="1_u27rj"]
-[ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Player.tscn" id="2_hrdgv"]
-[ext_resource type="Shader" uid="uid://efsc4y6mva7m" path="res://Background1.gdshader" id="8_13aqy"]
-[ext_resource type="Texture2D" uid="uid://ji56ejuu2b1d" path="res://Feeling Masks/mask_37.png" id="8_u3gh2"]
-[ext_resource type="Texture2D" uid="uid://bo7u4vj1wjyj4" path="res://Feeling Masks/mask_23.png" id="9_7gp2n"]
-[ext_resource type="PackedScene" uid="uid://b64rgmffvcg05" path="res://Platform.tscn" id="9_oq61x"]
-[ext_resource type="Texture2D" uid="uid://di5536pq1xhn0" path="res://Feeling Masks/mask_21.png" id="11_moekp"]
+[ext_resource type="Script" uid="uid://cqp8dy4k6ew73" path="res://Platform.gd" id="1_0ltmk"]
+[ext_resource type="Texture2D" uid="uid://c5lblpjecs0ps" path="res://Tileset.png" id="1_k63f6"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ouv0n"]
-texture = ExtResource("1_u27rj")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3v42y"]
+size = Vector2(62, 30)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ltmk"]
+texture = ExtResource("1_k63f6")
 separation = Vector2i(1, 1)
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:0/0 = 0
 4:0/0 = 0
 5:0/0 = 0
 6:0/0 = 0
 7:0/0 = 0
-7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 8:0/0 = 0
-8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 9:0/0 = 0
-9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 10:0/0 = 0
 11:0/0 = 0
 12:0/0 = 0
 13:0/0 = 0
 14:0/0 = 0
-14:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:0/0 = 0
-15:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:0/0 = 0
-16:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:0/0 = 0
 18:0/0 = 0
 19:0/0 = 0
@@ -68,31 +56,22 @@ texture_region_size = Vector2i(32, 32)
 46:0/0 = 0
 47:0/0 = 0
 0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:1/0 = 0
-2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:1/0 = 0
 4:1/0 = 0
 5:1/0 = 0
 6:1/0 = 0
 7:1/0 = 0
-7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 8:1/0 = 0
-8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 9:1/0 = 0
-9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 10:1/0 = 0
 11:1/0 = 0
 12:1/0 = 0
 13:1/0 = 0
 14:1/0 = 0
-14:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:1/0 = 0
-15:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:1/0 = 0
-16:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:1/0 = 0
 18:1/0 = 0
 19:1/0 = 0
@@ -131,21 +110,15 @@ texture_region_size = Vector2i(32, 32)
 5:2/0 = 0
 6:2/0 = 0
 7:2/0 = 0
-7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 8:2/0 = 0
-8:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 9:2/0 = 0
-9:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 10:2/0 = 0
 11:2/0 = 0
 12:2/0 = 0
 13:2/0 = 0
 14:2/0 = 0
-14:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:2/0 = 0
-15:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:2/0 = 0
-16:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:2/0 = 0
 18:2/0 = 0
 19:2/0 = 0
@@ -1178,69 +1151,25 @@ texture_region_size = Vector2i(32, 32)
 33:27/0 = 0
 34:27/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_70e50"]
+[sub_resource type="TileSet" id="TileSet_3v42y"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 0
-sources/0 = SubResource("TileSetAtlasSource_ouv0n")
+sources/0 = SubResource("TileSetAtlasSource_0ltmk")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oq61x"]
-shader = ExtResource("8_13aqy")
-shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/timescale = 0.01
-shader_parameter/hScrollSpeedFactor = 1.0
-shader_parameter/vScrollSpeedFactor = 1.0
-shader_parameter/entropyFactor = 1.0
-shader_parameter/sharpness = 300.0
-shader_parameter/alpha = 0.3
+[node name="Platform" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_0ltmk")
+waypoint_offsets = null
+speed = null
+wait_time = null
+ping_pong = null
 
-[node name="Node2D" type="Node2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_3v42y")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-texture_filter = 1
-position = Vector2(363, 291)
-tile_map_data = PackedByteArray("AAADAAEAAAAPAAEAAAAEAAEAAAAPAAEAAAAFAAEAAAAPAAEAAAAFAAIAAAAPAAIAAAAEAAIAAAAPAAIAAAADAAIAAAAPAAIAAAAGAAEAAAAPAAEAAAAHAAEAAAAPAAEAAAAHAAIAAAAPAAEAAAAGAAIAAAAPAAIAAAACAAcAAAAHAAAAAAACAAgAAAAHAAIAAAADAAcAAAAIAAAAAAADAAgAAAAIAAIAAAAEAAcAAAAIAAAAAAAEAAgAAAAIAAIAAAAFAAcAAAAIAAAAAAAFAAgAAAAIAAIAAAAGAAcAAAAIAAAAAAAGAAgAAAAIAAIAAAAHAAcAAAAJAAAAAAAHAAgAAAAIAAIAAAD8/wEAAAAPAAEAAAD8/wIAAAAPAAIAAAD9/wEAAAAPAAEAAAD+/wEAAAAPAAEAAAD//wEAAAAPAAEAAAAAAAEAAAAPAAAAAAABAAEAAAAPAAAAAAACAAEAAAAPAAAAAAD9/wIAAAAPAAIAAAD+/wIAAAAPAAIAAAD//wIAAAAPAAIAAAAAAAIAAAAPAAIAAAABAAIAAAAPAAIAAAACAAIAAAAPAAIAAAD7/wEAAAAOAAEAAAD7/wIAAAAOAAEAAAD8//7/AAAPAAAAAAD9//7/AAAQAAAAAAD1//3/AAAOAAAAAAD2//3/AAAQAAAAAAD7/wMAAAAOAAEAAAD7/wQAAAAOAAEAAAD7/wUAAAAOAAEAAAD7/wYAAAAOAAEAAAD7/wcAAAAOAAEAAAD7/wgAAAAOAAEAAAD7/wkAAAAOAAEAAAD7/woAAAAOAAEAAAD7/wsAAAAOAAEAAAD7/wwAAAAOAAEAAAD7/w0AAAAOAAEAAAD7/w4AAAAOAAEAAAD1/wEAAAASAAAAAAD0/wEAAAASAAAAAADz/wEAAAASAAAAAADy/wEAAAASAAAAAADx/wEAAAASAAAAAAD1/wIAAAAQAAEAAAD1/wMAAAAQAAEAAAD1/wQAAAAQAAEAAAD1/wUAAAAQAAEAAADw/wEAAAASAAAAAADv/wEAAAASAAAAAADu/wEAAAASAAAAAAD1/wYAAAAQAAEAAAD0/wIAAAAPAAEAAADz/wIAAAAPAAEAAADy/wIAAAAPAAEAAADx/wIAAAAPAAEAAADw/wIAAAAPAAEAAADv/wIAAAAPAAEAAADu/wIAAAAPAAEAAAD4/wMAAAAPAAAAAAD4/wQAAAAPAAEAAAD4/wUAAAAPAAEAAAD4/wgAAAAPAAEAAAD4/wkAAAAPAAEAAAD4/woAAAAPAAEAAAD6/w0AAAAPAAEAAAD5/w0AAAAPAAEAAAD4/w0AAAAPAAEAAAD3/w0AAAAPAAEAAAD2/w0AAAAPAAEAAAD1/w0AAAAPAAEAAAD1/wcAAAAQAAEAAAD1/wgAAAAQAAEAAAD1/wkAAAAQAAEAAAD1/woAAAAQAAEAAAD0/w0AAAAPAAEAAADz/w0AAAAPAAEAAADy/w0AAAAPAAEAAADx/w0AAAAPAAEAAAD7//7/AAAOAAAAAAD7////AAAOAAEAAAD7/wAAAAAOAAEAAAD9////AAAQAAEAAAD9/wAAAAAPAAEAAAD8////AAAPAAEAAAD8/wAAAAAPAAEAAAD//wAAAAAQAAAAAAD+/wAAAAAPAAAAAAADAAAAAAAOAAAAAAAEAAAAAAAPAAAAAAAFAP//AAAOAAEAAAAFAP7/AAAOAAAAAAAGAP//AAAPAAEAAAAGAP7/AAAPAAAAAAAFAAAAAAAPAAEAAAAGAAAAAAAPAAEAAAAHAAAAAAAPAAEAAAAHAP//AAAPAAEAAAAHAP7/AAAPAAAAAAAIAP3/AAAOAAEAAAAIAPz/AAAOAAEAAAAIAPv/AAAOAAEAAAAIAPr/AAAOAAEAAAAIAPn/AAAOAAAAAAAJAPn/AAAPAAAAAAAKAPn/AAAPAAAAAAALAPn/AAAPAAEAAAAIAP7/AAAPAAEAAAAIAP//AAAPAAEAAAAIAAAAAAAPAAEAAAAIAAEAAAAPAAEAAAAJAPr/AAAPAAEAAAAKAPr/AAAPAAEAAAALAPr/AAAPAAEAAAALAPv/AAAOAAEAAAAJAPv/AAAQAAEAAAAJAPz/AAAPAAEAAAAJAP3/AAAPAAEAAAAKAP3/AAAPAAEAAAALAP3/AAAPAAEAAAALAPz/AAAPAAEAAAAKAPz/AAAPAAAAAAAIAAIAAAAPAAEAAAAJAAIAAAAPAAEAAAAJAAEAAAAPAAEAAAAJAAAAAAAPAAEAAAAJAP//AAAPAAEAAAAJAP7/AAAPAAEAAAAKAP7/AAAPAAEAAAALAP7/AAAPAAEAAAALAP//AAAPAAEAAAAKAP//AAAPAAEAAAAMAP7/AAAPAAEAAAAMAP3/AAAPAAEAAAAMAPz/AAAPAAEAAAAMAPv/AAAPAAEAAAAMAPr/AAAPAAEAAAAMAPn/AAAQAAAAAADp//3/AAAOAAAAAADq//3/AAAQAAAAAADn//P/AAAQAAEAAADn//T/AAAQAAEAAADn//X/AAAQAAEAAADn//b/AAAQAAEAAADn//f/AAAQAAEAAADn//j/AAAQAAEAAADn//n/AAAQAAEAAADn//r/AAAQAAEAAADn//v/AAAQAAEAAADn//z/AAAQAAEAAADn//3/AAAQAAEAAADn//7/AAAQAAEAAADn////AAAQAAEAAADm//L/AAAPAAAAAADl//L/AAAPAAAAAADk//L/AAAPAAAAAADj//L/AAAPAAAAAADi//L/AAAPAAAAAADn//L/AAAQAAAAAAA=")
-tile_set = SubResource("TileSet_70e50")
-
-[node name="TileMapLayer2" parent="." instance=ExtResource("1_13aqy")]
-position = Vector2(1802, 419)
-tile_map_data = PackedByteArray("AAD1/wEAAAAWAAIAAAC0/+3/AAAQAAEAAAC0/+z/AAAQAAEAAAC0/+v/AAAQAAAAAAA=")
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("2_hrdgv")]
-position = Vector2(-335, -239)
-
-[node name="Mask37" type="Sprite2D" parent="."]
-position = Vector2(-505, -176)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_u3gh2")
-
-[node name="Mask23" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1100, 237)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("9_7gp2n")
-
-[node name="Mask21" type="Sprite2D" parent="."]
-position = Vector2(699, 148)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("11_moekp")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = -1
-material = SubResource("ShaderMaterial_oq61x")
-offset_left = -855.0
-offset_top = -683.0
-offset_right = 1758.0
-offset_bottom = 1232.0
-
-[node name="Platform1" parent="." instance=ExtResource("9_oq61x")]
-position = Vector2(-243, 255)
-waypoint_offsets = Array[Vector2]([Vector2(0, 0), Vector2(140, 0)])
-
-[node name="Platform2" parent="." instance=ExtResource("9_oq61x")]
-position = Vector2(-242, 136)
-waypoint_offsets = Array[Vector2]([Vector2(0, 0), Vector2(0, -150)])
-
-[node name="Platform3" parent="." instance=ExtResource("9_oq61x")]
-position = Vector2(-330, -163)
-waypoint_offsets = Array[Vector2]([Vector2(0, 0), Vector2(0, 150)])
+visible = false
+tile_map_data = PackedByteArray(0, 0, 255, 255, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_3v42y")
+collision_enabled = false

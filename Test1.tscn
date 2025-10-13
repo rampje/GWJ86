@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=4 uid="uid://byw3hhep7o6ne"]
+
+[ext_resource type="PackedScene" uid="uid://pgvwuru21ei" path="res://Tilemap1.tscn" id="1_13aqy"]
+[ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Player.tscn" id="2_hrdgv"]
+[ext_resource type="Texture2D" uid="uid://bgj0gxbi6i7wr" path="res://Feeling Masks/mask_38.png" id="7_oa2wk"]
+[ext_resource type="Shader" uid="uid://efsc4y6mva7m" path="res://Background1.gdshader" id="8_13aqy"]
+[ext_resource type="Texture2D" uid="uid://ji56ejuu2b1d" path="res://Feeling Masks/mask_37.png" id="8_u3gh2"]
+[ext_resource type="Texture2D" uid="uid://bo7u4vj1wjyj4" path="res://Feeling Masks/mask_23.png" id="9_7gp2n"]
+[ext_resource type="PackedScene" uid="uid://b64rgmffvcg05" path="res://MovingPlatform.tscn" id="9_oq61x"]
+[ext_resource type="Texture2D" uid="uid://bokpiuqaxgthh" path="res://Feeling Masks/mask_06.png" id="10_d6ro5"]
+[ext_resource type="Texture2D" uid="uid://di5536pq1xhn0" path="res://Feeling Masks/mask_21.png" id="11_moekp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oq61x"]
+shader = ExtResource("8_13aqy")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/timescale = 0.01
+shader_parameter/hScrollSpeedFactor = 1.0
+shader_parameter/vScrollSpeedFactor = 1.0
+shader_parameter/entropyFactor = 1.0
+shader_parameter/sharpness = 300.0
+shader_parameter/alpha = 0.3
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("1_13aqy")]
+position = Vector2(363, 291)
+tile_map_data = PackedByteArray("AAADAAEAAAAPAAAAAAAEAAEAAAAPAAAAAAAFAAEAAAAPAAAAAAAFAAIAAAAPAAIAAAAEAAIAAAAPAAIAAAADAAIAAAAPAAIAAAAGAAEAAAAPAAAAAAAHAAEAAAAQAAAAAAAHAAIAAAAQAAIAAAAGAAIAAAAPAAIAAAAFAP7/AAAOAAAAAAAGAP7/AAAQAAAAAAABAP//AAAQAAAAAAAAAP//AAAOAAAAAAACAAcAAAAHAAAAAAACAAgAAAAHAAIAAAADAAcAAAAIAAAAAAADAAgAAAAIAAIAAAAEAAcAAAAIAAAAAAAEAAgAAAAIAAIAAAAFAAcAAAAIAAAAAAAFAAgAAAAIAAIAAAAGAAcAAAAIAAAAAAAGAAgAAAAIAAIAAAAHAAcAAAAJAAAAAAAHAAgAAAAIAAIAAAD8/wEAAAAPAAAAAAD8/wIAAAAPAAIAAAD9/wEAAAAPAAAAAAD+/wEAAAAPAAAAAAD//wEAAAAPAAAAAAAAAAEAAAAPAAAAAAABAAEAAAAPAAAAAAACAAEAAAAPAAAAAAD9/wIAAAAPAAIAAAD+/wIAAAAPAAIAAAD//wIAAAAPAAIAAAAAAAIAAAAPAAIAAAABAAIAAAAPAAIAAAACAAIAAAAPAAIAAAD7/wEAAAAOAAEAAAD7/wIAAAAOAAEAAAD8//7/AAAOAAAAAAD9//7/AAAQAAAAAAD5//3/AAAOAAAAAAD6//3/AAAOAAAAAAD1//3/AAAOAAAAAAD2//3/AAAQAAAAAADy////AAAOAAAAAADz////AAAQAAAAAADt//3/AAAQAAAAAADs//3/AAAOAAAAAAD7/wMAAAAOAAEAAAD7/wQAAAAOAAEAAAD7/wUAAAAOAAEAAAD7/wYAAAAOAAEAAAD7/wcAAAAOAAEAAAD7/wgAAAAOAAEAAAD7/wkAAAAOAAEAAAD7/woAAAAOAAEAAAD7/wsAAAAOAAEAAAD7/wwAAAAOAAEAAAD7/w0AAAAOAAEAAAD7/w4AAAAOAAEAAAA=")
+
+[node name="TileMapLayer2" parent="." instance=ExtResource("1_13aqy")]
+position = Vector2(1095, 23)
+tile_map_data = PackedByteArray("AAD1/wEAAAAWAAIAAAA=")
+
+[node name="MovingPlatform" parent="." instance=ExtResource("9_oq61x")]
+position = Vector2(413, 208)
+waypoint_offsets = Array[Vector2]([Vector2(0, 0), Vector2(100, 0)])
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_hrdgv")]
+position = Vector2(405, 135)
+
+[node name="Mask38" type="Sprite2D" parent="."]
+position = Vector2(766, 295)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_oa2wk")
+
+[node name="Mask37" type="Sprite2D" parent="."]
+position = Vector2(982, 327)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_u3gh2")
+
+[node name="Mask23" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(759, 33)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_7gp2n")
+
+[node name="Mask06" type="Sprite2D" parent="."]
+position = Vector2(1000, 468)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_d6ro5")
+
+[node name="Mask21" type="Sprite2D" parent="."]
+position = Vector2(1083, 389)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("11_moekp")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_oq61x")
+offset_left = -855.0
+offset_top = -683.0
+offset_right = 1758.0
+offset_bottom = 1232.0

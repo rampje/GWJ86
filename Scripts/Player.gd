@@ -171,6 +171,7 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 	if event.is_action_pressed("reload"):
+		Global.reset_game()
 		get_tree().reload_current_scene()
 
 

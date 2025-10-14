@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b8r18x1hjxb71" path="res://Scripts/SpawnPoint.gd" id="1_54don"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13aqy"]
-size = Vector2(62, 53.5)
+size = Vector2(82, 42.25)
 
 [node name="SpawnPoint" type="Area2D"]
 script = ExtResource("1_54don")

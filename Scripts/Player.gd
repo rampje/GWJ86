@@ -166,21 +166,27 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _input(event):
-	# Keep "system/UI" stuff in _input; movement in _physics_process is correct.
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
-	if event.is_action_pressed("reload"):
-		Global.reset_game()
-		get_tree().reload_current_scene()
-
 
 func _sight_mask():
-	if Global.has_sight == true:
-		if Input.is_action_just_pressed("Mask1"):
-			%TileMapLayer2.enabled = !%TileMapLayer2.enabled
-			%TileMapLayer3.enabled = !%TileMapLayer3.enabled
-		
+	if !Global.has_sight:
+		return
+	if Input.is_action_just_pressed("Mask1"):
+		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
+		%TileMapLayer3.enabled = !%TileMapLayer3.enabled
+
+		# Determine which group should be visible based on the TileMaps
+		var show_layer2 = %TileMapLayer2.enabled
+		var show_layer3 = %TileMapLayer3.enabled
+
+		# Toggle platforms that belong to Layer2
+		for p in get_tree().get_nodes_in_group("Layer2"):
+			if "set_platform_enabled" in p:
+				p.set_platform_enabled(show_layer2)
+
+		# Toggle platforms that belong to Layer3
+		for p in get_tree().get_nodes_in_group("Layer3"):
+			if "set_platform_enabled" in p:
+				p.set_platform_enabled(show_layer3)
 
 
 func _on_animated_sprite_2d_animation_finished():

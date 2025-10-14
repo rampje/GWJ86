@@ -27,13 +27,14 @@ var is_wall_sliding: bool = false
 var _carry: Vector2 = Vector2.ZERO
 var _prev_on_floor: bool = false
 #var _sight_mask_on: bool = false
+var respawn_position: Vector2
 
 func _ready():
 	floor_snap_length = 8.0   # slightly less than half your tile size
 	floor_max_angle = deg_to_rad(46)
 	
-	%TileMapLayer2.enabled = true
-	%TileMapLayer3.enabled = false
+	%TileMapLayer2.enabled = false
+	%TileMapLayer3.enabled = true
 
 
 func _physics_process(delta: float) -> void:
@@ -86,8 +87,8 @@ func _physics_process(delta: float) -> void:
 
 	velocity.y = min(velocity.y + g * delta, max_fall_speed)
 
-	# --- WALL SLIDE DETECTION ---
-	is_wall_sliding = is_on_wall() and !is_on_floor() and dir != 0
+	# --- WALL SLIDE DETECTION (only if ability unlocked) ---
+	is_wall_sliding = Global.has_walljump and is_on_wall() and !is_on_floor() and dir != 0
 	if is_wall_sliding:
 		velocity.y = min(velocity.y, wall_slide_max_speed)
 
@@ -148,13 +149,14 @@ func _try_jump() -> bool:
 		_coyote_timer = 0.0
 		return true
 
-	# wall jump (push away from wall normal)
-	if is_on_wall() and !is_on_floor():
-		var wall_normal := get_wall_normal() # CharacterBody2D has this
+	# wall jump (only if ability unlocked)
+	if Global.has_walljump and is_on_wall() and !is_on_floor():
+		var wall_normal := get_wall_normal()
 		velocity.y = jump_speed
-		velocity.x = wall_normal.x * wall_jump_push  # pushes away from the wall
+		velocity.x = wall_normal.x * wall_jump_push
 		_jump_buffer = 0.0
 		return true
+
 
 	return false
 
@@ -199,3 +201,8 @@ func get_floor_motion() -> Vector2:
 			if col and "platform_velocity" in col:
 				return col.platform_velocity
 	return Vector2.ZERO
+
+
+func respawn() -> void:
+	global_position = respawn_position
+	velocity = Vector2.ZERO

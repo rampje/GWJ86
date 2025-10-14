@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://di5536pq1xhn0"
-path="res://.godot/imported/mask_21.png-80a55b26078ea0434abaa477b9319c29.ctex"
+path="res://.godot/imported/Attack.png-2d35bf7162b36e3877e18ecd25996615.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Feeling Masks/mask_21.png"
-dest_files=["res://.godot/imported/mask_21.png-80a55b26078ea0434abaa477b9319c29.ctex"]
+source_file="res://Assets/Masks/Attack.png"
+dest_files=["res://.godot/imported/Attack.png-2d35bf7162b36e3877e18ecd25996615.ctex"]
 
 [params]
 

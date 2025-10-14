@@ -1,8 +1,8 @@
 extends Node2D
 
-const MASK_TYPES := ["Sight", "Movement"]
+const MASK_TYPES := ["Sight", "Movement","Attack"]
 
-@export_enum("Sight", "Movement") var mask_type: String = "Sight"
+@export_enum("Sight", "Movement","Attack") var mask_type: String = "Sight"
 
 # bobbing anim settings
 @export var bob_amplitude: float = 3.0
@@ -67,4 +67,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		if mask_type == "Sight":
 			Global.has_sight = true
 			print(Global.has_sight)
+		elif mask_type == "Movement":
+			Global.has_walljump = true
 		queue_free()

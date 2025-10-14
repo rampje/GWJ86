@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bo7u4vj1wjyj4" path="res://Feeling Masks/mask_23.png" id="9_7gp2n"]
 [ext_resource type="PackedScene" uid="uid://ccsu5hhd6wek7" path="res://Scenes/SpawnPoint.tscn" id="9_53a8m"]
 [ext_resource type="PackedScene" uid="uid://b64rgmffvcg05" path="res://Scenes/Platform.tscn" id="9_oq61x"]
-[ext_resource type="PackedScene" uid="uid://7ahri2krb4yw" path="res://Scenes/DeathArea.tscn" id="10_53a8m"]
 [ext_resource type="PackedScene" uid="uid://bv2lri5y2g06" path="res://Scenes/Mask.tscn" id="10_oa2wk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ouv0n"]
@@ -1196,12 +1195,15 @@ shader_parameter/entropyFactor = 3.0
 shader_parameter/sharpness = 400.0
 shader_parameter/alpha = 0.3
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53a8m"]
+size = Vector2(619, 22)
+
 [node name="ActiveMap" type="Node2D"]
-position = Vector2(0, 9)
+position = Vector2(0, -1)
 script = ExtResource("1_oq61x")
 
 [node name="Player" parent="." instance=ExtResource("2_hrdgv")]
-position = Vector2(-573, -209)
+position = Vector2(417, 164)
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -1266,15 +1268,13 @@ mask_type = "Attack"
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
-[node name="SpawnPoint1" parent="SpawnPoints" instance=ExtResource("9_53a8m")]
-position = Vector2(253, 195)
-set_facing_to_right = false
+[node name="SpawnPoint" parent="SpawnPoints" instance=ExtResource("9_53a8m")]
 
-[node name="SpawnPoint2" parent="SpawnPoints" instance=ExtResource("9_53a8m")]
-position = Vector2(72, 167)
-
-[node name="SpawnPoint3" parent="SpawnPoints" instance=ExtResource("9_53a8m")]
-position = Vector2(-440, -187)
-
-[node name="Death" parent="." instance=ExtResource("10_53a8m")]
+[node name="Death" type="Area2D" parent="."]
 position = Vector2(-106, 344)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Death"]
+position = Vector2(4.5, -1)
+shape = SubResource("RectangleShape2D_53a8m")
+
+[connection signal="body_entered" from="Death" to="." method="_on_death_body_entered"]

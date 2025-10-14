@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://dsed6rjvxprh6"]
+[gd_scene load_steps=33 format=3 uid="uid://dsed6rjvxprh6"]
 
 [ext_resource type="Script" uid="uid://d3timhod7u17y" path="res://Player.gd" id="1_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://87n2binlio0v" path="res://Player Idle 48x48.png" id="2_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://ba6jetfr3ktwv" path="res://2D-Pixel-Art-Character-Template/Jump/player jump 48x48.png" id="3_dtqjt"]
 [ext_resource type="Texture2D" uid="uid://bk03k7edk28lx" path="res://2D-Pixel-Art-Character-Template/Run/player run 48x48.png" id="4_5ncpa"]
 [ext_resource type="Texture2D" uid="uid://tgpcbve5nf08" path="res://2D-Pixel-Art-Character-Template/Wall Slide/player wall slide 48x48.png" id="5_wi0c6"]
+[ext_resource type="Texture2D" uid="uid://cjyqu2mh8a4cr" path="res://zovcd6ll.bmp" id="6_tdg3f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70e50"]
 atlas = ExtResource("2_tdg3f")
@@ -200,6 +201,7 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22fhl"]
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_cxr5p")
 jump_speed = -350.0
@@ -213,3 +215,8 @@ sprite_frames = SubResource("SpriteFrames_7gp2n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_22fhl")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.35162926, 0.41428706, 0.83578813, 1)
+texture = ExtResource("6_tdg3f")
+texture_scale = 0.5

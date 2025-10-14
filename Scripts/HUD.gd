@@ -5,7 +5,14 @@ extends CanvasLayer
 @onready var mask_icon: TextureRect = %MaskIcon
 @export var fade_duration: float = 1.0
 
+const MASK_DESCRIPTIONS := {
+	"Sight":    "Press SHIFT to make some walls vanish and others appear",
+	"Movement": "You can now wall jump and slide down walls",
+	"Attack":   "res://Assets/Masks/Attack.png",
+}
+
 func _ready() -> void:
+	%MaskDescription.text = ""
 	mask_pickup.modulate.a = 0.0
 	# Listen to Global for pickups
 	Global.mask_picked.connect(_on_global_mask_picked)
@@ -13,6 +20,7 @@ func _ready() -> void:
 func _on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
 	mask_name.text = mask_type
+	%MaskDescription.text = MASK_DESCRIPTIONS[mask_type]
 	var tex = Global.get_mask_icon(mask_type)
 	if tex:
 		mask_icon.texture = tex
@@ -24,6 +32,7 @@ func _on_global_mask_picked(mask_type: String) -> void:
 			t.kill()
 
 	mask_pickup.modulate.a = 0.0
+	
 	fade_in()
 
 func fade_in() -> void:

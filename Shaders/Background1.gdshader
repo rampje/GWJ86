@@ -15,6 +15,12 @@ uniform float alpha = 0.3;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
+// zone tint and mix (0 = no tint, 1 = fully tinted)
+uniform vec3 zone_tint = vec3(1.0, 1.0, 1.0);
+uniform float zone_tint_mix = 0.0;
+
+
+
 vec3 hash(vec3 p)
 {
     p = vec3(dot(p, vec3(127.1, 311.7, 74.7)), dot(p, vec3(269.5,183.3,246.1)), dot(p, vec3(113.5, 271.9, 124.6)));
@@ -64,9 +70,11 @@ vec4 mainImage( in vec2 _uv )
 void fragment()
 {
     vec4 noise = mainImage(UV);
-	noise.a = alpha;
-
-	COLOR = noise;
+    // apply tint gradually
+    noise.rgb = mix(noise.rgb, noise.rgb * zone_tint, clamp(zone_tint_mix, 0.0, 1.0));
+    noise.a = alpha;
+    COLOR = noise;
+	
 }
 //    switch (colorMode)
 //    {

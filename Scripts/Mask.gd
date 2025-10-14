@@ -13,7 +13,7 @@ const MASK_TYPES := ["Sight", "Movement","Attack"]
 @export var wobble_scale: float = 0.02
 @export var snap_to_pixels: bool = true
 
-var MASK_TEXTURES: Dictionary = {}  # Dictionary[String, Texture2D]
+#var MASK_TEXTURES: Dictionary = {}  # Dictionary[String, Texture2D]
 var _base_y: float
 
 
@@ -24,14 +24,6 @@ func _ready() -> void:
 		var ok := picked_up.connect(cb)
 		print("Mask connect to Global.on_mask_picked -> ", ok)
 	
-	# Build dictionary of mask textures
-	for t in MASK_TYPES:
-		var path := "res://Assets/Masks/%s.png" % t.to_lower()
-		var tex: Texture2D = load(path)
-		if tex:
-			MASK_TEXTURES[t] = tex
-		else:
-			push_warning("Missing texture file: %s" % path)
 
 	# Apply texture to sprite
 	_apply_mask()
@@ -62,12 +54,15 @@ func _process(_delta: float) -> void:
 
 
 func _apply_mask() -> void:
-	var tex: Texture2D = MASK_TEXTURES.get(mask_type)
-	if tex:
-		$Visual/Sprite2D.texture = tex
+	var tex_path = Global.MASK_ICON_PATHS.get(mask_type, "")
+	if tex_path != "":
+		var tex: Texture2D = load(tex_path)
+		if tex:
+			$Visual/Sprite2D.texture = tex
+		else:
+			push_warning("Failed to load texture at path: %s" % tex_path)
 	else:
-		push_warning("Missing texture for mask type: %s" % mask_type)
-
+		push_warning("Missing texture path for mask type: %s" % mask_type)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:

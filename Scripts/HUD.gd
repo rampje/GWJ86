@@ -8,7 +8,7 @@ extends CanvasLayer
 const MASK_DESCRIPTIONS := {
 	"Sight":    "Press SHIFT to make some walls vanish and others appear",
 	"Movement": "You can now wall jump and slide down walls",
-	"Attack":   "res://Assets/Masks/Attack.png",
+	"Wisdom":   "You now know how many masks you need",
 }
 
 func _ready() -> void:

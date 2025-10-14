@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dg4dufh2sm5b4"
-path="res://.godot/imported/mask_15.png-66fde6d11933a51dc836d91d8218d7e2.ctex"
+path="res://.godot/imported/Wisdom.png-164f295ef48900cd5d532d27e714507c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Feeling Masks/mask_15.png"
-dest_files=["res://.godot/imported/mask_15.png-66fde6d11933a51dc836d91d8218d7e2.ctex"]
+source_file="res://Assets/Masks/Wisdom.png"
+dest_files=["res://.godot/imported/Wisdom.png-164f295ef48900cd5d532d27e714507c.ctex"]
 
 [params]
 

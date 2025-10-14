@@ -1,5 +1,7 @@
 extends Node2D
 
+signal picked_up(mask_type: String)
+
 const MASK_TYPES := ["Sight", "Movement","Attack"]
 
 @export_enum("Sight", "Movement","Attack") var mask_type: String = "Sight"
@@ -16,6 +18,12 @@ var _base_y: float
 
 
 func _ready() -> void:
+	# Use Callable to avoid ambiguities and to check is_connected.
+	var cb := Callable(Global, "on_mask_picked")
+	if not picked_up.is_connected(cb):
+		var ok := picked_up.connect(cb)
+		print("Mask connect to Global.on_mask_picked -> ", ok)
+	
 	# Build dictionary of mask textures
 	for t in MASK_TYPES:
 		var path := "res://Assets/Masks/%s.png" % t.to_lower()
@@ -64,9 +72,13 @@ func _apply_mask() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":# and body.has_method("unlock_wall_ability"):
-		if mask_type == "Sight":
-			Global.has_sight = true
-			print(Global.has_sight)
-		elif mask_type == "Movement":
-			Global.has_walljump = true
+		#if mask_type == "Sight":
+		#	Global.has_sight = true
+		#	print(Global.has_sight)
+		#elif mask_type == "Movement":
+		#	Global.has_walljump = true
+		# stop repeat triggers just in case
+		$Area2D.monitoring = false
+		# broadcast which mask was picked up
+		picked_up.emit(mask_type)
 		queue_free()

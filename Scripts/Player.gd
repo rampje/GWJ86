@@ -26,11 +26,14 @@ var attacking: bool = false
 var is_wall_sliding: bool = false
 var _carry: Vector2 = Vector2.ZERO
 var _prev_on_floor: bool = false
-
+#var _sight_mask_on: bool = false
 
 func _ready():
 	floor_snap_length = 8.0   # slightly less than half your tile size
 	floor_max_angle = deg_to_rad(46)
+	
+	%TileMapLayer2.enabled = true
+	%TileMapLayer3.enabled = false
 
 
 func _physics_process(delta: float) -> void:
@@ -38,12 +41,13 @@ func _physics_process(delta: float) -> void:
 	
 	if _prev_on_floor:
 		velocity += _carry       # -1,0,1
-		
-	if is_on_floor():
-		for i in get_slide_collision_count():
-			var c := get_slide_collision(i)
-			if c:
-				print("n=", c.get_normal(), " carry=", _carry)
+	
+	#debug	
+	#if is_on_floor():
+	#	for i in get_slide_collision_count():
+	#		var c := get_slide_collision(i)
+	#		if c:
+	#			print("n=", c.get_normal(), " carry=", _carry)
 
 
 	# Buffer jump so it can't be missed between frames
@@ -129,7 +133,7 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.play("default")
 
 	# Extra abilities
-	_switch_mask()
+	_sight_mask()
 
 
 func _try_jump() -> bool:
@@ -168,9 +172,12 @@ func _input(event):
 		get_tree().reload_current_scene()
 
 
-func _switch_mask():
-	if Input.is_action_just_pressed("Mask1"):
-		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
+func _sight_mask():
+	if Global.has_sight == true:
+		if Input.is_action_just_pressed("Mask1"):
+			%TileMapLayer2.enabled = !%TileMapLayer2.enabled
+			%TileMapLayer3.enabled = !%TileMapLayer3.enabled
+		
 
 
 func _on_animated_sprite_2d_animation_finished():

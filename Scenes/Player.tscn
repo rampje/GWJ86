@@ -1,6 +1,6 @@
 [gd_scene load_steps=33 format=3 uid="uid://dsed6rjvxprh6"]
 
-[ext_resource type="Script" uid="uid://d3timhod7u17y" path="res://Player.gd" id="1_cxr5p"]
+[ext_resource type="Script" uid="uid://d3timhod7u17y" path="res://Scripts/Player.gd" id="1_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://87n2binlio0v" path="res://Player Idle 48x48.png" id="2_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://ba6jetfr3ktwv" path="res://2D-Pixel-Art-Character-Template/Jump/player jump 48x48.png" id="3_dtqjt"]
 [ext_resource type="Texture2D" uid="uid://bk03k7edk28lx" path="res://2D-Pixel-Art-Character-Template/Run/player run 48x48.png" id="4_5ncpa"]
@@ -200,7 +200,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22fhl"]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_cxr5p")

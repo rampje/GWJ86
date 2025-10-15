@@ -208,8 +208,10 @@ jump_speed = -350.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+limit_enabled = false
+limit_smoothed = true
 position_smoothing_enabled = true
-position_smoothing_speed = 7.0
+rotation_smoothing_speed = 7.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.8862745, 0, 0.4745098, 1)
@@ -220,6 +222,7 @@ sprite_frames = SubResource("SpriteFrames_7gp2n")
 shape = SubResource("CapsuleShape2D_22fhl")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(0.35162926, 0.41428706, 0.83578813, 1)
 texture = ExtResource("6_tdg3f")
 texture_scale = 0.5

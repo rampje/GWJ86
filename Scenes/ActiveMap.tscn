@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=47 format=4 uid="uid://byw3hhep7o6ne"]
 
 [ext_resource type="Script" uid="uid://dbleoewbl2g1q" path="res://Scripts/ActiveMap.gd" id="1_ns8y8"]
 [ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Scenes/Player.tscn" id="3_j3yda"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://pgvwuru21ei" path="res://Scenes/Tilemap1.tscn" id="5_5kecc"]
 [ext_resource type="Texture2D" uid="uid://d2m6in4a520sc" path="res://Tileset.png" id="5_c56d2"]
 [ext_resource type="PackedScene" uid="uid://b64rgmffvcg05" path="res://Scenes/Platform.tscn" id="6_fgv63"]
+[ext_resource type="Shader" uid="uid://bdbh2l6g0dkwp" path="res://Shaders/PlatformTransition.gdshader" id="6_r76hp"]
 [ext_resource type="PackedScene" uid="uid://bv2lri5y2g06" path="res://Scenes/Mask.tscn" id="8_41vac"]
 [ext_resource type="PackedScene" uid="uid://ccsu5hhd6wek7" path="res://Scenes/SpawnPoint.tscn" id="9_r2i1d"]
 [ext_resource type="PackedScene" uid="uid://7ahri2krb4yw" path="res://Scenes/DeathArea.tscn" id="10_oryae"]
@@ -1497,6 +1498,14 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_ouv0n")
 sources/1 = SubResource("TileSetAtlasSource_j3yda")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r76hp"]
+shader = ExtResource("6_r76hp")
+shader_parameter/pulse = 0.350000016625
+shader_parameter/boost = 0.35
+shader_parameter/wobble_amp_px = 0.6
+shader_parameter/wobble_freq = 18.0
+shader_parameter/tint = Vector4(1, 1, 1, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c56d2"]
 size = Vector2(607, 17)
 
@@ -1594,7 +1603,7 @@ size = Vector2(110, 148)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(-418, -192)
+position = Vector2(-426, -180)
 
 [node name="TileMaps" type="Node2D" parent="."]
 
@@ -1607,6 +1616,7 @@ tile_set = SubResource("TileSet_70e50")
 
 [node name="TileMapLayer2" parent="TileMaps" instance=ExtResource("5_5kecc")]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_r76hp")
 position = Vector2(1805, 419)
 tile_map_data = PackedByteArray("AAC0/+3/AAAQAAEAAAC0/+7/AAAPAAEAAACz/+3/AAAOAAEAAACz/+7/AAAPAAEAAACy/+7/AAAPAAAAAAC2//H/AAAPAAAAAAC3//H/AAAQAAAAAACx/+//AAAPAAAAAACy/+//AAAPAAEAAACy//D/AAAPAAEAAACy//H/AAAPAAEAAACu/+//AAAPAAEAAACu/+3/AAAPAAEAAACu/+z/AAAPAAEAAACv/+z/AAAPAAEAAACw/+v/AAAPAAEAAACw/+r/AAAPAAEAAACw/+n/AAAPAAEAAACw/+j/AAAPAAEAAACw/+f/AAAPAAEAAACw/+b/AAAPAAEAAACw/+X/AAAPAAEAAACw/+T/AAAPAAEAAACw/+P/AAAPAAEAAACw/+L/AAAPAAEAAACw/+H/AAAPAAEAAACw/+D/AAAPAAEAAACw/9//AAAPAAEAAACz/+L/AAAPAAEAAACz/+H/AAAPAAEAAACz/+D/AAAPAAEAAAC0/+D/AAAPAAEAAACw/97/AAAPAAEAAACw/93/AAAPAAEAAACx/93/AAAPAAEAAACy/93/AAAPAAEAAACz/93/AAAPAAEAAAC0/93/AAAPAAEAAAC1/93/AAAPAAEAAAC2/93/AAAPAAEAAAC3/93/AAAPAAEAAAC4/93/AAAPAAEAAAC1/+D/AAAPAAEAAAC2/+D/AAAPAAEAAAC3/+D/AAAPAAEAAAC4/+D/AAAPAAEAAAC5/93/AAAPAAEAAAC6/93/AAAPAAEAAAC7/93/AAAPAAEAAAC8/93/AAAPAAEAAAC5/+D/AAAPAAEAAAC6/+D/AAAPAAEAAAC7/+D/AAAPAAEAAAC8/+D/AAAPAAEAAACw/+z/AAAPAAEAAACv/+3/AAAPAAEAAACy//L/AAAPAAEAAACz//L/AAAPAAEAAACz//T/AAAPAAEAAAC0//T/AAAPAAEAAAC1//T/AAAPAAEAAAC1//P/AAAPAAEAAAC2//L/AAAPAAEAAAC4//H/AAAPAAEAAAC5//H/AAAPAAEAAAC2/wkAAAAPAAEAAAC1/wkAAAAPAAEAAAC0/wkAAAAPAAEAAACz/wkAAAAPAAEAAACy/wkAAAAPAAEAAACx/wkAAAAPAAEAAACw/wkAAAAPAAEAAACv/wkAAAAPAAEAAACu/wkAAAAPAAEAAACt/wkAAAAPAAEAAACs/wkAAAAPAAEAAACr/wkAAAAPAAEAAACq/wkAAAAPAAEAAACp/wkAAAAPAAEAAACo/wkAAAAPAAEAAAC2/wYAAAAPAAEAAAC1/wYAAAAPAAEAAAC0/wYAAAAPAAEAAACz/wYAAAAPAAEAAACy/wYAAAAPAAEAAACx/wYAAAAPAAEAAACw/wYAAAAPAAEAAACv/wYAAAAPAAEAAACu/wYAAAAPAAEAAACt/wYAAAAPAAEAAACs/wYAAAAPAAEAAACr/wYAAAAPAAEAAACq/wYAAAAPAAEAAACp/wYAAAAPAAEAAACo/wYAAAAPAAEAAACr//P/AAAPAAEAAACs//P/AAAPAAEAAACt//P/AAAPAAEAAACu//P/AAAPAAEAAACv/+//AAAPAAEAAACw/+//AAAPAAEAAACv//P/AAAPAAEAAACw//T/AAAPAAEAAACx//T/AAAPAAEAAACy//T/AAAPAAEAAAC1/+7/AAAPAAEAAAC2/+7/AAAPAAEAAADH/xMAAAAPAAEAAADK/xIAAAAPAAEAAADa/xEAAAAPAAEAAADx/woAAAAPAAEAAADu/wgAAAAPAAEAAADu/wkAAAAPAAEAAADv/wgAAAAWAAQAAADv/wkAAAAWAAQAAADu/wcAAAASAAAAAADg/w8AAAAPAAEAAADL/wYAAAAPAAEAAAA=")
 

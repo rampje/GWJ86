@@ -167,29 +167,8 @@ func _process(delta: float) -> void:
 
 
 
-func _sight_mask():
-	if !Global.has_sight:
-		return
-	if Input.is_action_just_pressed("Mask1"):
-		
-		SoundManager.play_sfx(SoundManager.sight_sound, true)
-		
-		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
-		%TileMapLayer3.enabled = !%TileMapLayer3.enabled
 
-		# Determine which group should be visible based on the TileMaps
-		var show_layer2 = %TileMapLayer2.enabled
-		var show_layer3 = %TileMapLayer3.enabled
 
-		# Toggle platforms that belong to Layer2
-		for p in get_tree().get_nodes_in_group("Layer2"):
-			if "set_platform_enabled" in p:
-				p.set_platform_enabled(show_layer2)
-
-		# Toggle platforms that belong to Layer3
-		for p in get_tree().get_nodes_in_group("Layer3"):
-			if "set_platform_enabled" in p:
-				p.set_platform_enabled(show_layer3)
 
 
 func _on_animated_sprite_2d_animation_finished():
@@ -216,3 +195,74 @@ func get_floor_motion() -> Vector2:
 func respawn() -> void:
 	global_position = respawn_position
 	velocity = Vector2.ZERO
+
+
+
+
+
+
+var _pulse_shader: Shader = preload("res://Shaders/PlatformTransition.gdshader")
+
+
+func _sight_mask():
+	if !Global.has_sight:
+		return
+	if Input.is_action_just_pressed("Mask1"):
+		SoundManager.play_sight_sfx()
+
+		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
+		%TileMapLayer3.enabled = !%TileMapLayer3.enabled
+
+		var show_layer2 = %TileMapLayer2.enabled
+		var show_layer3 = %TileMapLayer3.enabled
+
+		for p in get_tree().get_nodes_in_group("Layer2"):
+			if "set_platform_enabled" in p:
+				p.set_platform_enabled(show_layer2)
+		for p in get_tree().get_nodes_in_group("Layer3"):
+			if "set_platform_enabled" in p:
+				p.set_platform_enabled(show_layer3)
+
+		#  Collect nodes that just became visible and pulse them
+		var to_pulse: Array = []
+
+		if show_layer2:
+			to_pulse.append(%TileMapLayer2)
+			for p in get_tree().get_nodes_in_group("Layer2"):
+				# prefer the visual node; fall back to p if it *is* the Sprite2D
+				var s := p.get_node_or_null("Sprite2D")
+				to_pulse.append(s if s else p)
+		if show_layer3:
+			to_pulse.append(%TileMapLayer3)
+			for p in get_tree().get_nodes_in_group("Layer3"):
+				var s := p.get_node_or_null("Sprite2D")
+				to_pulse.append(s if s else p)
+
+		_play_pulse_on_nodes(to_pulse, 0.25)
+
+
+func _ensure_pulse_material(ci: CanvasItem) -> ShaderMaterial:
+	if ci.material is ShaderMaterial and (ci.material as ShaderMaterial).shader == _pulse_shader:
+		return ci.material
+	var sm := ShaderMaterial.new()
+	sm.shader = _pulse_shader
+	sm.resource_local_to_scene = true
+	ci.material = sm
+	return sm
+
+func _play_pulse_on_nodes(nodes: Array, duration := 0.5) -> void:
+	if nodes.is_empty():
+		return
+	var tw := create_tween().set_parallel(true)
+	for n in nodes:
+		if n is CanvasItem:
+			var sm := _ensure_pulse_material(n)
+			sm.set_shader_parameter("pulse", 1.5)  # start at peak
+			sm.set_shader_parameter("wobble_freq", 300)  # start at peak
+			sm.set_shader_parameter("wobble_amp_px", 1)  # start at peak
+			tw.tween_property(sm, "shader_parameter/pulse", 0.35, duration)\
+				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tw.tween_property(sm, "shader_parameter/wobble_freq", 10, duration)\
+				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+			tw.tween_property(sm, "shader_parameter/wobble_amp_px", 0.6, duration)\
+				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

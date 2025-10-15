@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
-	mask_name.text = mask_type
+	mask_name.text = mask_type.to_upper()
 	%MaskDescription.text = MASK_DESCRIPTIONS[mask_type]
 	var tex = Global.get_mask_icon(mask_type)
 	if tex:

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxgu4ysu0asu8"]
+
+[ext_resource type="Shader" uid="uid://efsc4y6mva7m" path="res://Shaders/Background1.gdshader" id="1_kc7sw"]
+[ext_resource type="Script" uid="uid://br2hrwxtoopkc" path="res://Scripts/Background.gd" id="2_lf6h2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oq61x"]
+shader = ExtResource("1_kc7sw")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/timescale = 0.01
+shader_parameter/hScrollSpeedFactor = 1.0
+shader_parameter/vScrollSpeedFactor = 1.0
+shader_parameter/entropyFactor = 3.0
+shader_parameter/sharpness = 400.0
+shader_parameter/alpha = 0.3
+shader_parameter/zone_tint = Vector3(1, 1, 1)
+shader_parameter/zone_tint_mix = 0.0
+
+[node name="Background" type="ColorRect"]
+z_index = -1
+material = SubResource("ShaderMaterial_oq61x")
+offset_left = -1691.0
+offset_top = -1697.0
+offset_right = 3360.0
+offset_bottom = 1911.0
+script = ExtResource("2_lf6h2")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+position = Vector2(1691, 1697)
+color = Color(0.80784315, 0.7921569, 0.88235295, 1)
+
+[node name="CanvasModulate2" type="CanvasModulate" parent="."]

@@ -171,6 +171,9 @@ func _sight_mask():
 	if !Global.has_sight:
 		return
 	if Input.is_action_just_pressed("Mask1"):
+		
+		SoundManager.play_sfx(SoundManager.sight_sound, true)
+		
 		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
 		%TileMapLayer3.enabled = !%TileMapLayer3.enabled
 

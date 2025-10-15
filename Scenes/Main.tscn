@@ -1,10 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmtl55r61wb8f"]
+[gd_scene load_steps=5 format=3 uid="uid://cmtl55r61wb8f"]
 
 [ext_resource type="PackedScene" uid="uid://byw3hhep7o6ne" path="res://Scenes/ActiveMap.tscn" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://djd00lqj0y82h" path="res://Scenes/HUD.tscn" id="2_idj7w"]
+[ext_resource type="PackedScene" uid="uid://dxgu4ysu0asu8" path="res://Scenes/Background.tscn" id="3_kln2b"]
+[ext_resource type="PackedScene" uid="uid://jsir7q0d5twf" path="res://Scenes/TitleScreen.tscn" id="3_rgh2o"]
 
 [node name="Main" type="Node2D"]
 
-[node name="ActiveMap" parent="." instance=ExtResource("1_r150o")]
-
 [node name="HUD" parent="." instance=ExtResource("2_idj7w")]
+
+[node name="Background" parent="." instance=ExtResource("3_kln2b")]
+
+[node name="TitleScreen" parent="." instance=ExtResource("3_rgh2o")]
+
+[node name="ActiveMap" parent="." instance=ExtResource("1_r150o")]

@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://djd00lqj0y82h"]
+[gd_scene load_steps=6 format=3 uid="uid://djd00lqj0y82h"]
 
 [ext_resource type="Script" uid="uid://1uqtqgb3mql7" path="res://Scripts/HUD.gd" id="1_jo1ms"]
 [ext_resource type="Texture2D" uid="uid://ji56ejuu2b1d" path="res://Assets/Masks/Sight.png" id="2_psnte"]
+[ext_resource type="FontFile" uid="uid://c11f6wj387y5k" path="res://Assets/Fonts/ThickThinPixel.ttf" id="3_psnte"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jo1ms"]
-font_size = 36
+font = ExtResource("3_psnte")
+font_size = 42
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.4392157)
+
+[sub_resource type="LabelSettings" id="LabelSettings_psnte"]
+font_size = 24
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_jo1ms")
@@ -49,7 +54,7 @@ color = Color(1, 1, 1, 0)
 [node name="MaskName" type="Label" parent="MaskPickup/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Sight"
+text = "SIGHT"
 label_settings = SubResource("LabelSettings_jo1ms")
 horizontal_alignment = 1
 
@@ -67,6 +72,7 @@ color = Color(1, 1, 1, 0)
 unique_name_in_owner = true
 layout_mode = 2
 text = "Press SHIFT  to make some walls vanish and others appear"
+label_settings = SubResource("LabelSettings_psnte")
 horizontal_alignment = 1
 
 [node name="_" type="ColorRect" parent="MaskPickup/VBoxContainer"]

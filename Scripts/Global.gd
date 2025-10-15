@@ -9,6 +9,10 @@ const MASK_ICON_PATHS := {
 	"Wisdom":   "res://Assets/Masks/Wisdom.png"
 }
 
+# game state
+#var main_scene = load("uid://byw3hhep7o6ne")
+var player_active: bool = false
+
 # MASK ABILITIES
 var has_sight: bool = false
 var has_walljump: bool = false
@@ -22,8 +26,8 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
 	if event.is_action_pressed("reload"):
-		reset_game()
-		#enable_all()
+		#reset_game()
+		enable_all()
 		get_tree().reload_current_scene()
 
 

@@ -9,4 +9,11 @@ https://marcengelgamedevelopment.itch.io/platformer-tileset
 https://zegley.itch.io/2d-platformermetroidvania-asset-pack
 https://dreammixgames.itch.io/keyboard-keys-for-ui
 
+
+https://devilsworkshop.itch.io/pixel-font
+https://unfilledflag.itch.io/nicer-nightie
+
+
+
+
 https://godotshaders.com/shader/2d-sprite-cartridge-tilting-glitch/

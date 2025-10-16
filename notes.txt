@@ -41,7 +41,6 @@ Visual
 -logo polish font
 
 UI:
--Button presses UI controls in HUD
 -about menu
 -Esc menu
 -audio control
@@ -50,6 +49,7 @@ Mechanic:
 -attack (anims, collision, wall, particles)
 -make wall jump smoother (collider) 
 -snitch mask
+-polish spawn points
 
 Experience:
 -ending when collect all masks 
@@ -57,6 +57,7 @@ Experience:
 Ideas:
 -moving spike platform challenge
 -haste mask 10%
+-ghost companion mask
 
 Audio 
 -Mix sanity check

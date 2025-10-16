@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=55 format=4 uid="uid://byw3hhep7o6ne"]
 
 [ext_resource type="Script" uid="uid://dbleoewbl2g1q" path="res://Scripts/ActiveMap.gd" id="1_ns8y8"]
 [ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Scenes/Player.tscn" id="3_j3yda"]
@@ -401,8 +401,11 @@ texture_region_size = Vector2i(32, 32)
 12:7/0 = 0
 13:7/0 = 0
 14:7/0 = 0
+14:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:7/0 = 0
+15:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:7/0 = 0
+16:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:7/0 = 0
 18:7/0 = 0
 19:7/0 = 0
@@ -449,8 +452,11 @@ texture_region_size = Vector2i(32, 32)
 12:8/0 = 0
 13:8/0 = 0
 14:8/0 = 0
+14:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:8/0 = 0
+15:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:8/0 = 0
+16:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:8/0 = 0
 18:8/0 = 0
 19:8/0 = 0
@@ -496,8 +502,11 @@ texture_region_size = Vector2i(32, 32)
 11:9/0 = 0
 12:9/0 = 0
 14:9/0 = 0
+14:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 15:9/0 = 0
+15:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 16:9/0 = 0
+16:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 17:9/0 = 0
 18:9/0 = 0
 19:9/0 = 0
@@ -1592,6 +1601,12 @@ size = Vector2(222, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ye7g1"]
 size = Vector2(160, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmahw"]
+size = Vector2(733, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2iap"]
+size = Vector2(1023, 14)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tg2wy"]
 size = Vector2(17, 63)
 
@@ -1632,7 +1647,7 @@ size = Vector2(110, 148)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(409, 308)
+position = Vector2(-462, -76)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
 position = Vector2(6, -20)
@@ -1662,10 +1677,7 @@ tile_map_data = PackedByteArray("AADH/xMAAAAPAAEAAADK/xIAAAAPAAEAAADa/xEAAAAPAAE
 [node name="TileMapLayer3" parent="TileMaps" instance=ExtResource("5_5kecc")]
 unique_name_in_owner = true
 position = Vector2(11, 3)
-tile_map_data = PackedByteArray("AADv//z/AAAPAAEAAADv//3/AAAPAAEAAADv/xQAAAAPAAEAAADv/xUAAAAPAAEAAAAFAB4AAAAPAAEAAAAIAB0AAAAPAAEAAAAPAB0AAAAPAAEAAAAVAB0AAAAPAAEAAAAbABsAAAAPAAEAAAAMABIAAAAPAAEAAAALABIAAAAPAAEAAAALABEAAAAPAAEAAAAMABEAAAAPAAEAAAAMABAAAAAPAAEAAAALABAAAAAPAAEAAAALAA8AAAAPAAEAAAAMAA8AAAAPAAEAAAAMAA4AAAAPAAEAAAALAA4AAAAPAAEAAAADABUAAAAPAAEAAADf/wMAAAAPAAEAAADg/wMAAAAPAAEAAADj/wIAAAAPAAEAAADk/wIAAAAPAAEAAADt////AAAPAAEAAADb/wIAAAAPAAEAAADc/wIAAAAPAAEAAADU/9v/AAAPAAEAAADU/9r/AAAPAAEAAADU/9j/AAAPAAEAAADU/9n/AAAPAAEAAADU/9f/AAAPAAEAAADU/9b/AAAPAAEAAADU/9X/AAAPAAEAAADU/9T/AAAPAAEAAADU/9P/AAAPAAEAAADU/9L/AAAPAAEAAADU/9H/AAASAAAAAAAGABYAAAAPAAEAAAD6/wsAAAAPAAEAAAD7/wsAAAAPAAEAAAD8/wsAAAAPAAEAAAD9/wsAAAAPAAEAAAD+/wsAAAAPAAEAAAD6/woAAAASAAAAAAD7/woAAAASAAAAAAD8/woAAAASAAAAAAD9/woAAAASAAAAAAD+/woAAAASAAAAAADu/xQAAAAPAAEAAADu/xUAAAAPAAEAAADt/xUAAAAPAAEAAADt/xQAAAAPAAEAAADs/xQAAAAPAAEAAADs/xUAAAAPAAEAAADr/xUAAAAPAAEAAADr/xQAAAAPAAEAAADq/xQAAAAPAAEAAADp/xQAAAAPAAEAAADo/xQAAAAPAAEAAADn/xQAAAAPAAEAAADm/xQAAAAPAAEAAADl/xQAAAAPAAEAAADk/xQAAAAPAAEAAADj/xQAAAAPAAEAAADi/xQAAAAPAAEAAADh/xQAAAAPAAEAAADg/xQAAAAPAAEAAADg/xUAAAAPAAEAAADh/xUAAAAPAAEAAADi/xUAAAAPAAEAAADj/xUAAAAPAAEAAADk/xUAAAAPAAEAAADl/xUAAAAPAAEAAADm/xUAAAAPAAEAAADn/xUAAAAPAAEAAADo/xUAAAAPAAEAAADp/xUAAAAPAAEAAADq/xUAAAAPAAEAAAA=")
-
-[node name="SpawnPoint" parent="TileMaps" instance=ExtResource("9_r2i1d")]
-position = Vector2(-1291, -179)
+tile_map_data = PackedByteArray("AADv//z/AAAPAAEAAADv//3/AAAPAAEAAADv/xQAAAAPAAEAAADv/xUAAAAPAAEAAAAFAB4AAAAPAAEAAAAIAB0AAAAPAAEAAAAPAB0AAAAPAAEAAAAVAB0AAAAPAAEAAAAbABsAAAAPAAEAAAAMABIAAAAPAAEAAAALABIAAAAPAAEAAAALABEAAAAPAAEAAAAMABEAAAAPAAEAAAAMABAAAAAPAAEAAAALABAAAAAPAAEAAAALAA8AAAAPAAEAAAAMAA8AAAAPAAEAAAAMAA4AAAAPAAEAAAALAA4AAAAPAAEAAAADABUAAAAPAAEAAADf/wMAAAAPAAEAAADg/wMAAAAPAAEAAADj/wIAAAAPAAEAAADk/wIAAAAPAAEAAADt////AAAPAAEAAADb/wIAAAAPAAEAAADc/wIAAAAPAAEAAADU/9v/AAAPAAEAAADU/9r/AAAPAAEAAADU/9j/AAAPAAEAAADU/9n/AAAPAAEAAADU/9f/AAAPAAEAAADU/9b/AAAPAAEAAADU/9X/AAAPAAEAAADU/9T/AAAPAAEAAADU/9P/AAAPAAEAAADU/9L/AAAPAAEAAADU/9H/AAASAAAAAAAGABYAAAAPAAEAAAD6/wsAAAAPAAEAAAD7/wsAAAAPAAEAAAD8/wsAAAAPAAEAAAD9/wsAAAAPAAEAAAD+/wsAAAAPAAEAAAD6/woAAAASAAAAAAD7/woAAAASAAAAAAD8/woAAAASAAAAAAD9/woAAAASAAAAAAD+/woAAAASAAAAAADu/xQAAAAPAAEAAADu/xUAAAAPAAEAAADt/xUAAAAPAAEAAADt/xQAAAAPAAEAAADs/xQAAAAPAAEAAADs/xUAAAAPAAEAAADr/xUAAAAPAAEAAADr/xQAAAAPAAEAAADq/xQAAAAPAAEAAADp/xQAAAAPAAEAAADo/xQAAAAPAAEAAADn/xQAAAAPAAEAAADm/xQAAAAPAAEAAADl/xQAAAAPAAEAAADk/xQAAAAPAAEAAADj/xQAAAAPAAEAAADi/xQAAAAPAAEAAADi/xUAAAAPAAEAAADj/xUAAAAPAAEAAADk/xUAAAAPAAEAAADl/xUAAAAPAAEAAADm/xUAAAAPAAEAAADn/xUAAAAPAAEAAADo/xUAAAAPAAEAAADp/xUAAAAPAAEAAADq/xUAAAAPAAEAAAA=")
 
 [node name="Platforms" type="Node2D" parent="."]
 
@@ -1717,6 +1729,10 @@ bob_amplitude = 5.0
 [node name="LightnessMask" parent="Masks" instance=ExtResource("8_41vac")]
 position = Vector2(-1234, -1910)
 mask_type = "Lightness"
+
+[node name="CompanionMask" parent="Masks" instance=ExtResource("8_41vac")]
+position = Vector2(-1048, 651)
+mask_type = "Companionship"
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -1780,6 +1796,12 @@ position = Vector2(1168, 459)
 
 [node name="SpawnPoint19" parent="SpawnPoints" instance=ExtResource("9_r2i1d")]
 position = Vector2(-212, 429)
+
+[node name="SpawnPoint20" parent="SpawnPoints" instance=ExtResource("9_r2i1d")]
+position = Vector2(-1291, -179)
+
+[node name="SpawnPoint21" parent="SpawnPoints" instance=ExtResource("9_r2i1d")]
+position = Vector2(-986, 684)
 
 [node name="DeathAreas" type="Node2D" parent="."]
 
@@ -1881,6 +1903,14 @@ shape = SubResource("RectangleShape2D_tthv1")
 [node name="CollisionShape2D24" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="23"]
 position = Vector2(-218, 329)
 shape = SubResource("RectangleShape2D_ye7g1")
+
+[node name="CollisionShape2D26" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="24"]
+position = Vector2(-835, 1191)
+shape = SubResource("RectangleShape2D_kmahw")
+
+[node name="CollisionShape2D25" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="25"]
+position = Vector2(-1250.5, 865)
+shape = SubResource("RectangleShape2D_e2iap")
 
 [node name="DeathArea2" parent="DeathAreas" instance=ExtResource("10_oryae")]
 layer_name = "Layer2"

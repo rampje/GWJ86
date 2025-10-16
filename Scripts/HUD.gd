@@ -10,7 +10,8 @@ const MASK_DESCRIPTIONS := {
 	"Movement": "You can now wall jump and slide down walls",
 	"Wisdom":   "You now know how many masks you need",
 	"Attack": "You can now destroy weak walls ... and possibly foes?",
-	"Lightness": "You can now slow fall by holding JUMP while in air"
+	"Lightness": "You can now slow fall by holding JUMP while in air",
+	"Companionship": "You feel less alone"
 }
 
 func _ready() -> void:

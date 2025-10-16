@@ -8,6 +8,7 @@ const MASK_ICON_PATHS := {
 	"Attack":   "res://Assets/Masks/Attack.png",
 	"Wisdom":   "res://Assets/Masks/Wisdom.png",
 	"Lightness": "res://Assets/Masks/Lightness.png",
+	"Companionship": "res://Assets/Masks/Companionship.png"
 }
 
 const TOTAL_MASKS = 5

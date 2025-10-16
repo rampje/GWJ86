@@ -18,6 +18,17 @@ extends CharacterBody2D
 @export var wall_slide_max_speed: float = 120.0  # downward clamp while sliding
 @export var wall_jump_push: float = 180.0        # horizontal push on wall jump
 
+
+# --- Slow Fall (feather) ---
+@export var slow_fall_gravity_mul: float = 0.25   # scale base gravity while feathering
+@export var slow_fall_max_speed: float = 180.0    # clamp downward speed while feathering
+@export var slow_fall_release_cooldown: float = 0.12 # small lockout after releasing jump
+@export var slow_fall_min_start_speed: float = 0.0   # optional: only allow if falling this fast+
+
+var is_slow_falling: bool = false
+var _slow_fall_cooldown: float = 0.0
+
+
 # --- State ---
 var _jump_buffer: float = 0.0
 var _coyote_timer: float = 0.0
@@ -28,6 +39,9 @@ var _carry: Vector2 = Vector2.ZERO
 var _prev_on_floor: bool = false
 #var _sight_mask_on: bool = false
 var respawn_position: Vector2
+
+
+
 
 func _ready():
 	floor_snap_length = 8.0   # slightly less than half your tile size
@@ -61,6 +75,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		_coyote_timer = max(_coyote_timer - delta, 0.0)
 
+	# slowfall Cooldown ticks down every frame
+	if _slow_fall_cooldown > 0.0:
+		_slow_fall_cooldown = max(0.0, _slow_fall_cooldown - delta)
+
 	# --- HORIZONTAL MOVE (frame-rate independent) ---
 	var target_speed := dir * max_speed
 	var on_ground := is_on_floor()
@@ -78,14 +96,33 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.flip_h = _facing < 0
 
 	# --- VERTICAL MOVE (better gravity & variable jump height) ---
+	# --- VERTICAL MOVE (better gravity & variable jump height + slow fall) ---
 	var g := gravity
-	# falling or moving upward but jump released? make gravity stronger
+	var max_down := max_fall_speed
+
+	# Default fall gravity when moving downward
 	if velocity.y > 0.0:
 		g = gravity_fall
+	# Going up AND jump released? cut the jump (stronger gravity)
 	elif velocity.y < 0.0 and !Input.is_action_pressed("ui_accept"):
 		g *= cut_jump_gravity_mul
 
-	velocity.y = min(velocity.y + g * delta, max_fall_speed)
+	# Slow fall override (takes precedence while falling)
+	var was_slow_falling := is_slow_falling
+	is_slow_falling = _is_slow_fall_active()
+	if is_slow_falling:
+		# Use base gravity scaled down so it feels floaty, and cap fall speed lower
+		# (Using base gravity here keeps it gentle; switch to gravity_fall * mul if you want stronger pull.)
+		g = max(gravity * slow_fall_gravity_mul, 1.0)
+		max_down = min(max_down, slow_fall_max_speed)
+
+	# Apply gravity with cap
+	velocity.y = clamp(velocity.y + g * delta, -INF, max_down)
+
+	# If player releases jump while feathering, add a tiny cooldown to avoid rapid re-entry in the same frame
+	if was_slow_falling and !Input.is_action_pressed("ui_accept"):
+		_slow_fall_cooldown = slow_fall_release_cooldown
+
 
 	# --- WALL SLIDE DETECTION (only if ability unlocked) ---
 	is_wall_sliding = Global.has_walljump and is_on_wall() and !is_on_floor() and dir != 0
@@ -266,3 +303,22 @@ func _play_pulse_on_nodes(nodes: Array, duration := 0.5) -> void:
 				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			tw.tween_property(sm, "shader_parameter/wobble_amp_px", 0.6, duration)\
 				.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+
+func _is_slow_fall_active() -> bool:
+	# Must have the ability
+	if !"has_slowfall" in Global or !Global.has_slowfall:
+		return false
+	# Only in air and not wall-sliding
+	if is_on_floor() or is_wall_sliding:
+		return false
+	# Must be falling
+	if velocity.y <= 0.0:
+		return false
+	# Optional: only when already falling at least this fast
+	if abs(slow_fall_min_start_speed) > 0.0 and velocity.y < slow_fall_min_start_speed:
+		return false
+	# Holding jump, and not in a brief lockout window
+	if _slow_fall_cooldown > 0.0:
+		return false
+	return Input.is_action_pressed("ui_accept")

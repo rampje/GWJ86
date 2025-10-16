@@ -6,16 +6,21 @@ const MASK_ICON_PATHS := {
 	"Sight":    "res://Assets/Masks/Sight.png",
 	"Movement": "res://Assets/Masks/Movement.png",
 	"Attack":   "res://Assets/Masks/Attack.png",
-	"Wisdom":   "res://Assets/Masks/Wisdom.png"
+	"Wisdom":   "res://Assets/Masks/Wisdom.png",
+	"Lightness": "res://Assets/Masks/Lightness.png",
 }
+
+const TOTAL_MASKS = 5
 
 # game state
 #var main_scene = load("uid://byw3hhep7o6ne")
 var player_active: bool = false
+var current_mask_count: int = 0
 
 # MASK ABILITIES
 var has_sight: bool = false
 var has_walljump: bool = false
+var has_slowfall: bool = false
 
 
 func _ready() -> void:
@@ -38,6 +43,7 @@ func reset_game() -> void:
 func enable_all() -> void:
 	has_sight = true
 	has_walljump = true
+	#has_slowfall = true
 	
 	
 
@@ -47,7 +53,10 @@ func on_mask_picked(mask_type: String) -> void:
 			has_sight = true
 		"Movement":
 			has_walljump = true
-
+		"Lightness":
+			has_slowfall = true
+	
+	current_mask_count += 1
 	emit_signal("mask_picked", mask_type)
 
 

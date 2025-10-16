@@ -9,13 +9,20 @@ const MASK_DESCRIPTIONS := {
 	"Sight":    "Press SHIFT to make some walls vanish and others appear",
 	"Movement": "You can now wall jump and slide down walls",
 	"Wisdom":   "You now know how many masks you need",
+	"Attack": "You can now destroy weak walls ... and possibly foes?",
+	"Lightness": "You can now slow fall by holding JUMP while in air"
 }
 
 func _ready() -> void:
+	%MaskCount.visible = false
 	%MaskDescription.text = ""
 	mask_pickup.modulate.a = 0.0
 	# Listen to Global for pickups
 	Global.mask_picked.connect(_on_global_mask_picked)
+	
+	# update mask count
+	%MaskCountLabel.text = str(Global.current_mask_count)\
+	 + " / " + str(Global.TOTAL_MASKS)
 
 func _on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
@@ -24,6 +31,13 @@ func _on_global_mask_picked(mask_type: String) -> void:
 	var tex = Global.get_mask_icon(mask_type)
 	if tex:
 		mask_icon.texture = tex
+		
+	# update mask count
+	%MaskCountLabel.text = str(Global.current_mask_count)\
+	 + " / " + str(Global.TOTAL_MASKS)
+	
+	if mask_type == "Wisdom":
+		%MaskCount.visible = true
 
 	# Re-show the pickup banner and (re)start timer
 	for t in get_tree().get_processed_tweens():

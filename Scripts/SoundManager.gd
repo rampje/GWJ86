@@ -139,4 +139,4 @@ func set_sfx_volume(vol: float) -> void:
 
 # Called by player
 func play_sight_sfx() -> void:
-	play_sfx(sight_sound, true, Vector2(0.85, 1.15), 1.0, 10)
+	play_sfx(sight_sound, true, Vector2(0.95, 1.05), 1.0, 10)

@@ -22,8 +22,8 @@ SoundManager="*res://Scripts/SoundManager.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=768
+window/size/viewport_width=1281
+window/size/viewport_height=721
 window/stretch/mode="viewport"
 
 [global_group]

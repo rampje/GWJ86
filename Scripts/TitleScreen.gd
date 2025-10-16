@@ -53,6 +53,7 @@ func start_game() -> void:
 	self.visible = false
 	%MenuButtons/Start.visible = false
 	%MenuButtons/Resume.visible = true
+	%MenuButtons/Reset.visible = true
 	$"../ActiveMap".visible = true
 	var tween = get_tree().create_tween()
 	tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)
@@ -88,3 +89,10 @@ func _on_sfx_changed(v: float) -> void:
 
 func _on_resume_pressed() -> void:
 	self.visible = false
+
+
+func _on_reset_pressed() -> void:
+	pass
+	#Global.reset_game()
+	#get_tree().change_scene_to_packed(Global.ACTIVE_MAP_SCENE)
+	#get_tree().reload_current_scene()

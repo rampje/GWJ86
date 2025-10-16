@@ -16,10 +16,12 @@ func _on_area_2d_body_entered(body: Node) -> void:
 	 or (layer_name == "Layer3" and Global.sight_state == false)\
 	 or (layer_name == "Layer2" and Global.sight_state == true):
 		# Safely check if the body has the respawn_position property
-		if "respawn_position" in body:
-			body.global_position = body.respawn_position
-		else:
-			push_warning("%s entered death area but has no respawn_position!" % body.name)
+		
+		body.respawn()
+		#if "respawn_position" in body:
+			#body.global_position = body.respawn_position
+		#else:
+		#	push_warning("%s entered death area but has no respawn_position!" % body.name)
 
 		# Optional: prevent re-triggering
 		if one_shot:

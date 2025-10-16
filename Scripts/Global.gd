@@ -2,6 +2,7 @@ extends Node
 
 signal mask_picked(mask_type: String)
 
+const ACTIVE_MAP_SCENE: PackedScene = preload("res://Scenes/Main.tscn")
 const MASK_ICON_PATHS := {
 	"Sight":    "res://Assets/Masks/Sight.png",
 	"Movement": "res://Assets/Masks/Movement.png",
@@ -11,7 +12,7 @@ const MASK_ICON_PATHS := {
 	"Companionship": "res://Assets/Masks/Companionship.png"
 }
 
-const TOTAL_MASKS = 5
+static var TOTAL_MASKS := MASK_ICON_PATHS.size()
 
 # game state
 #var main_scene = load("uid://byw3hhep7o6ne")
@@ -32,17 +33,20 @@ func _ready() -> void:
 	reset_game()
 	#enable_all()
 
-func _input(event):
-	if event.is_action_pressed("reload"):
-		#reset_game()
-		enable_all()
-		get_tree().reload_current_scene()
+#func _input(event):
+#	if event.is_action_pressed("reload"):
+#		reset_game()
+#		#enable_all()
+#		get_tree().reload_current_scene()
 
 
 func reset_game() -> void:
 	sight_state = false
 	has_sight = false
 	has_walljump = false
+	has_slowfall = false
+	has_wisdom = false
+	has_friend = false
 	
 func enable_all() -> void:
 	sight_state = false

@@ -281,4 +281,8 @@ min_move_for_trail = 1.0
 modulate = Color(0.4316638, 0.00015122682, 0.4412115, 0.24705882)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_glx4g")
-frame_progress = 0.7465505
+frame_progress = 0.7242092
+
+[node name="RespawnTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]

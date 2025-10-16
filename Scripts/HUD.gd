@@ -6,10 +6,10 @@ extends CanvasLayer
 @export var fade_duration: float = 1.0
 
 const MASK_DESCRIPTIONS := {
-	"Sight":    "Press SHIFT to make some walls vanish and others appear",
+	"Sight":    "You can make some walls vanish and others appear by pressing SHIFT",
 	"Movement": "You can now wall jump and slide down walls",
 	"Wisdom":   "You now know how many masks you need",
-	"Attack": "You can now destroy weak walls ... and possibly foes?",
+	"Attack": "(NOT ADDED YET) You can now destroy weak walls ... and possibly foes?",
 	"Lightness": "You can now slow fall by holding JUMP while in air",
 	"Companionship": "You feel less alone"
 }

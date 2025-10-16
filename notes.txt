@@ -28,19 +28,21 @@ Gain the power of the masks to overcome their curse
 You are prisoner in the house of masks. Find the masks to gain their power and overcome their curse! 
 
 Notes (spoilers warning)
+
 I’ve been playing Silksong lately and wanted to challenge myself making a mini-metroidvania. For this jam I wanted to lean into atmosphere with my primary interests: sound and programming.
 
 I choose minimalism in many places to both to control scope and reinforce the surreal, isolated feel of the game: no enemies, health, power meters, narrative. It’s sorta a tech demo of elements that interest me in games. 
 
-
 TODO:
--tile map polish (correct types, spikes,
--stop player control on respawn for  0.5 sec
 -attack -> destroy 1 wall to unfinished mask ending
 -game ending
 
 -pixel flicker wobble problem
 
+-bug low transparency Mask HUD sometimes?
+
+
+-tilemap alignment on transform (tilemap/visual polish)
 
 Visual
 platforms

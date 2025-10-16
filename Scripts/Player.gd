@@ -152,8 +152,9 @@ func _physics_process(delta: float) -> void:
 	if _try_jump():
 		# handled inside
 		pass
-
-	move_and_slide()
+	
+	if Global.player_active == true:
+		move_and_slide()
 	
 	if !is_on_floor():
 		_carry = Vector2.ZERO
@@ -218,7 +219,6 @@ func _try_jump() -> bool:
 
 
 
-
 func _on_animated_sprite_2d_animation_finished():
 	if attacking:
 		attacking = false
@@ -226,7 +226,6 @@ func _on_animated_sprite_2d_animation_finished():
 func _on_animated_sprite_2d_animation_changed():
 	if $AnimatedSprite2D.animation == "attack":
 		attacking = true
-		
 		
 func get_floor_motion() -> Vector2:
 	if !is_on_floor():
@@ -241,6 +240,9 @@ func get_floor_motion() -> Vector2:
 
 
 func respawn() -> void:
+	$AnimatedSprite2D.modulate.a = 0.7
+	$RespawnTimer.start(0.25)
+	Global.player_active = false
 	global_position = respawn_position
 	velocity = Vector2.ZERO
 	if ghost:
@@ -340,3 +342,8 @@ func _is_slow_fall_active() -> bool:
 func _on_mask_picked(mask_type: String) -> void:
 	if mask_type == "Companionship":
 		$Ghost.visible = true
+
+
+func _on_respawn_timer_timeout() -> void:
+	Global.player_active = true
+	$AnimatedSprite2D.modulate.a = 1

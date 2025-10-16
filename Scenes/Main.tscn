@@ -11,9 +11,9 @@
 
 [node name="Background" parent="." instance=ExtResource("3_kln2b")]
 offset_left = -2595.0
-offset_top = -2189.0
-offset_right = 2456.0
-offset_bottom = 1419.0
+offset_top = -2368.0
+offset_right = 2904.0
+offset_bottom = 1875.0
 
 [node name="TitleScreen" parent="." instance=ExtResource("3_rgh2o")]
 

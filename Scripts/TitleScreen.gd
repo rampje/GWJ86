@@ -2,8 +2,8 @@ extends CanvasLayer
 
 
 func _ready() -> void:
-	#init_game()
-	start_game()
+	init_game()
+	#start_game()
 
 
 func _on_start_pressed() -> void:
@@ -22,6 +22,9 @@ func init_game() -> void:
 func start_game() -> void:
 	$"../ActiveMap".visible = true
 	var tween = get_tree().create_tween()
-	#tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)
+	tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)
 	Global.player_active = true
+	# find cleaner way to do this
+	$"../HUD/TopCenter/MovementKeys".visible = true
+	$"../HUD/TopCenter/Timer".start(3)
 	queue_free()

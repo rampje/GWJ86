@@ -19,3 +19,44 @@ https://www.youtube.com/watch?v=USOYsbrHIMs
 
 
 https://godotshaders.com/shader/2d-sprite-cartridge-tilting-glitch/
+
+
+
+Gain the power of the masks to overcome their curse
+
+You are prisoner in the house of masks. Find the masks to gain their power and overcome their curse! 
+
+Notes (spoilers warning)
+I’ve been playing Silksong lately and wanted to challenge myself making a mini-metroidvania. For this jam I wanted to lean into atmosphere with my primary interests: sound and programming.
+
+I choose minimalism in many places to both to control scope and reinforce the surreal, isolated feel of the game: no enemies, health, power meters, narrative. It’s sorta a tech demo of elements that interest me in games. 
+
+
+
+
+
+Visual
+-tile map polish (correct types, spikes, platforms
+-pixel flicker wobble problem
+-logo polish font
+
+UI:
+-Button presses UI controls in HUD
+-about menu
+-Esc menu
+-audio control
+
+Mechanic:
+-attack (anims, collision, wall, particles)
+-make wall jump smoother (collider) 
+-snitch mask
+
+Experience:
+-ending when collect all masks 
+
+Ideas:
+-moving spike platform challenge
+-haste mask 10%
+
+Audio 
+-Mix sanity check

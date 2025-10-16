@@ -1,9 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://djd00lqj0y82h"]
+[gd_scene load_steps=25 format=3 uid="uid://djd00lqj0y82h"]
 
 [ext_resource type="Script" uid="uid://1uqtqgb3mql7" path="res://Scripts/HUD.gd" id="1_jo1ms"]
+[ext_resource type="Texture2D" uid="uid://dmxth2cvr5j65" path="res://Assets/Keyboard/A-Unpressed.png" id="2_g8s2e"]
 [ext_resource type="Texture2D" uid="uid://ji56ejuu2b1d" path="res://Assets/Masks/Sight.png" id="2_psnte"]
 [ext_resource type="FontFile" uid="uid://c11f6wj387y5k" path="res://Assets/Fonts/ThickThinPixel.ttf" id="3_psnte"]
+[ext_resource type="Texture2D" uid="uid://t551vn1r3gle" path="res://Assets/Keyboard/A-Pressed.png" id="3_t385i"]
 [ext_resource type="Texture2D" uid="uid://ve2yvuwua0t0" path="res://Assets/Masks/MaskCount.png" id="4_s3jbq"]
+[ext_resource type="Texture2D" uid="uid://cei10mv8afuy8" path="res://Assets/Keyboard/D-Upressed.png" id="7_fbb48"]
+[ext_resource type="Texture2D" uid="uid://c83u3utx57g06" path="res://Assets/Keyboard/D-Pressed.png" id="8_o2vyp"]
+[ext_resource type="Texture2D" uid="uid://be3fgnocrp7jj" path="res://Assets/Keyboard/SpaceUnpressed.png" id="9_hhtw7"]
+[ext_resource type="Texture2D" uid="uid://b4rjjw5hmapeb" path="res://Assets/Keyboard/SpacePressed.png" id="10_w5mne"]
+[ext_resource type="Texture2D" uid="uid://ba6a3hm04b76w" path="res://Assets/Keyboard/ShiftUpressed.png" id="11_hhtw7"]
+[ext_resource type="Texture2D" uid="uid://bxsycgpd70t08" path="res://Assets/Keyboard/ShiftPressed.png" id="12_w5mne"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_jo1ms"]
 font = ExtResource("3_psnte")
@@ -18,10 +26,68 @@ font_size = 24
 font = ExtResource("3_psnte")
 font_size = 40
 
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_s3jbq"]
+frames = 2
+frame_0/texture = ExtResource("2_g8s2e")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("3_t385i")
+frame_1/duration = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbb48"]
+font_size = 12
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_xuldq"]
+frames = 2
+frame_0/texture = ExtResource("7_fbb48")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("8_o2vyp")
+frame_1/duration = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_o2vyp"]
+font_size = 12
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_g6jqq"]
+frames = 2
+frame_0/texture = ExtResource("9_hhtw7")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("10_w5mne")
+frame_1/duration = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_hhtw7"]
+font_size = 12
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_5ouvn"]
+frames = 2
+frame_0/texture = ExtResource("11_hhtw7")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("12_w5mne")
+frame_1/duration = 0.5
+
+[sub_resource type="FontFile" id="FontFile_w0blg"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/15/0/ascent = 0.0
+cache/0/15/0/descent = 0.0
+cache/0/15/0/underline_position = 0.0
+cache/0/15/0/underline_thickness = 0.0
+cache/0/15/0/scale = 1.0
+cache/0/14/0/ascent = 0.0
+cache/0/14/0/descent = 0.0
+cache/0/14/0/underline_position = 0.0
+cache/0/14/0/underline_thickness = 0.0
+cache/0/14/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_lqayy"]
+font = SubResource("FontFile_w0blg")
+font_size = 14
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_jo1ms")
 
-[node name="MaskPickup" type="MarginContainer" parent="."]
+[node name="BottomCenter" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 anchors_preset = 7
 anchor_left = 0.5
@@ -34,59 +100,60 @@ offset_right = 167.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MaskPickup"]
+[node name="VBoxContainer" type="VBoxContainer" parent="BottomCenter"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MaskPickup/VBoxContainer"]
+[node name="_3" type="ColorRect" parent="BottomCenter/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomCenter/VBoxContainer"]
 layout_mode = 2
 
-[node name="_" type="ColorRect" parent="MaskPickup/VBoxContainer/HBoxContainer"]
+[node name="_" type="ColorRect" parent="BottomCenter/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 0)
 
-[node name="MaskIcon" type="TextureRect" parent="MaskPickup/VBoxContainer/HBoxContainer"]
+[node name="MaskIcon" type="TextureRect" parent="BottomCenter/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_psnte")
 
-[node name="_3" type="ColorRect" parent="MaskPickup/VBoxContainer/HBoxContainer"]
+[node name="_3" type="ColorRect" parent="BottomCenter/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MaskName" type="Label" parent="MaskPickup/VBoxContainer/HBoxContainer"]
+[node name="MaskName" type="Label" parent="BottomCenter/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "SIGHT"
 label_settings = SubResource("LabelSettings_jo1ms")
 horizontal_alignment = 1
 
-[node name="_2" type="ColorRect" parent="MaskPickup/VBoxContainer/HBoxContainer"]
+[node name="_2" type="ColorRect" parent="BottomCenter/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 0)
 
-[node name="_2" type="ColorRect" parent="MaskPickup/VBoxContainer"]
+[node name="_2" type="ColorRect" parent="BottomCenter/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MaskDescription" type="Label" parent="MaskPickup/VBoxContainer"]
+[node name="MaskDescription" type="Label" parent="BottomCenter/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Press SHIFT  to make some walls vanish and others appear"
 label_settings = SubResource("LabelSettings_psnte")
 horizontal_alignment = 1
 
-[node name="_" type="ColorRect" parent="MaskPickup/VBoxContainer"]
+[node name="_" type="ColorRect" parent="BottomCenter/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MaskPickup"]
-layout_mode = 2
 
 [node name="MaskTimer" type="Timer" parent="."]
 
@@ -114,4 +181,113 @@ texture_filter = 1
 layout_mode = 2
 texture = ExtResource("4_s3jbq")
 
+[node name="TopCenter" type="MarginContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.0
+offset_right = 77.0
+offset_bottom = 201.0
+grow_horizontal = 2
+scale = Vector2(1.5, 1.5)
+
+[node name="Timer" type="Timer" parent="TopCenter"]
+
+[node name="MovementKeys" type="VBoxContainer" parent="TopCenter"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="_" type="ColorRect" parent="TopCenter/MovementKeys"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MovementKeys" type="HBoxContainer" parent="TopCenter/MovementKeys"]
+texture_filter = 1
+layout_mode = 2
+
+[node name="Left" type="VBoxContainer" parent="TopCenter/MovementKeys/MovementKeys"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TopCenter/MovementKeys/MovementKeys/Left"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AnimatedTexture_s3jbq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TopCenter/MovementKeys/MovementKeys/Left"]
+layout_mode = 2
+text = "Left"
+label_settings = SubResource("LabelSettings_fbb48")
+horizontal_alignment = 1
+
+[node name="Right" type="VBoxContainer" parent="TopCenter/MovementKeys/MovementKeys"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TopCenter/MovementKeys/MovementKeys/Right"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AnimatedTexture_xuldq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TopCenter/MovementKeys/MovementKeys/Right"]
+layout_mode = 2
+text = "Right"
+label_settings = SubResource("LabelSettings_o2vyp")
+horizontal_alignment = 1
+
+[node name="_" type="ColorRect" parent="TopCenter/MovementKeys/MovementKeys"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Jump" type="VBoxContainer" parent="TopCenter/MovementKeys/MovementKeys"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TopCenter/MovementKeys/MovementKeys/Jump"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AnimatedTexture_g6jqq")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TopCenter/MovementKeys/MovementKeys/Jump"]
+layout_mode = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_hhtw7")
+horizontal_alignment = 1
+
+[node name="SightKeys" type="VBoxContainer" parent="TopCenter"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Timer" type="Timer" parent="TopCenter/SightKeys"]
+
+[node name="_" type="ColorRect" parent="TopCenter/SightKeys"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="TextureRect" type="TextureRect" parent="TopCenter/SightKeys"]
+custom_minimum_size = Vector2(40, 50)
+layout_mode = 2
+texture = SubResource("AnimatedTexture_5ouvn")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TopCenter/SightKeys"]
+layout_mode = 2
+text = "Toggle"
+label_settings = SubResource("LabelSettings_lqayy")
+horizontal_alignment = 1
+
 [connection signal="timeout" from="MaskTimer" to="." method="_on_mask_timer_timeout"]
+[connection signal="timeout" from="TopCenter/Timer" to="." method="_on_move_keys_timer_timeout"]
+[connection signal="timeout" from="TopCenter/SightKeys/Timer" to="." method="_on_sight_key_timer_timeout"]

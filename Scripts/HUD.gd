@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@onready var mask_pickup: CanvasItem = %MaskPickup
+@onready var mask_pickup: CanvasItem = %BottomCenter
 @onready var mask_name: Label       = %MaskName
 @onready var mask_icon: TextureRect = %MaskIcon
 @export var fade_duration: float = 1.0
@@ -14,6 +14,7 @@ const MASK_DESCRIPTIONS := {
 }
 
 func _ready() -> void:
+	%MovementKeys.visible = false
 	%MaskCount.visible = false
 	%MaskDescription.text = ""
 	mask_pickup.modulate.a = 0.0
@@ -35,6 +36,12 @@ func _on_global_mask_picked(mask_type: String) -> void:
 	# update mask count
 	%MaskCountLabel.text = str(Global.current_mask_count)\
 	 + " / " + str(Global.TOTAL_MASKS)
+	
+	# mask specific UI stuff
+	if mask_type == "Sight":
+		%SightKeys.visible = true
+		%SightKeys/Timer.start(4)
+	
 	
 	if mask_type == "Wisdom":
 		%MaskCount.visible = true
@@ -60,3 +67,13 @@ func _on_fade_in_finished() -> void:
 func _on_mask_timer_timeout() -> void:
 	var tween := create_tween()
 	tween.tween_property(mask_pickup, "modulate:a", 0.0, 3.0)
+
+
+func _on_move_keys_timer_timeout() -> void:
+	var tween := create_tween()
+	tween.tween_property(%MovementKeys, "modulate:a", 0.0, 1.5)
+
+
+func _on_sight_key_timer_timeout() -> void:
+	var tween := create_tween()
+	tween.tween_property(%SightKeys, "modulate:a", 0.0, 1.5)

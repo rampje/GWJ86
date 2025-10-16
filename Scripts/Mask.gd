@@ -73,7 +73,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		#elif mask_type == "Movement":
 		#	Global.has_walljump = true
 		# stop repeat triggers just in case
-		SoundManager.play_sfx(SoundManager.mask_pickup_sound, false)
+		SoundManager.play_sfx(
+					SoundManager.mask_pickup_sound,  # stream
+					false,                           # pitch_randomize
+					Vector2(0.85, 1.15),             # pitch_range
+					0.0,                             # cooldown_sec
+					-9.0                             # gain_db
+				)
+
 		$Area2D.monitoring = false
 		# broadcast which mask was picked up
 		picked_up.emit(mask_type)

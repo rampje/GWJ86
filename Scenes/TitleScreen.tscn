@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://jsir7q0d5twf"]
+[gd_scene load_steps=5 format=3 uid="uid://jsir7q0d5twf"]
 
 [ext_resource type="FontFile" uid="uid://c11f6wj387y5k" path="res://Assets/Fonts/ThickThinPixel.ttf" id="1_uebgo"]
 [ext_resource type="Script" uid="uid://cqjif8ejwu4mm" path="res://Scripts/TitleScreen.gd" id="1_vmg2h"]
@@ -7,6 +7,10 @@
 font = ExtResource("1_uebgo")
 font_size = 60
 shadow_color = Color(0.5921569, 0, 0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8l4an"]
+font = ExtResource("1_uebgo")
+font_size = 20
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_vmg2h")
@@ -18,16 +22,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="Menu" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="_" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+[node name="_" type="ColorRect" parent="MarginContainer/Menu"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="MarginContainer/Menu"]
 unique_name_in_owner = true
 texture_filter = 1
 layout_mode = 2
@@ -37,22 +41,104 @@ MASKS"
 label_settings = SubResource("LabelSettings_vmg2h")
 horizontal_alignment = 1
 
-[node name="_2" type="ColorRect" parent="MarginContainer/VBoxContainer"]
+[node name="_2" type="ColorRect" parent="MarginContainer/Menu"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="MenuButtons" type="VBoxContainer" parent="MarginContainer/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+visible = false
+layout_mode = 2
+text = "RESUME"
+
+[node name="Start" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
 text = "START"
 
-[node name="About" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Options" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+layout_mode = 2
+text = "OPTIONS
+"
+
+[node name="About" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
 text = "ABOUT"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
 text = "QUIT"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[node name="OptionsWidgets" type="VBoxContainer" parent="MarginContainer/Menu"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Menu/OptionsWidgets"]
+layout_mode = 2
+text = "VOLUME"
+label_settings = SubResource("LabelSettings_8l4an")
+
+[node name="_2" type="ColorRect" parent="MarginContainer/Menu/OptionsWidgets"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MasterVolume" type="HBoxContainer" parent="MarginContainer/Menu/OptionsWidgets"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Menu/OptionsWidgets/MasterVolume"]
+layout_mode = 2
+text = "MASTER "
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/Menu/OptionsWidgets/MasterVolume"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="MusicVolume" type="HBoxContainer" parent="MarginContainer/Menu/OptionsWidgets"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Menu/OptionsWidgets/MusicVolume"]
+layout_mode = 2
+text = "MUSIC    "
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/Menu/OptionsWidgets/MusicVolume"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="SfxVolume" type="HBoxContainer" parent="MarginContainer/Menu/OptionsWidgets"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Menu/OptionsWidgets/SfxVolume"]
+layout_mode = 2
+text = "SFX          "
+
+[node name="SfxSlider" type="HSlider" parent="MarginContainer/Menu/OptionsWidgets/SfxVolume"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 50.0
+
+[node name="_" type="ColorRect" parent="MarginContainer/Menu/OptionsWidgets"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="BackButton" type="Button" parent="MarginContainer/Menu/OptionsWidgets"]
+layout_mode = 2
+text = "BACK"
+
+[connection signal="pressed" from="MarginContainer/Menu/MenuButtons/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MarginContainer/Menu/MenuButtons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MarginContainer/Menu/MenuButtons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MarginContainer/Menu/MenuButtons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/Menu/OptionsWidgets/BackButton" to="." method="_on_back_button_pressed"]

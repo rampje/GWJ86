@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=57 format=4 uid="uid://byw3hhep7o6ne"]
 
 [ext_resource type="Script" uid="uid://dbleoewbl2g1q" path="res://Scripts/ActiveMap.gd" id="1_ns8y8"]
 [ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Scenes/Player.tscn" id="3_j3yda"]
@@ -1607,6 +1607,12 @@ size = Vector2(733, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e2iap"]
 size = Vector2(1023, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qwv6i"]
+size = Vector2(63.5, 13.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rn2pm"]
+size = Vector2(64, 13)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tg2wy"]
 size = Vector2(17, 63)
 
@@ -1647,7 +1653,7 @@ size = Vector2(110, 148)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(-462, -76)
+position = Vector2(-462, -215)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
 position = Vector2(6, -20)
@@ -1911,6 +1917,14 @@ shape = SubResource("RectangleShape2D_kmahw")
 [node name="CollisionShape2D25" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="25"]
 position = Vector2(-1250.5, 865)
 shape = SubResource("RectangleShape2D_e2iap")
+
+[node name="CollisionShape2D28" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="26"]
+position = Vector2(-42.75, 963.25)
+shape = SubResource("RectangleShape2D_qwv6i")
+
+[node name="CollisionShape2D27" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="27"]
+position = Vector2(-171, 963.5)
+shape = SubResource("RectangleShape2D_rn2pm")
 
 [node name="DeathArea2" parent="DeathAreas" instance=ExtResource("10_oryae")]
 layer_name = "Layer2"

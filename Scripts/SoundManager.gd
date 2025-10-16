@@ -6,45 +6,43 @@ var music_player := AudioStreamPlayer.new()
 var current_music: AudioStream = null
 var is_muted := false
 
-# Volume control (0.0 to 1.0)
-var music_volume := 5
-var sfx_volume := 0.5
+# volumes need to normalize
+var master_volume := 0.7
+var music_volume  := 0.5
+var sfx_volume    := 0.5
+
+# Buses (ensure these exist in Project > Audio > Bus Layout)
+const BUS_MASTER := "Master"
+const BUS_MUSIC  := "Music"
+const BUS_SFX    := "SFX"
 
 # Sounds/Audio
 var music_sound: AudioStream = load("uid://c5le2hwmrhk5v")
 var sight_sound: AudioStream = load("uid://bxqcxooo62ixm")
 var mask_pickup_sound: AudioStream = load("uid://b3yihbrydmrs4")
 
-# remember last time each stream played (in seconds)
-var _last_play_times: Dictionary = {}   # key -> float(seconds)
+var _last_play_times: Dictionary = {}
+
 
 func _ready():
-	set_process_input(true)
 	add_child(sfx_player)
 	add_child(music_player)
+	sfx_player.bus = BUS_SFX
+	music_player.bus = BUS_MUSIC
 
-	sfx_player.bus = "SFX"
-	music_player.bus = "Music"
-
-	sfx_player.volume_db = linear_to_db(sfx_volume)
-	music_player.volume_db = linear_to_db(music_volume)
-	
+	#_load_settings()
+	_apply_volumes()
 	play_music(music_sound)
+	
+	print(get_master_volume())
+	print(get_music_volume())
+	print(get_sfx_volume())
+	
 
 func _input(event):
 	if event.is_action_pressed("toggle_mute"):
 		SoundManager.toggle_mute()
 
-func toggle_mute():
-	is_muted = !is_muted
-	var target_db = -80 if is_muted else 0
-
-	var sfx_index = AudioServer.get_bus_index("SFX")
-	var music_index = AudioServer.get_bus_index("Music")
-	print("SFX bus index:", sfx_index, " Music bus index:", music_index)
-
-	AudioServer.set_bus_volume_db(sfx_index, target_db)
-	AudioServer.set_bus_volume_db(music_index, target_db)
 
 # helper for cooldown control
 func _stream_key(stream: AudioStream) -> String:
@@ -66,77 +64,101 @@ func _can_play(stream: AudioStream, cooldown_sec: float) -> bool:
 	_last_play_times[key] = now
 	return true
 
-# add a small helper
-func _sfx_base_db() -> float:
-	return linear_to_db(sfx_volume)
-	
-func _music_base_db() -> float:
-	return linear_to_db(music_volume)
-	
-	
+
 
 ### --- SFX PLAYBACK -----------------------------------
-# add optional gain_db
 func play_sfx(stream: AudioStream, pitch_randomize := false,
 			  pitch_range := Vector2(0.85, 1.15),
 			  cooldown_sec := 0.0,
 			  gain_db := 0.0) -> void:
-	if not stream:
+	if not stream or not _can_play(stream, cooldown_sec):
 		return
-	if not _can_play(stream, cooldown_sec):
-		return
-
 	sfx_player.stop()
 	sfx_player.stream = stream
-
-	# per-sound pitch
-	if pitch_randomize:
-		sfx_player.pitch_scale = randf_range(pitch_range.x, pitch_range.y)
-	else:
-		sfx_player.pitch_scale = 1.00
-
-	# apply per-sound loudness (relative to global sfx_volume)
-	sfx_player.volume_db = _sfx_base_db() + gain_db
-
-	# reset to base after it finishes so the next SFX isn't too loud
+	sfx_player.pitch_scale = (randf_range(pitch_range.x, pitch_range.y)
+							  if pitch_randomize else 1.0)
+	# Player stays at 0 dB by default; only apply the per-clip offset:
+	sfx_player.volume_db = gain_db
 	if not sfx_player.finished.is_connected(_on_sfx_finished_reset):
 		sfx_player.finished.connect(_on_sfx_finished_reset, CONNECT_ONE_SHOT)
-
 	sfx_player.play()
 
 func _on_sfx_finished_reset() -> void:
-	sfx_player.volume_db = _sfx_base_db()
-
+	sfx_player.volume_db = 0.0   # reset to neutral
 
 ### --- MUSIC PLAYBACK ---------------------------------
-
 func play_music(stream: AudioStream) -> void:
 	if current_music == stream:
-		return  # Already playing
+		return
 	music_player.stop()
 	music_player.stream = stream
-	#music_player.loop = loop
+	music_player.volume_db = 5.0
 	current_music = stream
 	music_player.play()
+
 
 func stop_music() -> void:
 	music_player.stop()
 	current_music = null
 
-### --- VOLUME CONTROL ---------------------------------
-
-func set_music_volume(vol: float) -> void:
-	music_volume = clamp(vol, 0.0, 1.0)
-	if not is_muted:
-		music_player.volume_db = linear_to_db(music_volume)
-
-func set_sfx_volume(vol: float) -> void:
-	sfx_volume = clamp(vol, 0.0, 1.0)
-	if not is_muted:
-		sfx_player.volume_db = linear_to_db(sfx_volume)
 
 #helper functions 
-
 # Called by player
 func play_sight_sfx() -> void:
-	play_sfx(sight_sound, true, Vector2(0.95, 1.05), 1.0, 10)
+	play_sfx(sight_sound, true, Vector2(0.95, 1.05), 1.0, -4.0)
+
+
+
+
+# Map 0..1 slider -> dB with 0.5 = 0 dB
+func _slider_to_db(v: float, down_db := -40.0, up_db := 6.0, curve := 1.0) -> float:
+	v = clamp(v, 0.0, 1.0)
+	if v < 0.5:
+		# below mid: fade from down_db up to 0 dB
+		var t := pow(v / 0.5, curve)          # perceptual curve; 1.0 = linear in dB
+		return lerp(down_db, 0.0, t)
+	else:
+		# above mid: rise from 0 dB up to +up_db
+		var t := pow((v - 0.5) / 0.5, curve)
+		return lerp(0.0, up_db, t)
+
+func _apply_volumes() -> void:
+	var i_master := AudioServer.get_bus_index(BUS_MASTER)
+	var i_music  := AudioServer.get_bus_index(BUS_MUSIC)
+	var i_sfx    := AudioServer.get_bus_index(BUS_SFX)
+
+	var master_db := _slider_to_db(master_volume)
+	var music_db  := _slider_to_db(music_volume)
+	var sfx_db    := _slider_to_db(sfx_volume)
+
+	if is_muted:
+		AudioServer.set_bus_volume_db(i_master, -80.0)
+		# (Music/SFX values don’t matter while master is hard-muted)
+	else:
+		AudioServer.set_bus_volume_db(i_master, master_db)
+		AudioServer.set_bus_volume_db(i_music,  music_db)
+		AudioServer.set_bus_volume_db(i_sfx,    sfx_db)
+
+# --- Public setters/getters for the UI ---
+func set_master_volume(v: float) -> void:
+	master_volume = clamp(v, 0.0, 1.0)
+	_apply_volumes()
+	#_save_settings()
+
+func set_music_volume(v: float) -> void:
+	music_volume = clamp(v, 0.0, 1.0)
+	_apply_volumes()
+	#_save_settings()
+
+func set_sfx_volume(v: float) -> void:
+	sfx_volume = clamp(v, 0.0, 1.0)
+	_apply_volumes()
+	#_save_settings()
+
+func get_master_volume() -> float: return master_volume
+func get_music_volume()  -> float: return music_volume
+func get_sfx_volume()    -> float: return sfx_volume
+
+func toggle_mute():
+	is_muted = !is_muted
+	_apply_volumes()

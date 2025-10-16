@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=48 format=4 uid="uid://byw3hhep7o6ne"]
 
 [ext_resource type="Script" uid="uid://dbleoewbl2g1q" path="res://Scripts/ActiveMap.gd" id="1_ns8y8"]
 [ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Scenes/Player.tscn" id="3_j3yda"]
@@ -11,6 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://ccsu5hhd6wek7" path="res://Scenes/SpawnPoint.tscn" id="9_r2i1d"]
 [ext_resource type="PackedScene" uid="uid://7ahri2krb4yw" path="res://Scenes/DeathArea.tscn" id="10_oryae"]
 [ext_resource type="Script" uid="uid://cq255iyyjt0vu" path="res://Scripts/Zone.gd" id="12_s6m2s"]
+
+[sub_resource type="Gradient" id="Gradient_r76hp"]
+offsets = PackedFloat32Array(0.030303031, 0.5252525, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ouv0n"]
 texture = ExtResource("4_gaj3i")
@@ -1604,6 +1608,16 @@ script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
 position = Vector2(-426, -180)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
+position = Vector2(6, -20)
+amount = 16
+lifetime = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(300, 300)
+gravity = Vector2(2, 10)
+scale_amount_max = 2.0
+color_ramp = SubResource("Gradient_r76hp")
 
 [node name="TileMaps" type="Node2D" parent="."]
 

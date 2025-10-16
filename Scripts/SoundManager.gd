@@ -7,10 +7,11 @@ var current_music: AudioStream = null
 var is_muted := false
 
 # Volume control (0.0 to 1.0)
-var music_volume := 0.5
+var music_volume := 5
 var sfx_volume := 0.5
 
 # Sounds/Audio
+var music_sound: AudioStream = load("uid://c5le2hwmrhk5v")
 var sight_sound: AudioStream = load("uid://bxqcxooo62ixm")
 var mask_pickup_sound: AudioStream = load("uid://b3yihbrydmrs4")
 
@@ -27,6 +28,8 @@ func _ready():
 
 	sfx_player.volume_db = linear_to_db(sfx_volume)
 	music_player.volume_db = linear_to_db(music_volume)
+	
+	play_music(music_sound)
 
 func _input(event):
 	if event.is_action_pressed("toggle_mute"):
@@ -66,6 +69,11 @@ func _can_play(stream: AudioStream, cooldown_sec: float) -> bool:
 # add a small helper
 func _sfx_base_db() -> float:
 	return linear_to_db(sfx_volume)
+	
+func _music_base_db() -> float:
+	return linear_to_db(music_volume)
+	
+	
 
 ### --- SFX PLAYBACK -----------------------------------
 # add optional gain_db
@@ -102,12 +110,12 @@ func _on_sfx_finished_reset() -> void:
 
 ### --- MUSIC PLAYBACK ---------------------------------
 
-func play_music(stream: AudioStream, loop := true) -> void:
+func play_music(stream: AudioStream) -> void:
 	if current_music == stream:
 		return  # Already playing
 	music_player.stop()
 	music_player.stream = stream
-	music_player.loop = loop
+	#music_player.loop = loop
 	current_music = stream
 	music_player.play()
 

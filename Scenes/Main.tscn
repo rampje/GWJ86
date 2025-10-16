@@ -10,10 +10,10 @@
 [node name="HUD" parent="." instance=ExtResource("2_idj7w")]
 
 [node name="Background" parent="." instance=ExtResource("3_kln2b")]
-offset_left = -2595.0
-offset_top = -2368.0
-offset_right = 2904.0
-offset_bottom = 1875.0
+offset_left = -3294.0
+offset_top = -2358.0
+offset_right = 2205.0
+offset_bottom = 1885.0
 
 [node name="TitleScreen" parent="." instance=ExtResource("3_rgh2o")]
 

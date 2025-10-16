@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dsed6rjvxprh6"]
+[gd_scene load_steps=33 format=3 uid="uid://dsed6rjvxprh6"]
 
 [ext_resource type="Script" uid="uid://d3timhod7u17y" path="res://Scripts/Player.gd" id="1_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://87n2binlio0v" path="res://Assets/Player/Player Idle 48x48.png" id="2_tdg3f"]
@@ -6,8 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bk03k7edk28lx" path="res://2D-Pixel-Art-Character-Template/Run/player run 48x48.png" id="4_5ncpa"]
 [ext_resource type="Texture2D" uid="uid://tgpcbve5nf08" path="res://2D-Pixel-Art-Character-Template/Wall Slide/player wall slide 48x48.png" id="5_wi0c6"]
 [ext_resource type="Texture2D" uid="uid://cjyqu2mh8a4cr" path="res://zovcd6ll.bmp" id="6_tdg3f"]
-[ext_resource type="Texture2D" uid="uid://djo2ypnggcqb0" path="res://Assets/ghost-Sheet.png" id="7_52ee3"]
-[ext_resource type="Script" uid="uid://byr8exli4j0qk" path="res://Scripts/Ghost.gd" id="7_bhhdu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70e50"]
 atlas = ExtResource("2_tdg3f")
@@ -202,47 +200,28 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_22fhl"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bhhdu"]
-atlas = ExtResource("7_52ee3")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_megsn"]
-atlas = ExtResource("7_52ee3")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yoq75"]
-atlas = ExtResource("7_52ee3")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ksbbd"]
-atlas = ExtResource("7_52ee3")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_glx4g"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bhhdu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_megsn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yoq75")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ksbbd")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_cxr5p")
+max_speed = null
 jump_speed = -350.0
+gravity = null
+gravity_fall = null
+max_fall_speed = null
+accel_ground = null
+decel_ground = null
+accel_air = null
+decel_air = null
+jump_buffer_time = null
+coyote_time = null
+cut_jump_gravity_mul = null
+wall_slide_max_speed = null
+wall_jump_push = null
+slow_fall_gravity_mul = null
+slow_fall_max_speed = null
+slow_fall_release_cooldown = null
+slow_fall_min_start_speed = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -264,21 +243,3 @@ visible = false
 color = Color(0.35162926, 0.41428706, 0.83578813, 1)
 texture = ExtResource("6_tdg3f")
 texture_scale = 0.5
-
-[node name="Ghost" type="Node2D" parent="." node_paths=PackedStringArray("target")]
-visible = false
-position = Vector2(0, -13)
-scale = Vector2(0.7, 0.7)
-script = ExtResource("7_bhhdu")
-target = NodePath("..")
-rest_offset = Vector2(-7, -10)
-max_speed = 300.0
-dead_zone = 50.0
-bob_hz = 0.8
-min_move_for_trail = 1.0
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ghost"]
-modulate = Color(0.4316638, 0.00015122682, 0.4412115, 0.24705882)
-texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_glx4g")
-frame_progress = 0.7465505

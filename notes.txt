@@ -8,6 +8,7 @@ https://bottled-up-studio.itch.io/emotion-masks
 https://marcengelgamedevelopment.itch.io/platformer-tileset
 https://zegley.itch.io/2d-platformermetroidvania-asset-pack
 https://dreammixgames.itch.io/keyboard-keys-for-ui
+https://master-blazter.itch.io/ghostspritepack
 
 
 https://devilsworkshop.itch.io/pixel-font
@@ -32,18 +33,24 @@ I’ve been playing Silksong lately and wanted to challenge myself making a mini
 I choose minimalism in many places to both to control scope and reinforce the surreal, isolated feel of the game: no enemies, health, power meters, narrative. It’s sorta a tech demo of elements that interest me in games. 
 
 
+TODO:
 
+
+-tile map polish (correct types, spikes,
+-attack -> destroy 1 wall to unfinished mask ending
+-stop player control on respawn for  0.5 sec
+
+
+-pixel flicker wobble problem
 
 
 Visual
--tile map polish (correct types, spikes, platforms
--pixel flicker wobble problem
+platforms
+
 -logo polish font
 
 UI:
 -about menu
--Esc menu
--audio control
 
 Mechanic:
 -attack (anims, collision, wall, particles)
@@ -57,7 +64,10 @@ Experience:
 Ideas:
 -moving spike platform challenge
 -haste mask 10%
--ghost companion mask
+-Mask shadow particle effect (when you get close to mask?)
+
+-ghost companion mask (polish)
+
 
 Audio 
 -Mix sanity check

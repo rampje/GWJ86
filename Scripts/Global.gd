@@ -25,6 +25,7 @@ var has_walljump: bool = false
 var has_slowfall: bool = false
 var has_wisdom: bool = false
 var has_attack: bool = false
+var has_friend: bool = false
 
 
 func _ready() -> void:
@@ -63,6 +64,8 @@ func on_mask_picked(mask_type: String) -> void:
 			has_wisdom = true
 		"Attack":
 			has_attack = true
+		"Companionship":
+			has_friend = true
 	
 	current_mask_count += 1
 	emit_signal("mask_picked", mask_type)

@@ -25,6 +25,8 @@ extends CharacterBody2D
 @export var slow_fall_release_cooldown: float = 0.12 # small lockout after releasing jump
 @export var slow_fall_min_start_speed: float = 0.0   # optional: only allow if falling this fast+
 
+var ghost: Node2D
+
 var is_slow_falling: bool = false
 var _slow_fall_cooldown: float = 0.0
 
@@ -41,17 +43,26 @@ var _prev_on_floor: bool = false
 var respawn_position: Vector2
 
 
-
-
 func _ready():
+	
 	floor_snap_length = 8.0   # slightly less than half your tile size
 	floor_max_angle = deg_to_rad(46)
 	
 	%TileMapLayer2.enabled = false
 	%TileMapLayer3.enabled = true
+	
+	# ghost stuff
+	$Ghost.visible = false
+	ghost = get_parent().get_node_or_null("Ghost")
+	Global.mask_picked.connect(_on_mask_picked)
+
+
 
 
 func _physics_process(delta: float) -> void:
+	# snap pixels to avoid the jitteries
+	$Camera2D.global_position = self.global_position.round()
+	
 	var dir := Input.get_axis("ui_left", "ui_right") 
 	
 	if _prev_on_floor:
@@ -95,6 +106,14 @@ func _physics_process(delta: float) -> void:
 		_facing = -1 if dir < 0 else 1
 		$AnimatedSprite2D.flip_h = _facing < 0
 
+	#ghost code 
+	if ghost and ghost.has_method("set"):
+		# assume ghost has a script with a 'rest_offset' export
+		if _facing < 0:
+			ghost.rest_offset.x = abs(ghost.rest_offset.x)  * -1.0
+		else:
+			ghost.rest_offset.x = abs(ghost.rest_offset.x)
+			
 	# --- VERTICAL MOVE (better gravity & variable jump height) ---
 	# --- VERTICAL MOVE (better gravity & variable jump height + slow fall) ---
 	var g := gravity
@@ -198,14 +217,6 @@ func _try_jump() -> bool:
 	return false
 
 
-func _process(delta: float) -> void:
-	# Optional: purely cosmetic (particles, bob, UI) if needed
-	pass
-
-
-
-
-
 
 
 func _on_animated_sprite_2d_animation_finished():
@@ -232,8 +243,8 @@ func get_floor_motion() -> Vector2:
 func respawn() -> void:
 	global_position = respawn_position
 	velocity = Vector2.ZERO
-
-
+	if ghost:
+		ghost.global_position = (global_position + ghost.rest_offset).round() 
 
 
 
@@ -324,3 +335,8 @@ func _is_slow_fall_active() -> bool:
 	if _slow_fall_cooldown > 0.0:
 		return false
 	return Input.is_action_pressed("ui_accept")
+
+
+func _on_mask_picked(mask_type: String) -> void:
+	if mask_type == "Companionship":
+		$Ghost.visible = true

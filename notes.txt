@@ -34,12 +34,10 @@ I choose minimalism in many places to both to control scope and reinforce the su
 
 
 TODO:
-
-
 -tile map polish (correct types, spikes,
--attack -> destroy 1 wall to unfinished mask ending
 -stop player control on respawn for  0.5 sec
-
+-attack -> destroy 1 wall to unfinished mask ending
+-game ending
 
 -pixel flicker wobble problem
 

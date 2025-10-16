@@ -29,8 +29,8 @@ var has_friend: bool = false
 
 
 func _ready() -> void:
-	#reset_game()
-	enable_all()
+	reset_game()
+	#enable_all()
 
 func _input(event):
 	if event.is_action_pressed("reload"):

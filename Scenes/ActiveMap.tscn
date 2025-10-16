@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://byw3hhep7o6ne"]
+[gd_scene load_steps=53 format=4 uid="uid://byw3hhep7o6ne"]
 
 [ext_resource type="Script" uid="uid://dbleoewbl2g1q" path="res://Scripts/ActiveMap.gd" id="1_ns8y8"]
 [ext_resource type="PackedScene" uid="uid://dsed6rjvxprh6" path="res://Scenes/Player.tscn" id="3_j3yda"]
@@ -1589,6 +1589,18 @@ size = Vector2(703, 17)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tthv1"]
 size = Vector2(222, 14)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ye7g1"]
+size = Vector2(160, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tg2wy"]
+size = Vector2(17, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6c3m4"]
+size = Vector2(28, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ladis"]
+size = Vector2(163, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s6m2s"]
 size = Vector2(1388, 562)
 
@@ -1620,7 +1632,7 @@ size = Vector2(110, 148)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(975, 976)
+position = Vector2(262, 122)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
 position = Vector2(6, -20)
@@ -1650,7 +1662,7 @@ tile_map_data = PackedByteArray("AAC2/wkAAAAPAAEAAAC1/wkAAAAPAAEAAAC0/wkAAAAPAAE
 [node name="TileMapLayer3" parent="TileMaps" instance=ExtResource("5_5kecc")]
 unique_name_in_owner = true
 position = Vector2(11, 3)
-tile_map_data = PackedByteArray("AADv//z/AAAPAAEAAADv//3/AAAPAAEAAADv/xQAAAAPAAEAAADv/xUAAAAPAAEAAAAFAB4AAAAPAAEAAAAIAB0AAAAPAAEAAAAPAB0AAAAPAAEAAAAVAB0AAAAPAAEAAAAbABsAAAAPAAEAAAAMABIAAAAPAAEAAAALABIAAAAPAAEAAAALABEAAAAPAAEAAAAMABEAAAAPAAEAAAAMABAAAAAPAAEAAAALABAAAAAPAAEAAAALAA8AAAAPAAEAAAAMAA8AAAAPAAEAAAAMAA4AAAAPAAEAAAALAA4AAAAPAAEAAAADABUAAAAPAAEAAADf/wMAAAAPAAEAAADg/wMAAAAPAAEAAADj/wIAAAAPAAEAAADk/wIAAAAPAAEAAADt////AAAPAAEAAADb/wIAAAAPAAEAAADc/wIAAAAPAAEAAADU/9v/AAAPAAEAAADU/9r/AAAPAAEAAADU/9j/AAAPAAEAAADU/9n/AAAPAAEAAADU/9f/AAAPAAEAAADU/9b/AAAPAAEAAADU/9X/AAAPAAEAAADU/9T/AAAPAAEAAADU/9P/AAAPAAEAAADU/9L/AAAPAAEAAADU/9H/AAASAAAAAAAGABYAAAAPAAEAAAA=")
+tile_map_data = PackedByteArray("AADv//z/AAAPAAEAAADv//3/AAAPAAEAAADv/xQAAAAPAAEAAADv/xUAAAAPAAEAAAAFAB4AAAAPAAEAAAAIAB0AAAAPAAEAAAAPAB0AAAAPAAEAAAAVAB0AAAAPAAEAAAAbABsAAAAPAAEAAAAMABIAAAAPAAEAAAALABIAAAAPAAEAAAALABEAAAAPAAEAAAAMABEAAAAPAAEAAAAMABAAAAAPAAEAAAALABAAAAAPAAEAAAALAA8AAAAPAAEAAAAMAA8AAAAPAAEAAAAMAA4AAAAPAAEAAAALAA4AAAAPAAEAAAADABUAAAAPAAEAAADf/wMAAAAPAAEAAADg/wMAAAAPAAEAAADj/wIAAAAPAAEAAADk/wIAAAAPAAEAAADt////AAAPAAEAAADb/wIAAAAPAAEAAADc/wIAAAAPAAEAAADU/9v/AAAPAAEAAADU/9r/AAAPAAEAAADU/9j/AAAPAAEAAADU/9n/AAAPAAEAAADU/9f/AAAPAAEAAADU/9b/AAAPAAEAAADU/9X/AAAPAAEAAADU/9T/AAAPAAEAAADU/9P/AAAPAAEAAADU/9L/AAAPAAEAAADU/9H/AAASAAAAAAAGABYAAAAPAAEAAAD6/wsAAAAPAAEAAAD7/wsAAAAPAAEAAAD8/wsAAAAPAAEAAAD9/wsAAAAPAAEAAAD+/wsAAAAPAAEAAAD6/woAAAASAAAAAAD7/woAAAASAAAAAAD8/woAAAASAAAAAAD9/woAAAASAAAAAAD+/woAAAASAAAAAAA=")
 
 [node name="SpawnPoint" parent="TileMaps" instance=ExtResource("9_r2i1d")]
 position = Vector2(-1291, -179)
@@ -1866,6 +1878,28 @@ shape = SubResource("RectangleShape2D_r76hp")
 position = Vector2(198, 4)
 shape = SubResource("RectangleShape2D_tthv1")
 
+[node name="CollisionShape2D24" type="CollisionShape2D" parent="DeathAreas/DeathArea1/Area2D" index="23"]
+position = Vector2(-218, 329)
+shape = SubResource("RectangleShape2D_ye7g1")
+
+[node name="DeathArea2" parent="DeathAreas" instance=ExtResource("10_oryae")]
+layer_name = "Layer2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathAreas/DeathArea2/Area2D" index="0"]
+position = Vector2(1267.5, 705.5)
+shape = SubResource("RectangleShape2D_tg2wy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DeathAreas/DeathArea2/Area2D" index="1"]
+position = Vector2(1246, 669.5)
+shape = SubResource("RectangleShape2D_6c3m4")
+
+[node name="DeathArea3" parent="DeathAreas" instance=ExtResource("10_oryae")]
+layer_name = "Layer3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathAreas/DeathArea3/Area2D" index="0"]
+position = Vector2(-100.5, 346)
+shape = SubResource("RectangleShape2D_ladis")
+
 [node name="BackgroundZones" type="Node2D" parent="."]
 
 [node name="ZoneA2" type="Area2D" parent="BackgroundZones" groups=["bg_zone"]]
@@ -1925,3 +1959,5 @@ position = Vector2(-1162, 753)
 shape = SubResource("RectangleShape2D_i5ab7")
 
 [editable path="DeathAreas/DeathArea1"]
+[editable path="DeathAreas/DeathArea2"]
+[editable path="DeathAreas/DeathArea3"]

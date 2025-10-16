@@ -16,16 +16,19 @@ const TOTAL_MASKS = 5
 #var main_scene = load("uid://byw3hhep7o6ne")
 var player_active: bool = false
 var current_mask_count: int = 0
+var sight_state: bool = false # when use sight first time becomes true
 
 # MASK ABILITIES
 var has_sight: bool = false
 var has_walljump: bool = false
 var has_slowfall: bool = false
+var has_wisdom: bool = false
+var has_attack: bool = false
 
 
 func _ready() -> void:
-	reset_game()
-	#enable_all()
+	#reset_game()
+	enable_all()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -37,10 +40,12 @@ func _input(event):
 
 
 func reset_game() -> void:
+	sight_state = false
 	has_sight = false
 	has_walljump = false
 	
 func enable_all() -> void:
+	sight_state = false
 	has_sight = true
 	has_walljump = true
 	#has_slowfall = true
@@ -55,6 +60,10 @@ func on_mask_picked(mask_type: String) -> void:
 			has_walljump = true
 		"Lightness":
 			has_slowfall = true
+		"Wisdom":
+			has_wisdom = true
+		"Attack":
+			has_attack = true
 	
 	current_mask_count += 1
 	emit_signal("mask_picked", mask_type)

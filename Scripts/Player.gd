@@ -245,6 +245,8 @@ func _sight_mask():
 	if !Global.has_sight:
 		return
 	if Input.is_action_just_pressed("Mask1"):
+		Global.sight_state = !Global.sight_state
+		
 		SoundManager.play_sight_sfx()
 
 		%TileMapLayer2.enabled = !%TileMapLayer2.enabled

@@ -34,11 +34,15 @@ I’ve been playing Silksong lately and wanted to challenge myself making a mini
 I choose minimalism in many places to both to control scope and reinforce the surreal, isolated feel of the game: no enemies, health, power meters, narrative. It’s sorta a tech demo of elements that interest me in games. 
 
 TODO:
+-checkpoint visuals
 -ending when collect all masks 
 -HOUSE OF MASKS logo polish font
 -bug fix low transparency Mask HUD sometimes
 -about menu
 -itch page (pictures, video)
+
+Accessibility: https://drive.google.com/file/d/1YBCVIlETy_qSzvsYDQg_aaW0ZdKCG-kE/view
+
 
 LOWER PRIO
 -attack -> destroy 1 wall to unfinished mask ending
@@ -49,10 +53,12 @@ QOL IMPROVEMENTS
 -audio mix sanity check
 -tilemap alignment on transform (tilemap/visual polish)
 -polish spawn points
+-tile L2/L3 shader polish
 
 IDEAS:
 -moving spike platform challenge
 -snitch chase mask
+-double jump mask
 -haste mask 10%
 -Mask shadow background particle effect (when you get close to mask?)
 

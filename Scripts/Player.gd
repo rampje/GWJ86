@@ -41,6 +41,10 @@ var _carry: Vector2 = Vector2.ZERO
 var _prev_on_floor: bool = false
 #var _sight_mask_on: bool = false
 var respawn_position: Vector2
+@export var max_air_jumps: int = 1   # 1 = “double jump”
+var _air_jumps_left: int = 0
+var _prev_on_wall: bool = false
+
 
 
 # tilemap stuff
@@ -121,6 +125,8 @@ func _ready() -> void:
 	$Ghost.visible = false
 	ghost = get_parent().get_node_or_null("Ghost")
 	Global.mask_picked.connect(_on_mask_picked)
+	
+	_air_jumps_left = (max_air_jumps if Global.has_jump else 0)
 	
 
 	
@@ -255,8 +261,14 @@ func _physics_process(delta: float) -> void:
 	var just_landed := is_on_floor() and !_prev_on_floor
 	if just_landed:
 		_carry = Vector2.ZERO
+		_air_jumps_left = (max_air_jumps if Global.has_jump else 0)
 	else:
 		_carry = carry_next
+		var on_wall := is_on_wall()
+		# Reset when you FIRST touch a wall (prevents infinite recharge while hugging)
+		if Global.has_walljump and on_wall and !_prev_on_wall:
+			_air_jumps_left = (max_air_jumps if Global.has_jump else 0)
+		_prev_on_wall = on_wall
 
 	_prev_on_floor = is_on_floor()
 	
@@ -293,6 +305,12 @@ func _try_jump() -> bool:
 		var wall_normal := get_wall_normal()
 		velocity.y = jump_speed
 		velocity.x = wall_normal.x * wall_jump_push
+		_jump_buffer = 0.0
+		return true
+		
+	if Global.has_jump and _air_jumps_left > 0:
+		velocity.y = jump_speed
+		_air_jumps_left -= 1
 		_jump_buffer = 0.0
 		return true
 

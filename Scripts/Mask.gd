@@ -2,9 +2,9 @@ extends Node2D
 
 signal picked_up(mask_type: String)
 
-const MASK_TYPES := ["Sight", "Movement","Attack","Wisdom","Lightness","Companionship"]
+const MASK_TYPES := ["Sight", "Movement","Attack","Wisdom","Lightness","Companionship","Movement #2"]
 
-@export_enum("Sight", "Movement","Attack","Wisdom","Lightness","Companionship") var mask_type: String = "Sight"
+@export_enum("Sight", "Movement","Attack","Wisdom","Lightness","Companionship","Movement #2") var mask_type: String = "Sight"
 
 # bobbing anim settings
 @export var bob_amplitude: float = 3.0

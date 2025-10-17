@@ -61,6 +61,7 @@ func start_game() -> void:
 	# find cleaner way to do this
 	$"../HUD/TopCenter/MovementKeys".visible = true
 	$"../HUD/TopCenter/Timer".start(3)
+	GameTimer.start()
 	
 	#queue_free()
 

@@ -12,7 +12,9 @@ const MASK_DESCRIPTIONS := {
 	"Attack": "(NOT ADDED YET) You can now destroy weak walls ... and possibly foes?",
 	"Lightness": "You can now slow fall by holding JUMP while in air",
 	"Companionship": "You feel less alone",
-	"" : "Use the upward momentum of the moving platform to launch you"
+	"Movement #2": "You can now jump again while in the air",
+	"" : "Use the upward momentum of the moving platform to launch you",
+	" ": "Time: "
 }
 
 func _ready() -> void:
@@ -30,9 +32,14 @@ func _ready() -> void:
 func on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
 	mask_name.text = mask_type.to_upper()
-	%MaskDescription.text = MASK_DESCRIPTIONS[mask_type]
 	
-	if mask_type != "":
+	var mask_description = MASK_DESCRIPTIONS[mask_type]
+	if mask_type != " ":
+		%MaskDescription.text = mask_description
+	else: 
+		%MaskDescription.text = mask_description + GameTimer.format_elapsed()
+	
+	if mask_type not in [""," "]:
 		var tex = Global.get_mask_icon(mask_type)
 		if tex:
 			mask_icon.texture = tex

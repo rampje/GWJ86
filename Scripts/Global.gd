@@ -56,7 +56,7 @@ func enable_all() -> void:
 	has_sight = true
 	has_walljump = true
 	#has_jump = true
-	#has_slowfall = true
+	has_slowfall = true
 	
 	
 

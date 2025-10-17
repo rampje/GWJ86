@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bp2k2d0bqik43"]
+
+[ext_resource type="Script" uid="uid://b6gf0fg2x471s" path="res://Scripts/MaskBarrier.gd" id="1_e80fp"]
+[ext_resource type="Texture2D" uid="uid://c3e1o672hn6vk" path="res://Assets/Masks/MaskOutline.png" id="1_u8fwa"]
+
+[sub_resource type="Gradient" id="Gradient_s6m2s"]
+offsets = PackedFloat32Array(0, 0.33333334, 0.68817204, 1)
+colors = PackedColorArray(0.48235294, 0, 0, 0, 0.58431375, 0.2, 0.2, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbks3"]
+size = Vector2(300, 30)
+
+[node name="MaskBarrier" type="Node2D"]
+script = ExtResource("1_e80fp")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(1, -1)
+amount = 32
+texture = ExtResource("1_u8fwa")
+emission_shape = 3
+emission_rect_extents = Vector2(120, 20)
+gravity = Vector2(0, 0)
+radial_accel_min = 5.0
+radial_accel_max = 10.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+color_ramp = SubResource("Gradient_s6m2s")
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+shape = SubResource("RectangleShape2D_bbks3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

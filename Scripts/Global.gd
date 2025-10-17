@@ -6,7 +6,7 @@ const ACTIVE_MAP_SCENE: PackedScene = preload("res://Scenes/Main.tscn")
 const MASK_ICON_PATHS := {
 	"Sight":    "res://Assets/Masks/Sight.png",
 	"Movement": "res://Assets/Masks/Movement.png",
-	"Attack":   "res://Assets/Masks/Attack.png",
+	#"Attack":   "res://Assets/Masks/Attack.png",
 	"Wisdom":   "res://Assets/Masks/Wisdom.png",
 	"Lightness": "res://Assets/Masks/Lightness.png",
 	"Companionship": "res://Assets/Masks/Companionship.png",
@@ -32,8 +32,8 @@ var has_jump: bool = false
 
 
 func _ready() -> void:
-	reset_game()
-	#enable_all()
+	#reset_game()
+	enable_all()
 	#has_jump = true
 
 func _input(event):
@@ -55,7 +55,7 @@ func enable_all() -> void:
 	sight_state = false
 	has_sight = true
 	has_walljump = true
-	has_jump = true
+	#has_jump = true
 	#has_slowfall = true
 	
 	

@@ -32,14 +32,14 @@ var has_jump: bool = false
 
 
 func _ready() -> void:
-	#reset_game()
-	enable_all()
+	reset_game()
+	#enable_all()
 	#has_jump = true
 
 func _input(event):
 	if event.is_action_pressed("reload"):
-		#reset_game()
-		enable_all()
+		reset_game()
+		#enable_all()
 		get_tree().reload_current_scene()
 
 
@@ -56,7 +56,7 @@ func enable_all() -> void:
 	has_sight = true
 	has_walljump = true
 	#has_jump = true
-	has_slowfall = true
+	#has_slowfall = true
 	
 	
 

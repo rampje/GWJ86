@@ -70,6 +70,7 @@ text = "OPTIONS
 "
 
 [node name="About" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+visible = false
 layout_mode = 2
 text = "ABOUT"
 

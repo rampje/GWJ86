@@ -43,20 +43,103 @@ var _prev_on_floor: bool = false
 var respawn_position: Vector2
 
 
-func _ready():
+# tilemap stuff
+var _pulse_shader: Shader = preload("res://Shaders/PlatformTransition.gdshader")
+var _faint_shader: Shader = preload("res://Shaders/FaintOutline.gdshader")
+var _did_init_visuals := false
+var _active_layer: int = 3  # L3 should start fully visible
+const SHADER_PATH := "res://Shaders/FaintOutline.gdshader"
+var FAINT_MAT: ShaderMaterial
+
+var _orig_mat_l2: Material
+var _orig_mat_l3: Material
+var _faint_mat_l2: ShaderMaterial
+var _faint_mat_l3: ShaderMaterial
+var _post_init_done := false
+
+func _make_faint_mat() -> ShaderMaterial:
+	var sm := ShaderMaterial.new()
+	sm.shader = _faint_shader
+	sm.resource_local_to_scene = true
+	sm.set_shader_parameter("outline_mode", true)
+	sm.set_shader_parameter("fill_alpha", 0.1)      
+	sm.set_shader_parameter("outline_px", 1.0)
+	sm.set_shader_parameter("outline_color", Color(1,1,1,0.9))
+	return sm
+
 	
-	floor_snap_length = 8.0   # slightly less than half your tile size
-	floor_max_angle = deg_to_rad(46)
-	
-	%TileMapLayer2.enabled = false
+func _set_layer_render_order(active_layer: int) -> void:
+	if active_layer == 2:
+		%TileMapLayer2.z_index = 10
+		%TileMapLayer3.z_index = 0
+	else:
+		%TileMapLayer2.z_index = 0
+		%TileMapLayer3.z_index = 10
+
+
+func _set_layer_visuals(active_layer: int) -> void:
+	if active_layer == 2:
+		%TileMapLayer2.material = _orig_mat_l2
+		%TileMapLayer3.material = _faint_mat_l3
+	else:
+		%TileMapLayer2.material = _faint_mat_l2
+		%TileMapLayer3.material = _orig_mat_l3
+	%TileMapLayer2.queue_redraw()
+	%TileMapLayer3.queue_redraw()
+
+
+func _ready() -> void:
+	# Clean base
+	%TileMapLayer2.enabled = true
 	%TileMapLayer3.enabled = true
+	%TileMapLayer2.material = null
+	%TileMapLayer3.material = null
+	%TileMapLayer2.modulate = Color(1,1,1,1)
+	%TileMapLayer3.modulate = Color(1,1,1,1)
+
+	# One shared faint material (pure outline)
+	FAINT_MAT = ShaderMaterial.new()
+	FAINT_MAT.shader = preload(SHADER_PATH)
+	FAINT_MAT.resource_local_to_scene = true
+	FAINT_MAT.set_shader_parameter("outline_mode", true)
+	FAINT_MAT.set_shader_parameter("fill_alpha", 0.1)   # no interior wash
+	FAINT_MAT.set_shader_parameter("outline_px", 0.0)
+	FAINT_MAT.set_shader_parameter("outline_color", Color(1,1,1,0.9))
+
+	# Start: Layer 3 ACTIVE (normal), Layer 2 INACTIVE (faint)
+	_active_layer = 3
+	%TileMapLayer2.material = FAINT_MAT
+	%TileMapLayer3.material = null
+	%TileMapLayer2.z_index = 0
+	%TileMapLayer3.z_index = 10
+
+	# Collisions to match
+	%TileMapLayer2.set_deferred("collision_enabled", false)
+	%TileMapLayer3.set_deferred("collision_enabled", true)
 	
 	# ghost stuff
 	$Ghost.visible = false
 	ghost = get_parent().get_node_or_null("Ghost")
 	Global.mask_picked.connect(_on_mask_picked)
+	
 
+	
 
+# Reassert twice; this reliably beats any late writes from other _ready/_enter_tree
+#func _post_init_visuals() -> void:
+	#await get_tree().process_frame
+	#_set_layer_visuals(_active_layer)
+	#_set_layer_render_order(_active_layer)
+	#await get_tree().process_frame
+	#_set_layer_visuals(_active_layer)
+	#_set_layer_render_order(_active_layer)
+	#_post_init_done = true
+	#_debug_render_state("post-init")
+
+#func _process(_delta: float) -> void:
+	#if _active_layer == 3 and Engine.get_frames_drawn() == 1:
+		#_apply_mask_visuals_now(_active_layer)
+#
 
 
 func _physics_process(delta: float) -> void:
@@ -74,7 +157,6 @@ func _physics_process(delta: float) -> void:
 	#		var c := get_slide_collision(i)
 	#		if c:
 	#			print("n=", c.get_normal(), " carry=", _carry)
-
 
 	# Buffer jump so it can't be missed between frames
 	if Input.is_action_just_pressed("ui_accept"):
@@ -251,46 +333,37 @@ func respawn() -> void:
 
 
 
-var _pulse_shader: Shader = preload("res://Shaders/PlatformTransition.gdshader")
-
-
-func _sight_mask():
+func _sight_mask() -> void:
 	if !Global.has_sight:
 		return
 	if Input.is_action_just_pressed("Mask1"):
 		Global.sight_state = !Global.sight_state
-		
 		SoundManager.play_sight_sfx()
 
-		%TileMapLayer2.enabled = !%TileMapLayer2.enabled
-		%TileMapLayer3.enabled = !%TileMapLayer3.enabled
+		_active_layer = 2 if _active_layer == 3 else 3
+		var l2_active := (_active_layer == 2)
 
-		var show_layer2 = %TileMapLayer2.enabled
-		var show_layer3 = %TileMapLayer3.enabled
+		# visuals: active=null (normal), inactive=faint; put active on top
+		%TileMapLayer2.material = null if l2_active else FAINT_MAT
+		%TileMapLayer3.material = FAINT_MAT if l2_active else null
+		%TileMapLayer2.z_index = 10 if l2_active else 0
+		%TileMapLayer3.z_index = 0 if l2_active else 10
 
+		# collisions to match
+		%TileMapLayer2.set_deferred("collision_enabled", l2_active)
+		%TileMapLayer3.set_deferred("collision_enabled", !l2_active)
+
+		# your platform groups (unchanged)
 		for p in get_tree().get_nodes_in_group("Layer2"):
 			if "set_platform_enabled" in p:
-				p.set_platform_enabled(show_layer2)
+				p.set_platform_enabled(l2_active)
 		for p in get_tree().get_nodes_in_group("Layer3"):
 			if "set_platform_enabled" in p:
-				p.set_platform_enabled(show_layer3)
+				p.set_platform_enabled(!l2_active)
 
-		#  Collect nodes that just became visible and pulse them
-		var to_pulse: Array = []
+		# (optional) pulse block...
 
-		if show_layer2:
-			to_pulse.append(%TileMapLayer2)
-			for p in get_tree().get_nodes_in_group("Layer2"):
-				# prefer the visual node; fall back to p if it *is* the Sprite2D
-				var s := p.get_node_or_null("Sprite2D")
-				to_pulse.append(s if s else p)
-		if show_layer3:
-			to_pulse.append(%TileMapLayer3)
-			for p in get_tree().get_nodes_in_group("Layer3"):
-				var s := p.get_node_or_null("Sprite2D")
-				to_pulse.append(s if s else p)
 
-		_play_pulse_on_nodes(to_pulse, 0.25)
 
 
 func _ensure_pulse_material(ci: CanvasItem) -> ShaderMaterial:
@@ -347,3 +420,145 @@ func _on_mask_picked(mask_type: String) -> void:
 func _on_respawn_timer_timeout() -> void:
 	Global.player_active = true
 	$AnimatedSprite2D.modulate.a = 1
+	
+
+
+func _set_tilemap_collisions(tml: Node, enabled: bool, layer_bits: int, mask_bits: int) -> void:
+	# If  Godot version exposes collision_enabled on TileMapLayer, use it:
+	if "collision_enabled" in tml:
+		tml.collision_enabled = enabled
+		return
+
+	# Fallback: zero out layers/masks when off; restore when on
+	if enabled:
+		tml.collision_layer = layer_bits
+		tml.collision_mask  = mask_bits
+	else:
+		tml.collision_layer = 0
+		tml.collision_mask  = 0
+		
+#func _apply_mask_collisions(active_layer: int) -> void:
+	#var l2_active := (active_layer == 2)
+	#var l3_active := (active_layer == 3)
+	#
+	##var l2_active = !Global.sight_state
+	##var l3_active = !l2_active
+	## Defer to avoid flipping physics shapes mid-step
+	#%TileMapLayer2.set_deferred("collision_enabled", l2_active)
+	#%TileMapLayer3.set_deferred("collision_enabled", l3_active)
+#
+
+
+#func _ensure_unique_faint_mat(ci: CanvasItem) -> ShaderMaterial:
+	#if ci.material is ShaderMaterial and (ci.material as ShaderMaterial).shader == _faint_shader:
+		#var sm := ci.material as ShaderMaterial
+		## Only duplicate if this material might be shared
+		#if !sm.resource_local_to_scene:
+			#sm = sm.duplicate(true) as ShaderMaterial
+			#ci.material = sm
+		#sm.resource_local_to_scene = true
+		#return sm
+	#var sm := ShaderMaterial.new()
+	#sm.shader = _faint_shader
+	#sm.resource_local_to_scene = true
+	#ci.material = sm
+	#return sm
+
+#
+#func _apply_mask_visuals_now(active_layer: int) -> void:
+	#var sm2 := _ensure_unique_faint_mat(%TileMapLayer2)
+	#var sm3 := _ensure_unique_faint_mat(%TileMapLayer3)
+#
+	## Inactive = outline_mode = true; Active = outline_mode = false
+	#var l2_inactive := (active_layer != 2)
+	#var l3_inactive := (active_layer != 3)
+#
+	## Shared faint look parameters
+	#const FAINT_FILL := 0.06      # 0.0..0.10; lower = more ghosty
+	#const OUTLINE_PX := 1.0       # >= 1.0 to actually draw an edge
+	#const OUTLINE_COL := Color(1, 1, 1, 0.75)
+#
+	#for sm in [sm2, sm3]:
+		#sm.set_shader_parameter("fill_alpha", FAINT_FILL)
+		#sm.set_shader_parameter("outline_px", OUTLINE_PX)
+		#sm.set_shader_parameter("outline_color", OUTLINE_COL)
+#
+	#sm2.set_shader_parameter("outline_mode", l2_inactive)
+	#sm3.set_shader_parameter("outline_mode", l3_inactive)
+#
+	#%TileMapLayer2.queue_redraw()
+	#%TileMapLayer3.queue_redraw()
+	#
+	#var smat3 := %TileMapLayer3.material as ShaderMaterial
+	#print("L3 outline_mode=", smat3.get_shader_parameter("outline_mode"),
+		  #" fill_alpha=", smat3.get_shader_parameter("fill_alpha"),
+		  #" outline_px=", smat3.get_shader_parameter("outline_px"))
+
+
+#
+#func _apply_mask_visuals(active_layer: int) -> void:
+	## Apply immediately so frame 0 is correct
+	#_apply_mask_visuals_now(active_layer)
+	## Also re-apply next frame to override any late changes
+	#call_deferred("_apply_mask_visuals_now", active_layer)
+	#
+	#print("L2 uses faint? ", %TileMapLayer2.material == _faint_mat_l2,
+	  #" | L3 uses faint? ", %TileMapLayer3.material == _faint_mat_l3,
+	  #" | active=", _active_layer)
+	
+	
+func _capture_original_material(ci: CanvasItem) -> Material:
+	# If editor put faint on the layer, treat "normal" as null
+	if ci.material is ShaderMaterial and (ci.material as ShaderMaterial).shader == _faint_shader:
+		ci.material = null
+		return null
+	return ci.material
+
+
+func _debug_tileset_materials():
+	var l3_ts = %TileMapLayer3.tile_set
+	if l3_ts == null:
+		print("L3 tileset is null")
+		return
+	for i in l3_ts.get_source_count():
+		var sid = l3_ts.get_source_id(i)
+		var src = l3_ts.get_source(sid)
+		var mat = null
+		# Atlas sources have get_material(); other source types vary
+		if src and src.has_method("get_material"):
+			mat = src.get_material()
+		if mat:
+			var is_faint := (mat is ShaderMaterial and (mat as ShaderMaterial).shader == _faint_shader)
+			print("TileSet source id=", sid, " has material. is_faint_shader? ", is_faint, " type=", mat)
+		# (Optional) check a few tiles for per-tile overrides if supported:
+		# if src is TileSetAtlasSource:
+		#     for tid in src.get_tiles_ids():
+		#         var tmat := src.get_tile_data(tid, 0).material
+		#         if tmat:
+		#             var t_is_faint := (tmat is ShaderMaterial and (tmat as ShaderMaterial).shader == _faint_shader)
+		#             print("  tile id ", tid, " has material. faint? ", t_is_faint)
+
+
+func _debug_render_state(tag := "") -> void:
+	var l2 := %TileMapLayer2
+	var l3 := %TileMapLayer3
+	
+
+	var p2 := first_tinting_parent(l2)
+	var p3 := first_tinting_parent(l3)
+
+	print("[%s] L2 faint? ", tag,
+		l2.material == _faint_mat_l2, "  L3 faint? ", l3.material == _faint_mat_l3,
+		" | z L2=", l2.z_index, " z L3=", l3.z_index)
+	if p2: print("   L2 tinted by parent: ", p2.name, " mat? ", p2.material != null, " mod=", (p2 as CanvasItem).modulate)
+	if p3: print("   L3 tinted by parent: ", p3.name, " mat? ", p3.material != null, " mod=", (p3 as CanvasItem).modulate)
+
+func first_tinting_parent(n: CanvasItem) -> Node:
+		var p := n.get_parent()
+		while p:
+			if p is CanvasItem:
+				var ci := p as CanvasItem
+				if ci.material or ci.modulate != Color(1,1,1,1):
+					return ci
+			p = p.get_parent()
+		return null

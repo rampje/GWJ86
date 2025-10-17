@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_13aqy"]
 size = Vector2(82, 42.25)
 
-[node name="SpawnPoint" type="Area2D" groups=["spawn_points"]]
+[node name="SpawnPoint" type="Area2D"]
 script = ExtResource("1_54don")
 
 [node name="Marker2D" type="Marker2D" parent="."]

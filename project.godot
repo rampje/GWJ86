@@ -30,6 +30,7 @@ window/stretch/mode="viewport"
 
 Player=""
 bg_zone=""
+spawn_points=""
 
 [input]
 

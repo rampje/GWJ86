@@ -30,14 +30,14 @@ var has_friend: bool = false
 
 
 func _ready() -> void:
-	reset_game()
-	#enable_all()
+	#reset_game()
+	enable_all()
 
-#func _input(event):
-#	if event.is_action_pressed("reload"):
-#		reset_game()
-#		#enable_all()
-#		get_tree().reload_current_scene()
+func _input(event):
+	if event.is_action_pressed("reload"):
+		#reset_game()
+		enable_all()
+		get_tree().reload_current_scene()
 
 
 func reset_game() -> void:

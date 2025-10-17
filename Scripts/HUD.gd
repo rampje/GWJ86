@@ -11,7 +11,8 @@ const MASK_DESCRIPTIONS := {
 	"Wisdom":   "You now know how many masks you need",
 	"Attack": "(NOT ADDED YET) You can now destroy weak walls ... and possibly foes?",
 	"Lightness": "You can now slow fall by holding JUMP while in air",
-	"Companionship": "You feel less alone"
+	"Companionship": "You feel less alone",
+	"" : "Use the upward momentum of the moving platform to launch you"
 }
 
 func _ready() -> void:
@@ -20,19 +21,23 @@ func _ready() -> void:
 	%MaskDescription.text = ""
 	mask_pickup.modulate.a = 0.0
 	# Listen to Global for pickups
-	Global.mask_picked.connect(_on_global_mask_picked)
+	Global.mask_picked.connect(on_global_mask_picked)
 	
 	# update mask count
 	%MaskCountLabel.text = str(Global.current_mask_count)\
 	 + " / " + str(Global.TOTAL_MASKS)
 
-func _on_global_mask_picked(mask_type: String) -> void:
+func on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
 	mask_name.text = mask_type.to_upper()
 	%MaskDescription.text = MASK_DESCRIPTIONS[mask_type]
-	var tex = Global.get_mask_icon(mask_type)
-	if tex:
-		mask_icon.texture = tex
+	
+	if mask_type != "":
+		var tex = Global.get_mask_icon(mask_type)
+		if tex:
+			mask_icon.texture = tex
+	else:
+		mask_icon.texture = null
 		
 	# update mask count
 	%MaskCountLabel.text = str(Global.current_mask_count)\

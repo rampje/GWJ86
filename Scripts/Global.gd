@@ -10,7 +10,8 @@ const MASK_ICON_PATHS := {
 	"Wisdom":   "res://Assets/Masks/Wisdom.png",
 	"Lightness": "res://Assets/Masks/Lightness.png",
 	"Companionship": "res://Assets/Masks/Companionship.png",
-	"Movement #2": "res://Assets/Masks/Movement2.png"
+	"Movement #2": "res://Assets/Masks/Movement2.png",
+	"Time": "res://Assets/Masks/Time.png"
 }
 
 static var TOTAL_MASKS := MASK_ICON_PATHS.size()
@@ -29,17 +30,18 @@ var has_wisdom: bool = false
 var has_attack: bool = false
 var has_friend: bool = false
 var has_jump: bool = false
+var has_time: bool = false
 
 
 func _ready() -> void:
 	reset_game()
 	#enable_all()
-	#has_jump = true
+	has_walljump = true
+	has_sight = true
 
 func _input(event):
 	if event.is_action_pressed("reload"):
 		reset_game()
-		enable_all()
 		get_tree().reload_current_scene()
 
 
@@ -50,6 +52,8 @@ func reset_game() -> void:
 	has_slowfall = false
 	has_wisdom = false
 	has_friend = false
+	has_jump = false
+	has_time = false
 	
 func enable_all() -> void:
 	sight_state = false
@@ -57,6 +61,9 @@ func enable_all() -> void:
 	has_walljump = true
 	has_jump = true
 	has_slowfall = true
+	has_wisdom = true
+	has_time = true
+	has_friend = true
 	
 	
 
@@ -76,18 +83,15 @@ func on_mask_picked(mask_type: String) -> void:
 			has_friend = true
 		"Movement #2":
 			has_jump = true
+		"Time":
+			has_time = true
 	
 	current_mask_count += 1
 	emit_signal("mask_picked", mask_type)
 	
-	if current_mask_count == TOTAL_MASKS:
-		print('GAME ENDED')
-		end_game()
 
 
-func end_game():
-	GameTimer.stop()
-	
+
 
 
 func get_mask_icon(mask_type: String) -> Texture2D:

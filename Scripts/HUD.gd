@@ -14,10 +14,12 @@ const MASK_DESCRIPTIONS := {
 	"Companionship": "With your new friend you can cross cursed barriers",
 	"Movement #2": "You can now jump again while in the air",
 	"" : "Use the upward momentum of the moving platform to launch you",
-	" ": "Time: "
+	" ": "Time: ",
+	"Time": "You now know how much time has elapsed"
 }
 
 func _ready() -> void:
+	%TimeElapsedLabel.visible = false
 	%MovementKeys.visible = false
 	%MaskCount.visible = false
 	%MaskDescription.text = ""
@@ -28,6 +30,10 @@ func _ready() -> void:
 	# update mask count
 	%MaskCountLabel.text = str(Global.current_mask_count)\
 	 + " / " + str(Global.TOTAL_MASKS)
+	
+
+func _process(delta):
+	%TimeElapsedLabel.text = GameTimer.format_elapsed()
 
 func on_global_mask_picked(mask_type: String) -> void:
 	# Update HUD text + icon
@@ -58,6 +64,9 @@ func on_global_mask_picked(mask_type: String) -> void:
 	
 	if mask_type == "Wisdom":
 		%MaskCount.visible = true
+		
+	if mask_type == "Time":
+		%TimeElapsedLabel.visible = true
 
 	# Re-show the pickup banner and (re)start timer
 	for t in get_tree().get_processed_tweens():

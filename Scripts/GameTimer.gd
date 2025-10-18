@@ -31,5 +31,6 @@ func format_elapsed() -> String:
 	var t := _elapsed_s
 	var minutes := int(t) / 60
 	var seconds := int(t) % 60
-	var millis  := int(round((t - int(t)) * 1000.0))
-	return "%02d:%02d.%03d" % [minutes, seconds, millis]
+	return "%02d:%02d" % [minutes, seconds]
+	#var millis  := int(round((t - int(t)) * 1000.0))
+	#return "%02d:%02d.%03d" % [minutes, seconds, millis]

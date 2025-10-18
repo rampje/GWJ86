@@ -37,7 +37,7 @@ I choose minimalism in many places to both to control scope and reinforce the su
 
 TODO:
 -HOUSE OF MASKS logo polish font
--END ZONE
+-ghost companion mask (polish)
 
 -itch page (pictures, video)
 
@@ -47,18 +47,12 @@ LOWER PRIO
 -bug fix low transparency Mask HUD sometimes
 
 QOL IMPROVEMENTS
--ghost companion mask (polish)
--audio mix sanity check
--tilemap alignment on transform (tilemap/visual polish)
--tile L2/L3 shader polish
 
-IDEAS:
--moving spike platform challenge
--timer mask maybe
+-audio mix sanity check
+
+-tile L2/L3 shader polish
 
 
 Accessibility: https://drive.google.com/file/d/1YBCVIlETy_qSzvsYDQg_aaW0ZdKCG-kE/view
 
-
-Audio 
 

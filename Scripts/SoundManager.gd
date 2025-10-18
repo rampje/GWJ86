@@ -6,6 +6,9 @@ var music_player := AudioStreamPlayer.new()
 var current_music: AudioStream = null
 var is_muted := false
 
+var is_fading_music: bool = false
+
+
 # volumes need to normalize
 var master_volume := 0.7
 var music_volume  := 0.5
@@ -134,12 +137,14 @@ func _apply_volumes() -> void:
 
 	if is_muted:
 		AudioServer.set_bus_volume_db(i_master, -80.0)
-		# (Music/SFX values don’t matter while master is hard-muted)
 	else:
 		AudioServer.set_bus_volume_db(i_master, master_db)
-		AudioServer.set_bus_volume_db(i_music,  music_db)
-		AudioServer.set_bus_volume_db(i_sfx,    sfx_db)
-
+		# ⬇️ skip changing the Music bus during a fade
+		if not is_fading_music:
+			AudioServer.set_bus_volume_db(i_music, music_db)
+		AudioServer.set_bus_volume_db(i_sfx, sfx_db)
+		
+		
 # --- Public setters/getters for the UI ---
 func set_master_volume(v: float) -> void:
 	master_volume = clamp(v, 0.0, 1.0)
@@ -147,9 +152,12 @@ func set_master_volume(v: float) -> void:
 	#_save_settings()
 
 func set_music_volume(v: float) -> void:
+	if is_fading_music:
+		# Ignore UI while fading to avoid stomping the fade
+		music_volume = clamp(v, 0.0, 1.0)
+		return
 	music_volume = clamp(v, 0.0, 1.0)
 	_apply_volumes()
-	#_save_settings()
 
 func set_sfx_volume(v: float) -> void:
 	sfx_volume = clamp(v, 0.0, 1.0)
@@ -163,3 +171,20 @@ func get_sfx_volume()    -> float: return sfx_volume
 func toggle_mute():
 	is_muted = !is_muted
 	_apply_volumes()
+
+func fade_music_bus(seconds: float) -> void:
+	var idx := AudioServer.get_bus_index(BUS_MUSIC)
+	if idx == -1: return
+	is_fading_music = true
+	var start_db: float = AudioServer.get_bus_volume_db(idx)
+	var t := 0.0
+	while t < seconds:
+		await get_tree().process_frame
+		t += get_process_delta_time()
+		var u = clamp(t / seconds, 0.0, 1.0)
+		u = u * u * (3.0 - 2.0 * u)  # smoothstep
+		AudioServer.set_bus_volume_db(idx, lerp(start_db, -60.0, u))
+	# snap & stop
+	AudioServer.set_bus_volume_db(idx, -60.0)
+	if music_player.playing: music_player.stop()
+	is_fading_music = false

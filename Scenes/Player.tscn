@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://dsed6rjvxprh6"]
+[gd_scene load_steps=41 format=3 uid="uid://dsed6rjvxprh6"]
 
 [ext_resource type="Script" uid="uid://d3timhod7u17y" path="res://Scripts/Player.gd" id="1_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://87n2binlio0v" path="res://Assets/Player/Player Idle 48x48.png" id="2_tdg3f"]
@@ -48,6 +48,10 @@ region = Rect2(384, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_u3gh2"]
 atlas = ExtResource("2_tdg3f")
 region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glx4g"]
+atlas = ExtResource("3_dtqjt")
+region = Rect2(48, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrv06"]
 atlas = ExtResource("3_dtqjt")
@@ -141,6 +145,14 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glx4g")
+}],
+"loop": true,
+"name": &"end",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -255,6 +267,7 @@ rotation_smoothing_speed = 7.0
 modulate = Color(0.8862745, 0, 0.4745098, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7gp2n")
+animation = &"end"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_22fhl")
@@ -271,12 +284,14 @@ scale = Vector2(0.7, 0.7)
 script = ExtResource("7_bhhdu")
 target = NodePath("..")
 min_move_for_trail = 1.0
+stiffness = 5.0
 max_speed = 300.0
 predict_time_max = 0.08
 bob_hz = 0.8
+snap_pixels_in_process = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ghost"]
-modulate = Color(1, 1, 1, 0.34901962)
+modulate = Color(1, 1, 1, 0.22352941)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_glx4g")
 frame_progress = 0.30897218

@@ -12,4 +12,4 @@ lifetime = 3.0
 emission_shape = 3
 emission_rect_extents = Vector2(6, 1)
 gravity = Vector2(0, -3)
-color = Color(0.99999994, 0.42091772, 0.9934465, 1)
+color = Color(0.8131713, 0.46970183, 0.9998806, 1)

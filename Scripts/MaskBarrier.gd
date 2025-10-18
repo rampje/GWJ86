@@ -5,6 +5,9 @@ func _ready() -> void:
 #	 Listen to Global for pickups
 	Global.mask_picked.connect(on_mask_picked)
 	
+	if Global.has_friend == true:
+		$CharacterBody2D.queue_free()
+	
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":# and body.has_method("unlock_wall_ability"):

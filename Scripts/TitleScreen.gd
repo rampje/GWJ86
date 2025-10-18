@@ -5,15 +5,15 @@ extends CanvasLayer
 @onready var music_slider:  HSlider = %MusicSlider
 @onready var sfx_slider:    HSlider = %SfxSlider
 
-
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		self.visible = !self.visible
+		if Global.game_active == true:
+			self.visible = !self.visible
 
 func _ready() -> void:
 	%OptionsWidgets.visible = false
-	#init_game()
-	start_game()
+	init_game()
+	#start_game()
 	
 	#OPTIONS MENU
 	# sliders operate in 0..1 with step 0.01
@@ -49,13 +49,14 @@ func init_game() -> void:
 	$"../ActiveMap".modulate = Color(1, 1, 1, 0)
 
 func start_game() -> void:
+	Global.game_active = true
 	self.visible = false
 	%MenuButtons/Start.visible = false
 	%MenuButtons/Resume.visible = true
 	%MenuButtons/Reset.visible = true
 	$"../ActiveMap".visible = true
 	var tween = get_tree().create_tween()
-	#tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)
+	tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)
 	Global.player_active = true
 	# find cleaner way to do this
 	$"../HUD/TopCenter/MovementKeys".visible = true
@@ -96,3 +97,12 @@ func _on_reset_pressed() -> void:
 	#Global.reset_game()
 	#get_tree().change_scene_to_packed(Global.ACTIVE_MAP_SCENE)
 	#get_tree().reload_current_scene()
+
+
+func end_menu():
+	%Resume.visible = false
+	%Reset.visible = false
+	%Options.visible = false
+	%Quit.text = "EXIT GAME"
+	%EndSpace.visible = true
+	

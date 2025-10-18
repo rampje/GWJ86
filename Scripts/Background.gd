@@ -4,8 +4,8 @@ extends ColorRect
 @export var smooth_speed := 8.0
 
 # defaults for when you're in no zone:
-@export var default_entropy := 3.0
-@export var default_sharp   := 400.0
+@export var default_entropy := 2
+@export var default_sharp   := 200
 @export var default_tint    := Color(0, 0, 0)
 @export var default_tint_mix := 0.0
 

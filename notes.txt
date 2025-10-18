@@ -33,13 +33,18 @@ I’ve been playing Silksong lately and wanted to challenge myself making a mini
 
 I choose minimalism in many places to both to control scope and reinforce the surreal, isolated feel of the game: no enemies, health, power meters, narrative. It’s sorta a tech demo of elements that interest me in games. 
 
+software used:
+Godot 4.5.1
+Ableton 11
+Audacity
+Aseprite
 
 
 TODO:
--ghost companion mask (polish)
 -game ending
 -final polish visual language/color/theming
 -itch page (pictures, video)
+
 
 
 LOWER PRIO

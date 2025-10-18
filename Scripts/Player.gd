@@ -93,6 +93,8 @@ func _set_layer_visuals(active_layer: int) -> void:
 
 
 func _ready() -> void:
+
+	
 	# Clean base
 	%TileMapLayer2.enabled = true
 	%TileMapLayer3.enabled = true
@@ -125,6 +127,10 @@ func _ready() -> void:
 	$Ghost.visible = false
 	ghost = get_parent().get_node_or_null("Ghost")
 	Global.mask_picked.connect(_on_mask_picked)
+	
+		# for debug
+	if Global.has_friend == true:
+		$Ghost.visible = true
 	
 	_air_jumps_left = (max_air_jumps if Global.has_jump else 0)
 	
@@ -354,7 +360,7 @@ func respawn() -> void:
 func _sight_mask() -> void:
 	if !Global.has_sight:
 		return
-	if Input.is_action_just_pressed("Mask1"):
+	if Input.is_action_just_pressed("Mask1") and Global.game_active == true:
 		Global.sight_state = !Global.sight_state
 		SoundManager.play_sight_sfx()
 

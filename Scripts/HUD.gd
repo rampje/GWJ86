@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var mask_name: Label       = %MaskName
 @onready var mask_icon: TextureRect = %MaskIcon
 @export var fade_duration: float = 1.0
+var current_mask: String
 
 const MASK_DESCRIPTIONS := {
 	"Sight":    "You can make some walls vanish and others appear by pressing SHIFT",
@@ -15,7 +16,10 @@ const MASK_DESCRIPTIONS := {
 	"Movement #2": "You can now jump again while in the air",
 	"" : "Use the upward momentum of the moving platform to launch you",
 	" ": "Time: ",
-	"Time": "You now know how much time has elapsed"
+	"Time": "You now know how much time has elapsed",
+	"   ": "The masks' barrier is too strong",
+	"    ": "You and your friend will not be able to escape together...",
+	"     ": "Your friend stays behind."
 }
 
 func _ready() -> void:
@@ -36,6 +40,7 @@ func _process(delta):
 	%TimeElapsedLabel.text = GameTimer.format_elapsed()
 
 func on_global_mask_picked(mask_type: String) -> void:
+	current_mask = mask_type
 	# Update HUD text + icon
 	mask_name.text = mask_type.to_upper()
 	
@@ -45,7 +50,7 @@ func on_global_mask_picked(mask_type: String) -> void:
 	else: 
 		%MaskDescription.text = mask_description + GameTimer.format_elapsed()
 	
-	if mask_type not in [""," "]:
+	if mask_type not in [""," ","   ","    ","     "]:
 		var tex = Global.get_mask_icon(mask_type)
 		if tex:
 			mask_icon.texture = tex
@@ -87,8 +92,13 @@ func _on_fade_in_finished() -> void:
 	$MaskTimer.start(5.0)
 
 func _on_mask_timer_timeout() -> void:
+	var fade_time: float = 3.0
 	var tween := create_tween()
-	tween.tween_property(mask_pickup, "modulate:a", 0.0, 3.0)
+	if current_mask == "     ":
+		fade_time = 4.0
+	else:
+		fade_time = 3.0
+	tween.tween_property(mask_pickup, "modulate:a", 0.0, fade_time)
 
 
 func _on_move_keys_timer_timeout() -> void:

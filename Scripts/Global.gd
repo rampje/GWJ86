@@ -21,6 +21,7 @@ static var TOTAL_MASKS := MASK_ICON_PATHS.size()
 var player_active: bool = false
 var current_mask_count: int = 0
 var sight_state: bool = false # when use sight first time becomes true
+var game_active: bool = false
 
 # MASK ABILITIES
 var has_sight: bool = false
@@ -33,17 +34,19 @@ var has_jump: bool = false
 var has_time: bool = false
 
 
+
 func _ready() -> void:
 	reset_game()
 	#enable_all()
-	has_walljump = true
-	has_sight = true
-	has_friend = true
+	#has_walljump = true
+	#has_sight = true
+	#has_friend = true
 
-func _input(event):
-	if event.is_action_pressed("reload"):
-		reset_game()
-		get_tree().reload_current_scene()
+#func _input(event):
+	#if event.is_action_pressed("reload"):
+		##enable_all()
+		#reset_game()
+		#get_tree().reload_current_scene()
 
 
 func reset_game() -> void:

@@ -44,7 +44,15 @@ label_settings = SubResource("LabelSettings_vmg2h")
 horizontal_alignment = 1
 
 [node name="_2" type="ColorRect" parent="MarginContainer/Menu"]
+visible = false
 custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="EndSpace" type="ColorRect" parent="MarginContainer/Menu"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
@@ -53,6 +61,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Resume" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_uebgo")
@@ -60,6 +69,7 @@ theme_override_font_sizes/font_size = 25
 text = "RESUME"
 
 [node name="Reset" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_uebgo")
@@ -73,6 +83,7 @@ theme_override_font_sizes/font_size = 25
 text = "START"
 
 [node name="Options" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_uebgo")
 theme_override_font_sizes/font_size = 25
@@ -85,6 +96,7 @@ layout_mode = 2
 text = "ABOUT"
 
 [node name="Quit" type="Button" parent="MarginContainer/Menu/MenuButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_uebgo")
 theme_override_font_sizes/font_size = 25

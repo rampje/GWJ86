@@ -23,6 +23,7 @@ offset_top = -1697.0
 offset_right = 3360.0
 offset_bottom = 1911.0
 script = ExtResource("2_lf6h2")
+default_sharp = 300.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 position = Vector2(1691, 1697)

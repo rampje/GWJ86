@@ -5,12 +5,14 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_vmg2h"]
 font = ExtResource("1_uebgo")
-font_size = 60
+font_size = 68
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0.5921569, 0, 0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8l4an"]
 font = ExtResource("1_uebgo")
-font_size = 20
+font_size = 25
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_vmg2h")
@@ -53,19 +55,27 @@ layout_mode = 2
 [node name="Resume" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "RESUME"
 
 [node name="Reset" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "RESET"
 
 [node name="Start" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "START"
 
 [node name="Options" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "OPTIONS
 "
 
@@ -76,6 +86,8 @@ text = "ABOUT"
 
 [node name="Quit" type="Button" parent="MarginContainer/Menu/MenuButtons"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "QUIT"
 
 [node name="OptionsWidgets" type="VBoxContainer" parent="MarginContainer/Menu"]
@@ -141,6 +153,8 @@ color = Color(1, 1, 1, 0)
 
 [node name="BackButton" type="Button" parent="MarginContainer/Menu/OptionsWidgets"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 25
 text = "BACK"
 
 [connection signal="pressed" from="MarginContainer/Menu/MenuButtons/Resume" to="." method="_on_resume_pressed"]

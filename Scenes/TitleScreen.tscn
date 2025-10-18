@@ -44,7 +44,6 @@ label_settings = SubResource("LabelSettings_vmg2h")
 horizontal_alignment = 1
 
 [node name="_2" type="ColorRect" parent="MarginContainer/Menu"]
-visible = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 color = Color(1, 1, 1, 0)

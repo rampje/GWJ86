@@ -11,13 +11,14 @@ func _ready() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":# and body.has_method("unlock_wall_ability"):
-		SoundManager.play_sfx(
-					SoundManager.mask_barrier_cross,  # stream
-					false,                           # pitch_randomize
-					Vector2(0.85, 1.15),             # pitch_range
-					1.5,                             # cooldown_sec
-					-7.0                             # gain_db
-				)
+		if self.name != "MaskBarrier1":
+			SoundManager.play_sfx(
+						SoundManager.mask_barrier_cross,  # stream
+						false,                           # pitch_randomize
+						Vector2(0.85, 1.15),             # pitch_range
+						1.5,                             # cooldown_sec
+						-7.0                             # gain_db
+					)
 
 		var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		t.tween_property(self, "modulate:a", 0.2, 2)  # fade down

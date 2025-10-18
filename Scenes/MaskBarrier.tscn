@@ -14,10 +14,10 @@ script = ExtResource("1_e80fp")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(1, -1)
-amount = 32
+amount = 40
 texture = ExtResource("1_u8fwa")
 emission_shape = 3
-emission_rect_extents = Vector2(120, 20)
+emission_rect_extents = Vector2(120, 10)
 gravity = Vector2(0, 0)
 radial_accel_min = 5.0
 radial_accel_max = 10.0

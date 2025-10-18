@@ -3057,7 +3057,7 @@ size = Vector2(10173, 2101)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(722, 147)
+position = Vector2(-1843, 1011)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
 position = Vector2(6, -20)
@@ -3685,14 +3685,14 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_y3erm")
 
 [node name="MaskBarrier2" parent="MaskBarriers" instance=ExtResource("11_r76hp")]
-position = Vector2(-422, 115)
+position = Vector2(-422, 117)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MaskBarriers/MaskBarrier2/Area2D" index="0"]
 shape = SubResource("RectangleShape2D_8xu72")
 
 [node name="CPUParticles2D" parent="MaskBarriers/MaskBarrier2" index="1"]
-amount = 8
-emission_rect_extents = Vector2(20, 40)
+amount = 12
+emission_rect_extents = Vector2(5, 40)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="MaskBarriers/MaskBarrier2"]
 collision_layer = 2
@@ -3708,8 +3708,8 @@ position = Vector2(860, 614)
 shape = SubResource("RectangleShape2D_1e5ha")
 
 [node name="CPUParticles2D" parent="MaskBarriers/MaskBarrier3" index="1"]
-amount = 8
-emission_rect_extents = Vector2(15, 30)
+amount = 12
+emission_rect_extents = Vector2(5, 30)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="MaskBarriers/MaskBarrier3"]
 collision_layer = 2

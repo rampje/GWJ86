@@ -4,6 +4,8 @@ extends Node2D
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":
+		body.gravity = 0.0
+		body.max_fall_speed = 0.0
 		SoundManager.fade_music_bus(12)
 		Global.player_active = false
 		Global.game_active = false

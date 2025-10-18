@@ -11,7 +11,7 @@ const MASK_DESCRIPTIONS := {
 	"Wisdom":   "You now know how many masks you need",
 	"Attack": "(NOT ADDED YET) You can now destroy weak walls ... and possibly foes?",
 	"Lightness": "You can now slow fall by holding JUMP while in air",
-	"Companionship": "You feel less alone",
+	"Companionship": "With your new friend you can cross cursed barriers",
 	"Movement #2": "You can now jump again while in the air",
 	"" : "Use the upward momentum of the moving platform to launch you",
 	" ": "Time: "

@@ -20,6 +20,7 @@ const BUS_SFX    := "SFX"
 var music_sound: AudioStream = load("uid://c5le2hwmrhk5v")
 var sight_sound: AudioStream = load("uid://bxqcxooo62ixm")
 var mask_pickup_sound: AudioStream = load("uid://b3yihbrydmrs4")
+var mask_barrier_cross: AudioStream = load("uid://cj7xavuppnu5k")
 
 var _last_play_times: Dictionary = {}
 

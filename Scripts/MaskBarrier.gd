@@ -9,13 +9,20 @@ func _ready() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is CharacterBody2D and body.name == "Player":# and body.has_method("unlock_wall_ability"):
 		SoundManager.play_sfx(
-					SoundManager.mask_pickup_sound,  # stream
+					SoundManager.mask_barrier_cross,  # stream
 					false,                           # pitch_randomize
 					Vector2(0.85, 1.15),             # pitch_range
-					0.0,                             # cooldown_sec
-					-9.0                             # gain_db
+					1.5,                             # cooldown_sec
+					-7.0                             # gain_db
 				)
 
+		var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		t.tween_property(self, "modulate:a", 0.2, 2)  # fade down
+		t.tween_property(self, "modulate:a", 1.0, 2)  # fade up
+
+
+		 # free AFTER tween finishes
+		#t.tween_callback(func(): $CharacterBody2D.queue_free())
 		#$Area2D.monitoring = false
 		# broadcast which mask was picked up
 		#picked_up.emit(mask_type)

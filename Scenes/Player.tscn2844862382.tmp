@@ -266,20 +266,34 @@ texture = ExtResource("6_tdg3f")
 texture_scale = 0.5
 
 [node name="Ghost" type="Node2D" parent="." node_paths=PackedStringArray("target")]
-position = Vector2(0, -18)
+position = Vector2(0, -13)
 scale = Vector2(0.7, 0.7)
 script = ExtResource("7_bhhdu")
 target = NodePath("..")
+rest_offset = Vector2(-7, -10)
+side_flip_hold = null
 min_move_for_trail = 1.0
+stiffness = null
+damping = null
 max_speed = 300.0
-predict_time_max = 0.08
+arrive_time = null
+predict_time_min = null
+predict_time_max = null
+leash_soft = null
+leash_hard = null
+bob_amp = null
 bob_hz = 0.8
+snap_pixels_in_process = null
+idle_speed_threshold = null
+idle_hold = null
+settle_radius = null
+settle_speed = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ghost"]
-modulate = Color(1, 1, 1, 0.34901962)
+modulate = Color(1, 1, 1, 0.41568628)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_glx4g")
-frame_progress = 0.30897218
+frame_progress = 0.42571434
 
 [node name="RespawnTimer" type="Timer" parent="."]
 

@@ -53,7 +53,7 @@ func start_game() -> void:
 	self.visible = false
 	%MenuButtons/Start.visible = false
 	%MenuButtons/Resume.visible = true
-	%MenuButtons/Reset.visible = true
+	#%MenuButtons/Reset.visible = true
 	$"../ActiveMap".visible = true
 	var tween = get_tree().create_tween()
 	tween.tween_property($"../ActiveMap", "modulate", Color(1, 1, 1, 1), 3)

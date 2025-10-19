@@ -3123,7 +3123,7 @@ size = Vector2(4987, 7049)
 script = ExtResource("1_ns8y8")
 
 [node name="Player" parent="." instance=ExtResource("3_j3yda")]
-position = Vector2(721, 147)
+position = Vector2(716, 147)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="Player"]
 position = Vector2(6, -20)

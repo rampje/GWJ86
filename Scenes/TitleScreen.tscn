@@ -6,7 +6,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_vmg2h"]
 font = ExtResource("1_uebgo")
 font_size = 68
-outline_size = 5
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0.5921569, 0, 0, 0)
 

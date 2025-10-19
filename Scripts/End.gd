@@ -37,9 +37,14 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		await get_tree().create_timer(7).timeout
 		
 		var title_screen = $"../../TitleScreen"
-		title_screen.end_menu()
+		#title_screen.end_menu()
+		
+		var menu = title_screen.get_node("MarginContainer")
+		menu.visible = false
 		title_screen.visible = true
-		var mc = title_screen.get_node("MarginContainer") as CanvasItem
+		var mc = title_screen.get_node("EndScreen") as CanvasItem
+		print('did we get it')
+		print(mc)
 		var c: Color = mc.modulate
 		c.a = 0.0
 		mc.modulate = c
@@ -61,7 +66,7 @@ func _fade_sprite(sprite: CanvasItem, seconds: float, start_alpha: float = 1.0) 
 		
 # Fade IN the MarginContainer inside a CanvasLayer
 func _fade_title(title: CanvasLayer, seconds: float) -> void:
-	var mc := title.get_node_or_null("MarginContainer")
+	var mc = title.get_node_or_null("EndScreen")
 	if mc == null: 
 		return
 	var t: float = 0.0
@@ -69,5 +74,5 @@ func _fade_title(title: CanvasLayer, seconds: float) -> void:
 		await get_tree().process_frame
 		t += get_process_delta_time()
 		var col: Color = (mc as CanvasItem).modulate
-		col.a = clamp(t / seconds, 0.0, 1.0)  # 0 → 1
+		col.a = clamp(t / seconds, 0.0, 1.0)  # 0 to 1
 		(mc as CanvasItem).modulate = col

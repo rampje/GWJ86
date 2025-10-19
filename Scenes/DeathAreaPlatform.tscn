@@ -22,7 +22,7 @@ accel = 1800.0
 wait_time = 0.1
 
 [node name="TileMapLayer" parent="Platform" index="1"]
-tile_map_data = PackedByteArray("AAD//wAAAAAPAAEAAAAAAAAAAAAPAAEAAAD/////AAASAAAAAAAAAP//AAASAAAAAAD+/wAAAAAVAAQAAAABAAAAAAAWAAQAAAA=")
+tile_map_data = PackedByteArray("AAD//wAAAAAPAAEAAAAAAAAAAAAPAAEAAAD/////AAASAAAAAAAAAP//AAASAAAAAAD+/wAAAQAVAAQAAAABAAAAAQAWAAQAAAA=")
 
 [node name="Area2D" type="Area2D" parent="Platform"]
 unique_name_in_owner = true

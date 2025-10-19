@@ -41,13 +41,9 @@ Aseprite
 
 
 TODO:
--Sideways spikes sprite space remove
 -Normalize audio, fix levels
 -end (thanks for playing)
--take picture of game option
-
-
--itch page (pictures, video)
+-take pictures of game for itch page
 
 
 

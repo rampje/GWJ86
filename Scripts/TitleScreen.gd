@@ -11,6 +11,7 @@ func _input(event):
 			self.visible = !self.visible
 
 func _ready() -> void:
+	%EndScreen.visible = false
 	%OptionsWidgets.visible = false
 	init_game()
 	#start_game()
@@ -106,3 +107,7 @@ func end_menu():
 	%Quit.text = "EXIT GAME"
 	%EndSpace.visible = true
 	
+
+
+func _on_exit_game_pressed() -> void:
+	get_tree().quit()

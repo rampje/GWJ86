@@ -21,8 +21,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		if sprite:
 			sprite.play("jump")
 		
-		
-		
 
 		$"../../HUD".on_global_mask_picked("   ")
 		await get_tree().create_timer(3.5).timeout
@@ -43,7 +41,6 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		menu.visible = false
 		title_screen.visible = true
 		var mc = title_screen.get_node("EndScreen") as CanvasItem
-		print('did we get it')
 		print(mc)
 		var c: Color = mc.modulate
 		c.a = 0.0

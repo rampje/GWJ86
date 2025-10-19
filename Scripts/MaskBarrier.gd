@@ -17,7 +17,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 						false,                           # pitch_randomize
 						Vector2(0.85, 1.15),             # pitch_range
 						1.5,                             # cooldown_sec
-						-7.0                             # gain_db
+						2.0                             # gain_db
 					)
 
 		var t := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)

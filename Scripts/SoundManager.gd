@@ -10,7 +10,7 @@ var is_fading_music: bool = false
 
 
 # volumes need to normalize
-var master_volume := 0.7
+var master_volume := 0.5
 var music_volume  := 0.5
 var sfx_volume    := 0.5
 
@@ -20,10 +20,10 @@ const BUS_MUSIC  := "Music"
 const BUS_SFX    := "SFX"
 
 # Sounds/Audio
-var music_sound: AudioStream = load("uid://c5le2hwmrhk5v")
-var sight_sound: AudioStream = load("uid://bxqcxooo62ixm")
-var mask_pickup_sound: AudioStream = load("uid://b3yihbrydmrs4")
-var mask_barrier_cross: AudioStream = load("uid://cj7xavuppnu5k")
+var music_sound: AudioStream = load("uid://dwk2wx4upgxag")
+var sight_sound: AudioStream = load("uid://blihxcm5rd4uo")
+var mask_pickup_sound: AudioStream = load("uid://cp3mxpe3je807")
+var mask_barrier_cross: AudioStream = load("uid://cshjudu0hnd46")
 
 var _last_play_times: Dictionary = {}
 
@@ -96,7 +96,7 @@ func play_music(stream: AudioStream) -> void:
 		return
 	music_player.stop()
 	music_player.stream = stream
-	music_player.volume_db = 5.0
+	#music_player.volume_db = 5.0
 	current_music = stream
 	music_player.play()
 
@@ -109,22 +109,24 @@ func stop_music() -> void:
 #helper functions 
 # Called by player
 func play_sight_sfx() -> void:
-	play_sfx(sight_sound, true, Vector2(0.95, 1.05), 1.0, -4.0)
+	play_sfx(sight_sound, true, Vector2(0.95, 1.05), 1.0)
 
 
 
 
-# Map 0..1 slider -> dB with 0.5 = 0 dB
-func _slider_to_db(v: float, down_db := -40.0, up_db := 6.0, curve := 1.0) -> float:
+func _slider_to_db(v: float, down_db := -40.0, up_db := 1.0, curve := 1.0, mid_db := -10.0) -> float:
 	v = clamp(v, 0.0, 1.0)
+	var result := 0.0
+
 	if v < 0.5:
-		# below mid: fade from down_db up to 0 dB
-		var t := pow(v / 0.5, curve)          # perceptual curve; 1.0 = linear in dB
-		return lerp(down_db, 0.0, t)
+		var t := pow(v / 0.5, curve)
+		result = lerp(down_db, mid_db, t)
 	else:
-		# above mid: rise from 0 dB up to +up_db
 		var t := pow((v - 0.5) / 0.5, curve)
-		return lerp(0.0, up_db, t)
+		result = lerp(mid_db, up_db, t)
+
+	return result
+
 
 func _apply_volumes() -> void:
 	var i_master := AudioServer.get_bus_index(BUS_MASTER)
@@ -143,6 +145,11 @@ func _apply_volumes() -> void:
 		if not is_fading_music:
 			AudioServer.set_bus_volume_db(i_music, music_db)
 		AudioServer.set_bus_volume_db(i_sfx, sfx_db)
+	
+	# Apply an extra cut to the Master bus so everything is less loud overall
+	var global_mix_trim_db := -5.0  
+	var current_master_db := AudioServer.get_bus_volume_db(i_master)
+	AudioServer.set_bus_volume_db(i_master, current_master_db + global_mix_trim_db)
 		
 		
 # --- Public setters/getters for the UI ---

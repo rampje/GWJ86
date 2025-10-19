@@ -42,19 +42,18 @@ Aseprite
 
 TODO:
 -Normalize audio, fix levels
--end (thanks for playing)
 -take pictures of game for itch page
 
 
 
 
+-programs used 
+
 
 LOWER PRIO
 -bug fix low transparency Mask HUD sometimes
 
-QOL IMPROVEMENTS
--audio mix sanity check
-
+-mute button
 
 
 Accessibility: https://drive.google.com/file/d/1YBCVIlETy_qSzvsYDQg_aaW0ZdKCG-kE/view

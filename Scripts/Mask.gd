@@ -77,8 +77,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 					SoundManager.mask_pickup_sound,  # stream
 					false,                           # pitch_randomize
 					Vector2(0.85, 1.15),             # pitch_range
-					0.0,                             # cooldown_sec
-					-9.0                             # gain_db
+					0.0,#,                             # cooldown_sec
+					-3.0                             # gain_db
 				)
 
 		$Area2D.monitoring = false

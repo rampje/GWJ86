@@ -13,18 +13,24 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 		var ghost = body.get_node_or_null("Ghost")
 		var parts = body.get_node_or_null("CPUParticles2D")
-		if ghost: ghost.queue_free()
+		#if ghost: ghost.queue_free()
 		if parts: parts.queue_free()
 
 		var sprite = body.get_node_or_null("AnimatedSprite2D")
 		if sprite:
 			sprite.play("end")
+		
+		
+		
 
 		$"../../HUD".on_global_mask_picked("   ")
 		await get_tree().create_timer(3.5).timeout
 		$"../../HUD".on_global_mask_picked("    ")
+		
+		_fade_sprite(ghost.get_node("AnimatedSprite2D"), 3, 0.22)	
 		await get_tree().create_timer(5).timeout
-
+		
+		$MaskBarrier7/CPUParticles2D.emitting = false
 		$"../../HUD".on_global_mask_picked("     ")
 		_fade_sprite(sprite, 4.0)
 		await get_tree().create_timer(7).timeout
@@ -37,17 +43,18 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		c.a = 0.0
 		mc.modulate = c
 		mc.visible = true
-
+		
+		sprite.visible = false
 		_fade_title(title_screen, 5.0)
 
 
-func _fade_sprite(sprite: CanvasItem, seconds: float) -> void:
+func _fade_sprite(sprite: CanvasItem, seconds: float, start_alpha: float = 1.0) -> void:
 	var t := 0.0
 	while t < seconds:
 		await get_tree().process_frame
 		t += get_process_delta_time()
 		var col := sprite.modulate
-		col.a = 1.0 - clamp(t / seconds, 0.0, 1.0)
+		col.a = start_alpha - clamp(t / seconds, 0.0, 1.0)
 		sprite.modulate = col
 		
 		

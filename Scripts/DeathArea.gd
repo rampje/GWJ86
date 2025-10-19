@@ -6,7 +6,7 @@ extends Node2D
 @onready var marker := $Marker2D
 
 func _ready() -> void:
-	$Area2D.body_entered.connect(_on_area_2d_body_entered)
+	%Area2D.body_entered.connect(_on_area_2d_body_entered)
 
 func _on_area_2d_body_entered(body: Node) -> void:
 	if body == null or !body.is_in_group("Player"):
@@ -25,7 +25,7 @@ func _on_area_2d_body_entered(body: Node) -> void:
 
 		# Optional: prevent re-triggering
 		if one_shot:
-			$Area2D.monitoring = false
+			%Area2D.monitoring = false
 			set_deferred("monitorable", false)
 			
 	

@@ -6,5 +6,6 @@
 script = ExtResource("1_6qbj7")
 
 [node name="Area2D" type="Area2D" parent="."]
+unique_name_in_owner = true
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

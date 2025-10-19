@@ -36,16 +36,16 @@ var has_time: bool = false
 
 
 func _ready() -> void:
-	#reset_game()
-	enable_all()
+	reset_game()
+	#enable_all()
 	#has_walljump = true
 	#has_sight = true
 	#has_friend = true
 
 #func _input(event):
 	#if event.is_action_pressed("reload"):
-		##enable_all()
-		#reset_game()
+		#enable_all()
+		##reset_game()
 		#get_tree().reload_current_scene()
 
 

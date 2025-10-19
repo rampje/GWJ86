@@ -267,7 +267,6 @@ rotation_smoothing_speed = 7.0
 modulate = Color(0.8862745, 0, 0.4745098, 1)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_7gp2n")
-animation = &"end"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_22fhl")

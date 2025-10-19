@@ -15,7 +15,7 @@
 offset_left = -3727.0
 offset_top = -2325.0
 offset_right = 1772.0
-offset_bottom = 2817.0
+offset_bottom = 3310.0
 default_sharp = 200
 
 [node name="ActiveMap" parent="." instance=ExtResource("1_r150o")]

@@ -93,8 +93,6 @@ func _set_layer_visuals(active_layer: int) -> void:
 
 
 func _ready() -> void:
-
-	
 	# Clean base
 	%TileMapLayer2.enabled = true
 	%TileMapLayer3.enabled = true

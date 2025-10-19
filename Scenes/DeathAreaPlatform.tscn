@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=4 uid="uid://dcogkv8al1wdw"]
+
+[ext_resource type="Script" uid="uid://bvx0ld8374elf" path="res://Scripts/DeathArea.gd" id="1_4xhyy"]
+[ext_resource type="PackedScene" uid="uid://b64rgmffvcg05" path="res://Scenes/Platform.tscn" id="2_a1e5n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qajor"]
+size = Vector2(61, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xhyy"]
+size = Vector2(11, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1e5n"]
+size = Vector2(11, 30)
+
+[node name="DeathAreaPltform" type="Node2D"]
+script = ExtResource("1_4xhyy")
+
+[node name="Platform" parent="." instance=ExtResource("2_a1e5n")]
+waypoint_offsets = Array[Vector2]([Vector2(0, 0), Vector2(160, 0)])
+speed = 180.0
+accel = 1800.0
+wait_time = 0.1
+
+[node name="TileMapLayer" parent="Platform" index="1"]
+tile_map_data = PackedByteArray("AAD//wAAAAAPAAEAAAAAAAAAAAAPAAEAAAD/////AAASAAAAAAAAAP//AAASAAAAAAD+/wAAAAAVAAQAAAABAAAAAAAWAAQAAAA=")
+
+[node name="Area2D" type="Area2D" parent="Platform"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/Area2D"]
+position = Vector2(-0.5, -6)
+shape = SubResource("RectangleShape2D_qajor")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Platform/Area2D"]
+position = Vector2(37.5, 15)
+shape = SubResource("RectangleShape2D_4xhyy")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Platform/Area2D"]
+position = Vector2(-37.5, 16)
+shape = SubResource("RectangleShape2D_a1e5n")
+
+[connection signal="body_entered" from="Platform/Area2D" to="." method="_on_area_2d_body_entered"]
+
+[editable path="Platform"]

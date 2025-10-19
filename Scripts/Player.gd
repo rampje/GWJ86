@@ -18,13 +18,6 @@ extends CharacterBody2D
 @export var wall_slide_max_speed: float = 120.0  # downward clamp while sliding
 @export var wall_jump_push: float = 180.0        # horizontal push on wall jump
 
-
-# --- Slow Fall (feather) ---
-@export var slow_fall_gravity_mul: float = 0.25   # scale base gravity while feathering
-@export var slow_fall_max_speed: float = 180.0    # clamp downward speed while feathering
-@export var slow_fall_release_cooldown: float = 0.12 # small lockout after releasing jump
-@export var slow_fall_min_start_speed: float = 0.0   # optional: only allow if falling this fast+
-
 var ghost: Node2D
 
 var is_slow_falling: bool = false
@@ -44,6 +37,31 @@ var respawn_position: Vector2
 @export var max_air_jumps: int = 1   # 1 = “double jump”
 var _air_jumps_left: int = 0
 var _prev_on_wall: bool = false
+
+
+# Slow Fall 
+@export var slow_fall_gravity_mul: float = 0.25   # scale base gravity while feathering
+@export var slow_fall_max_speed: float = 180.0    # clamp downward speed while feathering
+@export var slow_fall_release_cooldown: float = 0.12 # small lockout after releasing jump
+@export var slow_fall_min_start_speed: float = 0.0   # optional: only allow if falling this fast+
+
+
+# wall slide collider
+@onready var stand_shape: CollisionShape2D = $CollisionShape2D_Stand
+@onready var wall_shape:  CollisionShape2D = $CollisionShape2D_Wall
+var _using_wall_shape := false
+@export var wall_slide_exit_grace: float = 0.12  
+var _wall_slide_grace: float = 0.0
+var _was_wall_sliding: bool = false
+
+func _near_wall(dir_sign: int) -> bool:
+	# considers "almost touching" a wall within a couple pixels
+	if dir_sign == 0:
+		return false
+	return test_move(global_transform, Vector2(dir_sign * 2.0, 0.0))
+
+
+
 
 
 
@@ -93,6 +111,12 @@ func _set_layer_visuals(active_layer: int) -> void:
 
 
 func _ready() -> void:
+	# colliders
+	#stand_shape.disabled = false
+	#wall_shape.disabled = true
+	#stand_shape.visible = true
+	#wall_shape.visible = false
+	#_using_wall_shape = false
 	# Clean base
 	%TileMapLayer2.enabled = true
 	%TileMapLayer3.enabled = true
@@ -207,7 +231,6 @@ func _physics_process(delta: float) -> void:
 			ghost.rest_offset.x = abs(ghost.rest_offset.x)
 			
 	# --- VERTICAL MOVE (better gravity & variable jump height) ---
-	# --- VERTICAL MOVE (better gravity & variable jump height + slow fall) ---
 	var g := gravity
 	var max_down := max_fall_speed
 
@@ -235,11 +258,42 @@ func _physics_process(delta: float) -> void:
 		_slow_fall_cooldown = slow_fall_release_cooldown
 
 
-	# --- WALL SLIDE DETECTION (only if ability unlocked) ---
-	is_wall_sliding = Global.has_walljump and is_on_wall() and !is_on_floor() and dir != 0
+	# --- WALL SLIDE with latch + near-wall check ---
+	var dir_sign = sign(dir)
+
+	# Conditions to ENTER slide (strict)
+	var can_enter_slide = (
+		Global.has_walljump
+		and !is_on_floor()
+		and velocity.y > 0.0          # falling
+		and dir_sign != 0             # pressing a direction
+		and (is_on_wall() or _near_wall(dir_sign)) # touching or almost touching
+	)
+
+	# If we can enter, refresh the grace fully; otherwise tick it down only when we're truly away
+	if can_enter_slide:
+		_wall_slide_grace = wall_slide_exit_grace
+	else:
+		# are we still effectively next to a wall in the direction we're pressing?
+		var still_near := (is_on_wall() or _near_wall(dir_sign))
+		if !still_near:
+			_wall_slide_grace = max(0.0, _wall_slide_grace - delta)
+
+	# Latch: once sliding, we stay sliding until grace fully runs out or we land
+	var was_sliding := is_wall_sliding
+	is_wall_sliding = (_wall_slide_grace > 0.0) and !is_on_floor()
+
+	# Clamp fall speed while sliding
 	if is_wall_sliding:
 		velocity.y = min(velocity.y, wall_slide_max_speed)
 
+	# Swap colliders ONLY on transitions (enter/exit)
+	if is_wall_sliding != _was_wall_sliding:
+		#_use_wall_shape(is_wall_sliding)
+		_was_wall_sliding = is_wall_sliding
+
+
+	
 	# --- JUMP RESOLUTION (uses buffer + coyote) ---
 	if _try_jump():
 		# handled inside
@@ -264,6 +318,9 @@ func _physics_process(delta: float) -> void:
 	# If we *just* landed, suppress one frame of horizontal carry
 	var just_landed := is_on_floor() and !_prev_on_floor
 	if just_landed:
+		_wall_slide_grace = 0.0
+		is_wall_sliding = false
+		_use_wall_shape(false)
 		_carry = Vector2.ZERO
 		_air_jumps_left = (max_air_jumps if Global.has_jump else 0)
 	else:
@@ -446,7 +503,6 @@ func _on_respawn_timer_timeout() -> void:
 
 
 func _set_tilemap_collisions(tml: Node, enabled: bool, layer_bits: int, mask_bits: int) -> void:
-	# If  Godot version exposes collision_enabled on TileMapLayer, use it:
 	if "collision_enabled" in tml:
 		tml.collision_enabled = enabled
 		return
@@ -530,7 +586,6 @@ func _set_tilemap_collisions(tml: Node, enabled: bool, layer_bits: int, mask_bit
 	
 	
 func _capture_original_material(ci: CanvasItem) -> Material:
-	# If editor put faint on the layer, treat "normal" as null
 	if ci.material is ShaderMaterial and (ci.material as ShaderMaterial).shader == _faint_shader:
 		ci.material = null
 		return null
@@ -552,7 +607,6 @@ func _debug_tileset_materials():
 		if mat:
 			var is_faint := (mat is ShaderMaterial and (mat as ShaderMaterial).shader == _faint_shader)
 			print("TileSet source id=", sid, " has material. is_faint_shader? ", is_faint, " type=", mat)
-		# (Optional) check a few tiles for per-tile overrides if supported:
 		# if src is TileSetAtlasSource:
 		#     for tid in src.get_tiles_ids():
 		#         var tmat := src.get_tile_data(tid, 0).material
@@ -584,3 +638,11 @@ func first_tinting_parent(n: CanvasItem) -> Node:
 					return ci
 			p = p.get_parent()
 		return null
+
+
+func _use_wall_shape(enable: bool) -> void:
+	if _using_wall_shape == enable:
+		return
+	_using_wall_shape = enable
+	stand_shape.set_deferred("disabled", enable)   
+	wall_shape.set_deferred("disabled", !enable) 

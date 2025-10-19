@@ -38,8 +38,8 @@ var has_time: bool = false
 func _ready() -> void:
 	reset_game()
 	#enable_all()
-	#has_walljump = true
-	#has_sight = true
+	has_walljump = true
+	has_sight = true
 	#has_friend = true
 
 #func _input(event):

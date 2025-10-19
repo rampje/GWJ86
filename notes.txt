@@ -41,21 +41,24 @@ Aseprite
 
 
 TODO:
--game ending
--final polish visual language/color/theming
+-Sideways spikes sprite space remove
+-Normalize audio, fix levels
+-end (thanks for playing)
+-take picture of game option
+
+
 -itch page (pictures, video)
 
 
 
+
+
 LOWER PRIO
--about menu
 -bug fix low transparency Mask HUD sometimes
 
 QOL IMPROVEMENTS
-
 -audio mix sanity check
 
--tile L2/L3 shader polish
 
 
 Accessibility: https://drive.google.com/file/d/1YBCVIlETy_qSzvsYDQg_aaW0ZdKCG-kE/view

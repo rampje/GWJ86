@@ -42,7 +42,9 @@ func _ready() -> void:
 	#has_sight = true
 	#has_friend = true
 
-#func _input(event):
+func _input(event):
+	if event.is_action_pressed("screenshot"):
+		_take_screenshot()
 	#if event.is_action_pressed("reload"):
 		#enable_all()
 		##reset_game()
@@ -94,10 +96,15 @@ func on_mask_picked(mask_type: String) -> void:
 	emit_signal("mask_picked", mask_type)
 	
 
-
-
-
-
 func get_mask_icon(mask_type: String) -> Texture2D:
 	var p = MASK_ICON_PATHS.get(mask_type, "")
 	return null if p == "" else load(p)
+
+
+func _take_screenshot():
+	await get_tree().process_frame  # ensure frame is drawn
+	var image := get_viewport().get_texture().get_image()
+	var timestamp := Time.get_datetime_string_from_system().replace(":", "-")
+	var path := "user://screenshot_" + timestamp + ".png"
+	image.save_png(path)
+	print("Saved screenshot to:", path)

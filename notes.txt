@@ -46,16 +46,4 @@ TODO:
 
 
 
-
--programs used 
-
-
-LOWER PRIO
--bug fix low transparency Mask HUD sometimes
-
--mute button
-
-
 Accessibility: https://drive.google.com/file/d/1YBCVIlETy_qSzvsYDQg_aaW0ZdKCG-kE/view
-
-

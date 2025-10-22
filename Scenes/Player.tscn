@@ -249,7 +249,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bhhdu"]
-size = Vector2(20, 24)
+size = Vector2(20, 26)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 texture_filter = 1
@@ -297,7 +297,7 @@ sprite_frames = SubResource("SpriteFrames_glx4g")
 frame_progress = 0.30897218
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
+position = Vector2(0, 3)
 scale = Vector2(0.6, 1)
 shape = SubResource("RectangleShape2D_bhhdu")
 

@@ -10,7 +10,7 @@ var is_fading_music: bool = false
 
 
 # volumes need to normalize
-var master_volume := 0.5
+var master_volume := 0.7
 var music_volume  := 0.5
 var sfx_volume    := 0.5
 
@@ -20,7 +20,7 @@ const BUS_MUSIC  := "Music"
 const BUS_SFX    := "SFX"
 
 # Sounds/Audio
-var music_sound: AudioStream = load("uid://dwk2wx4upgxag")
+var music_sound: AudioStream = load("uid://dwdt1vhge1wh4")
 var sight_sound: AudioStream = load("uid://blihxcm5rd4uo")
 var mask_pickup_sound: AudioStream = load("uid://cp3mxpe3je807")
 var mask_barrier_cross: AudioStream = load("uid://cshjudu0hnd46")
